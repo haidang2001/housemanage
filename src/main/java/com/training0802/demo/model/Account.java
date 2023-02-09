@@ -1,17 +1,17 @@
-package com.training0802.demo.dto;
+package com.training0802.demo.model;
 
-public class AccountResponse {
+public class Account {
     private String name;
     private String gender;
     private String role;
     private String phone;
     private String email;
 
-    public AccountResponse() {
+    public Account() {
 
     }
 
-    public AccountResponse(String name, String gender, String role, String phone, String email) {
+    public Account(String name, String gender, String role, String phone, String email) {
         this.name = name;
         this.gender = gender;
         this.role = role;
@@ -58,6 +58,4 @@ public class AccountResponse {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
 }
