@@ -17,57 +17,53 @@ public class AccountServiceImpl implements AccountService{
     public AccountRepository accountRepository;
     @Autowired
     public ModelMapper modelMapper;
-    List<AccountResponse> accountList = new ArrayList<AccountResponse>();
-    @Override
+        @Override
     public List<AccountResponse> getAccounts() {
-
         //convert raw data to dto
         List<Account> rawAccountList = accountRepository.findAll(); //debug chỗ nào thì thêm tíc đỏ rồi debug ấn f8 xong thì resume
-
+        List<AccountResponse> accountList = new ArrayList<AccountResponse>();
         for(Account acc: rawAccountList){
             AccountResponse dto = modelMapper.map(acc,AccountResponse.class); //map tung object trong list
             accountList.add(dto);
         }
         return accountList;
-
-
     }
 
     @Override
     public AccountResponse getOneAccount(String name){
-        List<AccountResponse> listAccounts = getAccounts();
-        AccountResponse oneAccount = new AccountResponse();
-        for(AccountResponse a: listAccounts){
-            if(a.getName().equals(name)){
-                oneAccount = a;
-            }
-        }
-        return oneAccount;
+        //java8
 //        return accountList.stream().filter(e-> e.getName().equals(name)).findFirst().get();
+
+        //convert raw data to dto
+        Account modelAccount = accountRepository.findOne(name);
+        AccountResponse dtoAccount = modelMapper.map(modelAccount,AccountResponse.class);
+        return dtoAccount;
     }
 
     @Override
     public void addAccount(AccountResponse account){
-        AccountResponse acc = new AccountResponse(account.getName(),account.getGender(),account.getRole(),account.getPhone(),account.getEmail());
-        accountList.add(acc);
+
+        //convert dto to model
+        // repo.add(Account)
+        Account modelAccount = modelMapper.map(account,Account.class);
+        accountRepository.addAccount(modelAccount);
+
     }
 
     @Override
     public void deleteAccount(String name) {
-        accountList.removeIf(e->e.getName().equals(name));
+
+        accountRepository.deleteAccount(name);
+
     }
 
     @Override
     public void updateAccount(AccountResponse account,String name) {
-        for(AccountResponse acc : accountList){
-            if(acc.getName().equals(name)){
-                acc.setName(account.getName());
-                acc.setGender(account.getGender());
-                acc.setRole(account.getRole());
-                acc.setPhone(account.getPhone());
-                acc.setEmail(account.getEmail());
-            }
-        }
+
+        //convert dto to model
+        //repo.update(Account)
+        Account modelAccount = modelMapper.map(account,Account.class);
+        accountRepository.updateAccount(modelAccount,name);
     }
 
 }
