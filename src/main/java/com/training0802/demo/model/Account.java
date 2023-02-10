@@ -1,6 +1,15 @@
 package com.training0802.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity(name="ACCOUNT")
+
 public class Account {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
     private String gender;
     private String role;
@@ -11,7 +20,16 @@ public class Account {
 
     }
 
-    public Account(String name, String gender, String role, String phone, String email) {
+//    public Account(String name, String gender, String role, String phone, String email) {
+//        this.name = name;
+//        this.gender = gender;
+//        this.role = role;
+//        this.phone = phone;
+//        this.email = email;
+//    }
+
+    public Account(Long id, String name, String gender, String role, String phone, String email) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.role = role;
@@ -19,6 +37,13 @@ public class Account {
         this.email = email;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
@@ -57,5 +82,17 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", role='" + role + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
