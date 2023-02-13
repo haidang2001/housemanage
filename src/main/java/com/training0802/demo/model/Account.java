@@ -3,12 +3,17 @@ package com.training0802.demo.model;
 import jakarta.persistence.*;
 
 @Entity(name="ACCOUNT")
-
+@Table(name="tblAccount")
 public class Account {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @SequenceGenerator(
+//            name = "account_sequence",
+//            sequenceName = "account_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "account_sequence")
     private Long id;
     private String name;
     private String gender;
@@ -20,22 +25,22 @@ public class Account {
 
     }
 
-//    public Account(String name, String gender, String role, String phone, String email) {
-//        this.name = name;
-//        this.gender = gender;
-//        this.role = role;
-//        this.phone = phone;
-//        this.email = email;
-//    }
-
-    public Account(Long id, String name, String gender, String role, String phone, String email) {
-        this.id = id;
+    public Account(String name, String gender, String role, String phone, String email) {
         this.name = name;
         this.gender = gender;
         this.role = role;
         this.phone = phone;
         this.email = email;
     }
+
+//    public Account(Long id, String name, String gender, String role, String phone, String email) {
+//        this.id = id;
+//        this.name = name;
+//        this.gender = gender;
+//        this.role = role;
+//        this.phone = phone;
+//        this.email = email;
+//    }
 
     public Long getId() {
         return id;

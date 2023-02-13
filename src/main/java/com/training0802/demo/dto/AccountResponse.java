@@ -1,6 +1,9 @@
 package com.training0802.demo.dto;
 
 public class AccountResponse {
+
+
+    private Long id;
     private String name;
     private String gender;
     private String role;
@@ -19,6 +22,22 @@ public class AccountResponse {
         this.email = email;
     }
 
+    public AccountResponse(Long id, String name, String gender, String role, String phone, String email) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.role = role;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
@@ -59,5 +78,15 @@ public class AccountResponse {
         this.email = email;
     }
 
-
+    @Override
+    public String toString() {
+        return "AccountResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", role='" + role + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

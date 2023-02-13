@@ -1,6 +1,7 @@
 package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.AccountResponse;
+import com.training0802.demo.dto.DemoResponse;
 import com.training0802.demo.model.Account;
 import com.training0802.demo.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,45 +17,52 @@ public class AccountController {
     @Autowired
     private AccountServiceImpl accountService;
     @GetMapping
-    public List<Account> getListAccount(){
-        return accountService.findAll();
+    public List<AccountResponse> getListAccount(){
+        return accountService.getAccounts();
     }
-    @GetMapping("/{id}")
-    public Account getOneAccount(@PathVariable Long id){
-        return accountService.findOne(id);
-    }
-
-    @PostMapping
-    public Account addAccount(@RequestBody Account account){
-        return accountService.addAccount(account);
-    }
-
-//    @GetMapping
-//    public List<AccountResponse> getListAccount(){
-//        return accountService.getAccounts();
-//    }
-//
 //    @GetMapping("/{userName}")
 //    public  AccountResponse getAccount(@PathVariable("userName") String name){
 //        return accountService.getOneAccount(name);
 //    }
-//
+    @GetMapping("/{id}")
+    public  ResponseEntity<DemoResponse> getAccount(@PathVariable Long id){
+        return accountService.getOneAccount(id);
+    }
 //    @PostMapping
 //    public ResponseEntity<AccountResponse> addAccount(@RequestBody AccountResponse accountResponse){
-    //        accountService.addAccount(accountResponse);
+//            accountService.addAccount(accountResponse);
 //        return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.CREATED);
 //    }
-//
-//    @DeleteMapping("/{userName}")
-//    public ResponseEntity<String> deleteAccount(@PathVariable("userName") String name){
-//        accountService.deleteAccount(name);
-//        return new ResponseEntity<String>("Deleted succesfully " + name,HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity<DemoResponse> addAccount(@RequestBody AccountResponse accountResponse){
+        return accountService.addAccount(accountResponse);
+//        return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.CREATED);
+    }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteAccount(@PathVariable Long id){
+//        accountService.deleteAccount(id);
+//        return new ResponseEntity<String>("Deleted succesfully " + id,HttpStatus.OK);
 //    }
-//
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DemoResponse> deleteAccount(@PathVariable Long id){
+        accountService.deleteAccount(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new DemoResponse(0,"Delete account successfully with id:" +id,"")
+        );
+    }
+    @PutMapping("/{userName}")
+    public ResponseEntity<DemoResponse> updateAccount(@RequestBody AccountResponse accountResponse,@PathVariable("userName") String name){
+        accountService.updateAccount(accountResponse,name);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new DemoResponse(0,"Update account successfully with name:"+name,accountResponse)
+        );
+    }
+
 //    @PutMapping("/{userName}")
-//    public ResponseEntity<AccountResponse> updateAccount(@RequestBody AccountResponse accountResponse,@PathVariable("userName") String name){
+//    public ResponseEntity<DemoResponse> updateAccount(@RequestBody AccountResponse accountResponse,@PathVariable("userName") String name){
 //        accountService.updateAccount(accountResponse,name);
-//        return new ResponseEntity<AccountResponse>(accountResponse,HttpStatus.OK);
+//        return new ResponseEntity<DemoResponse>(new DemoResponse(0,"Update account successfully with name:"+name,accountResponse),HttpStatus.OK);
 //    }
 
 }
