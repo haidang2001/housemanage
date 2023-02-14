@@ -1,15 +1,15 @@
 package com.training0802.demo.dto;
 
-public class DemoResponse {
+public class MessageResponse {
     private int status;
     private String message;
     private Object data;
 
-    public DemoResponse() {
+    public MessageResponse() {
 
     }
 
-    public DemoResponse(int status, String message, Object data) {
+    public MessageResponse(int status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;

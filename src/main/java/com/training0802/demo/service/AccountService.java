@@ -1,17 +1,15 @@
 package com.training0802.demo.service;
 
 import com.training0802.demo.dto.AccountResponse;
-import com.training0802.demo.dto.DemoResponse;
+import com.training0802.demo.dto.MessageResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface AccountService  {
-    public List<AccountResponse> getAccounts();
-    public ResponseEntity<DemoResponse> getOneAccount(Long id);
-    public ResponseEntity<DemoResponse> addAccount(AccountResponse account);
-    public void deleteAccount(Long id);
-    public void updateAccount(AccountResponse account, String name);
-
-
+    List<AccountResponse> getAccounts();
+    AccountResponse getOneAccount(Long id);
+    void addAccount(AccountResponse account);
+    void deleteAccount(Long id);
+    void updateAccount(AccountResponse account, Long id);
 }

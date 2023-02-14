@@ -1,8 +1,7 @@
 package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.AccountResponse;
-import com.training0802.demo.dto.DemoResponse;
-import com.training0802.demo.model.Account;
+import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,49 +19,53 @@ public class AccountController {
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
     }
-//    @GetMapping("/{userName}")
-//    public  AccountResponse getAccount(@PathVariable("userName") String name){
-//        return accountService.getOneAccount(name);
-//    }
+
     @GetMapping("/{id}")
-    public  ResponseEntity<DemoResponse> getAccount(@PathVariable Long id){
-        return accountService.getOneAccount(id);
-    }
-//    @PostMapping
-//    public ResponseEntity<AccountResponse> addAccount(@RequestBody AccountResponse accountResponse){
-//            accountService.addAccount(accountResponse);
-//        return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.CREATED);
-//    }
-    @PostMapping
-    public ResponseEntity<DemoResponse> addAccount(@RequestBody AccountResponse accountResponse){
-        return accountService.addAccount(accountResponse);
-//        return new ResponseEntity<AccountResponse>(accountResponse, HttpStatus.CREATED);
+    public  ResponseEntity<MessageResponse> getAccount(@PathVariable Long id){
+        try {
+            AccountResponse accountFound = accountService.getOneAccount(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Account found with id: "+id,accountFound)
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
+
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> deleteAccount(@PathVariable Long id){
-//        accountService.deleteAccount(id);
-//        return new ResponseEntity<String>("Deleted succesfully " + id,HttpStatus.OK);
-//    }
+    @PostMapping
+    public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse){
+        accountService.addAccount(accountResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new MessageResponse(0,"Add successful account",accountResponse)
+        );
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<DemoResponse> deleteAccount(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> deleteAccount(@PathVariable Long id){
         accountService.deleteAccount(id);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new DemoResponse(0,"Delete account successfully with id:" +id,"")
-        );
-    }
-    @PutMapping("/{userName}")
-    public ResponseEntity<DemoResponse> updateAccount(@RequestBody AccountResponse accountResponse,@PathVariable("userName") String name){
-        accountService.updateAccount(accountResponse,name);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new DemoResponse(0,"Update account successfully with name:"+name,accountResponse)
+                new MessageResponse(0,"Delete account successfully with id:" +id,"")
         );
     }
 
-//    @PutMapping("/{userName}")
-//    public ResponseEntity<DemoResponse> updateAccount(@RequestBody AccountResponse accountResponse,@PathVariable("userName") String name){
-//        accountService.updateAccount(accountResponse,name);
-//        return new ResponseEntity<DemoResponse>(new DemoResponse(0,"Update account successfully with name:"+name,accountResponse),HttpStatus.OK);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updateAccount(@RequestBody AccountResponse accountResponse, @PathVariable Long id){
+        try{
+            accountService.updateAccount(accountResponse,id);
+            accountResponse.setId(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Update account successfully with id: "+id,accountResponse)
+            );
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
 
+
+    }
 }
