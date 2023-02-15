@@ -1,13 +1,11 @@
 package com.training0802.demo.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "test_mongodb" )
-public class House {
+@Entity
+@Table(name = "tblHouse")
+public class MysqlHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -15,8 +13,9 @@ public class House {
     private int fee;
     private String options;
 
-    public House(){}
-    public House(String address, int fee, String options) {
+    public MysqlHouse(){}
+    public MysqlHouse(String id,String address, int fee, String options) {
+        this.id = id;
         this.address = address;
         this.fee = fee;
         this.options = options;

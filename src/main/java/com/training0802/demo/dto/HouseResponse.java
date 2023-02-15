@@ -3,23 +3,23 @@ package com.training0802.demo.dto;
 import org.bson.types.ObjectId;
 
 public class HouseResponse {
-    private ObjectId id;
+    private String id;
     private String address;
-    private String fee;
+    private int fee;
     private String options;
 
     public HouseResponse(){}
-    public HouseResponse(String address, String fee, String options) {
+    public HouseResponse(String address, int fee, String options) {
         this.address = address;
         this.fee = fee;
         this.options = options;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -31,11 +31,11 @@ public class HouseResponse {
         this.address = address;
     }
 
-    public String getFee() {
+    public int getFee() {
         return fee;
     }
 
-    public void setFee(String fee) {
+    public void setFee(int fee) {
         this.fee = fee;
     }
 
