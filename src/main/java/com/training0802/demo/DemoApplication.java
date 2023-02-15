@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -27,7 +29,16 @@ public class DemoApplication implements CommandLineRunner {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+//		SpringApplication.run(DemoApplication.class, args);
+
+		SpringApplication application = new SpringApplication(DemoApplication.class);
+		ConfigurableEnvironment environment = new StandardEnvironment();
+//		environment.setActiveProfiles("mysql");
+//		environment.setActiveProfiles("mongodb");
+//		application.setEnvironment(environment);
+		ApplicationContext context = application.run(args);
+		MongoDatasource mongoDatasource = context.getBean(MongoDatasource.class);
+		System.out.println(mongoDatasource);
 	}
 
 	@Override
