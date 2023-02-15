@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public List<AccountResponse> getAccounts() {
         //convert raw data(model) to dto
-        List<Account> rawAccountList = accountRepository.findAll(); //debug chỗ nào thì thêm tíc đỏ rồi debug ấn f8 xong thì resume
+        List<Account> rawAccountList = accountRepository.findAll();
         List<AccountResponse> accountList = new ArrayList<AccountResponse>();
         for(Account acc: rawAccountList){
             AccountResponse dto = modelMapper.map(acc,AccountResponse.class); //map từng object trong list
@@ -50,9 +50,7 @@ public class AccountServiceImpl implements AccountService{
         // repo.add(Account)
         Account modelAccount = modelMapper.map(account,Account.class);
         accountRepository.save(modelAccount);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(
-//                new MessageResponse(0,"Add new account successfully",modelAccount)
-//        );
+
 
     }
 
