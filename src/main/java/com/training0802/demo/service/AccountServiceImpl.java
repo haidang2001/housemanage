@@ -1,14 +1,11 @@
 package com.training0802.demo.service;
 
 import com.training0802.demo.dto.AccountResponse;
-import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.model.Account;
-import com.training0802.demo.repository.AccountRepositori;
+import com.training0802.demo.repository.AccountRepository;
 //import com.training0802.demo.repository.AccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +14,7 @@ import java.util.List;
 @Service
 public class AccountServiceImpl implements AccountService{
     @Autowired
-    public AccountRepositori accountRepository;
+    public AccountRepository accountRepository;
     @Autowired
     public ModelMapper modelMapper;
     @Override
