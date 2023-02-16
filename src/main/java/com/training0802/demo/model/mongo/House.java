@@ -1,12 +1,11 @@
-package com.training0802.demo.model;
+package com.training0802.demo.model.mongo;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "test_mongodb" )
+@Document(collection = "house" )
 public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

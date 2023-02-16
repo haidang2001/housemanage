@@ -1,7 +1,7 @@
 package com.training0802.demo.service;
 
 import com.training0802.demo.dto.HouseResponse;
-import com.training0802.demo.model.House;
+import com.training0802.demo.model.mongo.House;
 import com.training0802.demo.repository.MongoHouseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ public class MongoHouseServiceImp implements HouseService{
         List<HouseResponse> dtoHouseData = new ArrayList<HouseResponse>();
         for(House h: modelHouseData){
             HouseResponse dtoHouse = modelMapper.map(h,HouseResponse.class);
-
             dtoHouseData.add(dtoHouse);
         }
         return dtoHouseData;

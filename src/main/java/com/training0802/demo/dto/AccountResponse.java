@@ -2,7 +2,6 @@ package com.training0802.demo.dto;
 
 public class AccountResponse {
 
-
     private Long id;
     private String name;
     private String gender;

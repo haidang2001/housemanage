@@ -65,7 +65,5 @@ public class AccountController {
                     new MessageResponse(1,e.getMessage(),"")
             );
         }
-
-
     }
 }

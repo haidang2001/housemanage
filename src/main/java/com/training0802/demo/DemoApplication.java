@@ -15,11 +15,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = AccountRepositori.class)
+//@EnableJpaRepositories(basePackages = "com.training0802.demo.repository.*")
 @EnableMongoRepositories(basePackageClasses = MongoHouseRepository.class)
 public class DemoApplication implements CommandLineRunner {
-
-//	@Autowired
-//	private ApplicationContext appContext;
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
@@ -27,26 +25,8 @@ public class DemoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-
-//		SpringApplication application = new SpringApplication(DemoApplication.class);
-//		ConfigurableEnvironment environment = new StandardEnvironment();
-//		environment.setActiveProfiles("mysql");
-//		environment.setActiveProfiles("mongodb");
-//		application.setEnvironment(environment);
-//		ApplicationContext context = application.run(args);
-//		MongoDatasource mongoDatasource = context.getBean(MongoDatasource.class);
-//		System.out.println(mongoDatasource);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-
-		//hiện các hàm đã viết
-//		String[] beans = appContext.getBeanDefinitionNames();
-//		Arrays.sort(beans);
-//		for (String bean : beans) {
-//			System.out.println(bean);
-//		}
-
-	}
+	public void run(String... args) throws Exception {}
 }

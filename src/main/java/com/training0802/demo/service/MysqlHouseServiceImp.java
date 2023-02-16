@@ -1,7 +1,7 @@
 package com.training0802.demo.service;
 
 import com.training0802.demo.dto.HouseResponse;
-import com.training0802.demo.model.MysqlHouse;
+import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.repository.MysqlHouseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,11 @@ public class MysqlHouseServiceImp implements HouseService{
     public ModelMapper modelMapper;
     @Override
     public List<HouseResponse> getHouses() {
-        List<MysqlHouse> mysqlModelHouses = mysqlHouseRepository.findAll();
+        List<House> mysqlModelHouses = mysqlHouseRepository.findAll();
         List<HouseResponse> dtoHouses = new ArrayList<HouseResponse>();
-        for (MysqlHouse mysqlHouse: mysqlModelHouses){
-            HouseResponse dtoHouse = modelMapper.map(mysqlHouse,HouseResponse.class);
-
-//            HouseResponse dtoHouse = new HouseResponse();
-//            dtoHouse.setId(mysqlHouse.getId());
-//            dtoHouse.setAddress(mysqlHouse.getAddress());
-//            dtoHouse.setFee(mysqlHouse.getFee());
-//            dtoHouse.setOptions(mysqlHouse.getOptions());
+        for (House house : mysqlModelHouses){
+            //convert model to dto
+            HouseResponse dtoHouse = modelMapper.map(house,HouseResponse.class);
             dtoHouses.add(dtoHouse);
         }
 

@@ -1,11 +1,11 @@
-package com.training0802.demo.model;
+package com.training0802.demo.model.mysql;
 
 import jakarta.persistence.*;
-import org.bson.types.ObjectId;
+
 
 @Entity
 @Table(name = "tblHouse")
-public class MysqlHouse {
+public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -13,8 +13,9 @@ public class MysqlHouse {
     private int fee;
     private String options;
 
-    public MysqlHouse(){}
-    public MysqlHouse(String id,String address, int fee, String options) {
+    public House(){}
+
+    public House(String id, String address, int fee, String options) {
         this.id = id;
         this.address = address;
         this.fee = fee;

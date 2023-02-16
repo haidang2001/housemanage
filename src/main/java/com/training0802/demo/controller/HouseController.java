@@ -12,16 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/house")
 public class HouseController {
-
-
     @Autowired
     private HouseService houseServiceImp;
     @GetMapping
     public List<HouseResponse> getHouses(){
         return houseServiceImp.getHouses();
     }
-//    @GetMapping("/h")
-//    public List<HouseResponse> getHousesInMysql(){
-//        return houseServiceImp.getHouses();
-//    }
+
 }

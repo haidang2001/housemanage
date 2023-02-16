@@ -9,6 +9,7 @@ public class HouseResponse {
     private String options;
 
     public HouseResponse(){}
+
     public HouseResponse(String address, int fee, String options) {
         this.address = address;
         this.fee = fee;
