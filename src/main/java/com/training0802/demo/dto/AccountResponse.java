@@ -8,7 +8,8 @@ public class AccountResponse {
     private String role;
     private String phone;
     private String email;
-
+    private String username;
+    private String password;
     public AccountResponse() {
 
     }
@@ -28,6 +29,17 @@ public class AccountResponse {
         this.role = role;
         this.phone = phone;
         this.email = email;
+    }
+
+    public AccountResponse(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.role = role;
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {
@@ -75,6 +87,22 @@ public class AccountResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
