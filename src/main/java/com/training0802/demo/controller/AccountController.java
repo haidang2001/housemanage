@@ -20,12 +20,13 @@ public class AccountController {
     private AccountServiceImpl accountService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('user')")
     public  ResponseEntity<MessageResponse> getAccount(@PathVariable Long id){
         try {
             AccountResponse accountFound = accountService.getOneAccount(id);

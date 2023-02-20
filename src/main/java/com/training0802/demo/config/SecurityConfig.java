@@ -1,36 +1,26 @@
 package com.training0802.demo.config;
 
-import com.mysql.cj.protocol.AuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder encoder(){return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
     }
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(encoder());
-        return (AuthenticationProvider) authenticationProvider;
-    }
+
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService() {
 //        UserDetails user = User.builder()
@@ -46,6 +36,22 @@ public class SecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(user,user2);
 //    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password(encoder.encode("123456"))
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password(encoder.encode("123456"))
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(admin,user);
+        return new AccountInfoToUserDetailsService();
+    }
 
 //    @Bean
 //    public DataSource dataSource() {
@@ -103,20 +109,28 @@ public class SecurityConfig {
 //        return users;
 //    }
 
-    public UserDetailsService userDetailsService(){
-        return new AccountInfoToUserDetailsService();
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider(){
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setUserDetailsService(userDetailsService());
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        return authenticationProvider;
+//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        return http
+        http
                 .csrf().disable()
                 .cors().and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/account/add").permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/house").authenticated()
-                .and().build();
+                .authorizeHttpRequests((authr)->authr
+                        .requestMatchers("/api/account/add").permitAll()
+                        .anyRequest().authenticated()
+//                        .requestMatchers("/api/account").hasAuthority("admin")
+//                        .requestMatchers("/api/house/*").authenticated() // admin hay user thì định nghĩa trong controller
+//                        .requestMatchers("/api/account/{id}").hasAuthority("user")
+                )
+                .httpBasic(Customizer.withDefaults());
+
+        return http.build();
     };
 
 }

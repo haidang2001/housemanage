@@ -5,15 +5,13 @@ import org.bson.types.ObjectId;
 public class HouseResponse {
     private String id;
     private String address;
-    private int fee;
-    private String options;
+
 
     public HouseResponse(){}
 
-    public HouseResponse(String address, int fee, String options) {
+    public HouseResponse(String address) {
         this.address = address;
-        this.fee = fee;
-        this.options = options;
+
     }
 
     public String getId() {
@@ -32,29 +30,13 @@ public class HouseResponse {
         this.address = address;
     }
 
-    public int getFee() {
-        return fee;
-    }
 
-    public void setFee(int fee) {
-        this.fee = fee;
-    }
-
-    public String getOptions() {
-        return options;
-    }
-
-    public void setOptions(String options) {
-        this.options = options;
-    }
 
     @Override
     public String toString() {
         return "House{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
-                ", fee='" + fee + '\'' +
-                ", options='" + options + '\'' +
                 '}';
     }
 }

@@ -19,7 +19,6 @@ public class HouseController {
     @Autowired
     private HouseService houseServiceImp;
     @GetMapping
-    @PreAuthorize("hasAuthority('USER')")
     public List<HouseResponse> getHouses(){
         return houseServiceImp.getHouses();
     }
