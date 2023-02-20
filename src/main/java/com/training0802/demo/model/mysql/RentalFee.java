@@ -1,6 +1,12 @@
-package com.training0802.demo.model.mongo;
+package com.training0802.demo.model.mysql;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tblRentalFee")
 public class RentalFee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private int roomCharge;
     private int bill;

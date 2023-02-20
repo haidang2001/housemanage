@@ -123,7 +123,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests((authr)->authr
                         .requestMatchers("/api/account/add").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
 //                        .requestMatchers("/api/account").hasAuthority("admin")
 //                        .requestMatchers("/api/house/*").authenticated() // admin hay user thì định nghĩa trong controller
 //                        .requestMatchers("/api/account/{id}").hasAuthority("user")

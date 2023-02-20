@@ -2,31 +2,39 @@ package com.training0802.demo.model.mysql;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "tblHouse")
 public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     private String address;
-    private int fee;
-    private String options;
-
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true,
+            mappedBy = "tblHouse")
+    private List<Room> roomList;
     public House(){}
 
-    public House(String id, String address, int fee, String options) {
+    public House(Long id, String address) {
         this.id = id;
         this.address = address;
-        this.fee = fee;
-        this.options = options;
+
     }
 
-    public String getId() {
+    public House(Long id, String address, List<Room> roomList) {
+        this.id = id;
+        this.address = address;
+        this.roomList = roomList;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,20 +46,12 @@ public class House {
         this.address = address;
     }
 
-    public int getFee() {
-        return fee;
+    public List<Room> getRooms() {
+        return roomList;
     }
 
-    public void setFee(int fee) {
-        this.fee = fee;
-    }
-
-    public String getOptions() {
-        return options;
-    }
-
-    public void setOptions(String options) {
-        this.options = options;
+    public void setRooms(List<Room> roomList) {
+        this.roomList = roomList;
     }
 
     @Override
@@ -59,8 +59,7 @@ public class House {
         return "House{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
-                ", fee='" + fee + '\'' +
-                ", options='" + options + '\'' +
+                ", roomList=" + roomList +
                 '}';
     }
 }

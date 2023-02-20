@@ -1,12 +1,20 @@
-package com.training0802.demo.model.mongo;
+package com.training0802.demo.model.mysql;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="tblRoom")
 public class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String name;
     private String options;
     private String image;
     private int rentalFee;
-
+    @ManyToOne()
+    @JoinColumn(name = "house_id")
+    private House house;
     public Room() {
     }
 
@@ -51,11 +59,20 @@ public class Room {
     }
 
     public int getRentalFee() {
-        return rentalFee;
+        RentalFee rentalFee1 = new RentalFee();
+        return rentalFee1.total();
     }
 
     public void setRentalFee(int rentalFee) {
         this.rentalFee = rentalFee;
+    }
+
+    public House getHouse() {
+        return house;
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 
     @Override

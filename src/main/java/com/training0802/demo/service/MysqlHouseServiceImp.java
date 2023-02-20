@@ -26,7 +26,28 @@ public class MysqlHouseServiceImp implements HouseService{
             HouseResponse dtoHouse = modelMapper.map(house,HouseResponse.class);
             dtoHouses.add(dtoHouse);
         }
-
         return dtoHouses;
     }
+
+    @Override
+    public void addHouse(HouseResponse houseResponse){
+        House modelHouse = modelMapper.map(houseResponse, House.class);
+        mysqlHouseRepository.save(modelHouse);
+    }
+
+    @Override
+    public void deleteHouse(Long id) {
+        mysqlHouseRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateHouse(HouseResponse houseResponse, Long id) {
+        House modelHouse = modelMapper.map(houseResponse,House.class);
+        House houseById = mysqlHouseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found house with " +id));
+        houseById.setId(id);
+        houseById.setAddress(modelHouse.getAddress());
+        mysqlHouseRepository.save(houseById);
+    }
+
 }

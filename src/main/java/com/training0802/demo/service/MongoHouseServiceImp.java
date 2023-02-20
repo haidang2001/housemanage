@@ -27,4 +27,19 @@ public class MongoHouseServiceImp implements HouseService{
         }
         return dtoHouseData;
     }
+
+    @Override
+    public void addHouse(HouseResponse houseResponse) {
+
+    }
+
+    @Override
+    public void deleteHouse(Long id) {
+
+    }
+
+    @Override
+    public void updateHouse(HouseResponse houseResponse, Long id) {
+
+    }
 }
