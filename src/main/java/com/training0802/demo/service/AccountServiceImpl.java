@@ -6,6 +6,7 @@ import com.training0802.demo.repository.AccountRepository;
 //import com.training0802.demo.repository.AccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService{
     @Autowired
     public AccountRepository accountRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     public ModelMapper modelMapper;
     @Override
@@ -45,6 +48,7 @@ public class AccountServiceImpl implements AccountService{
     public void addAccount(AccountResponse account){
         //convert dto to model
         // repo.add(Account)
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         Account modelAccount = modelMapper.map(account,Account.class);
         accountRepository.save(modelAccount);
 

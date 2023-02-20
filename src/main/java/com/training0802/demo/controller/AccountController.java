@@ -6,16 +6,21 @@ import com.training0802.demo.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
+
 public class AccountController {
     @Autowired
     private AccountServiceImpl accountService;
+
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
     }
@@ -36,7 +41,7 @@ public class AccountController {
 
     }
 
-    @PostMapping
+    @PostMapping(value = "/add")
     public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse){
         accountService.addAccount(accountResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
