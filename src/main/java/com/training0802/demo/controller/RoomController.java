@@ -2,8 +2,7 @@ package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.dto.RoomResponse;
-import com.training0802.demo.model.mysql.Room;
-import com.training0802.demo.service.RoomServiceImp;
+import com.training0802.demo.service.mysql.RoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,29 +14,29 @@ import java.util.List;
 @RequestMapping("/api/room")
 public class RoomController {
     @Autowired
-    private RoomServiceImp roomServiceImp;
+    private RoomServiceImpl roomServiceImpl;
 
     @GetMapping
     public List<RoomResponse> getRooms(){
-        return roomServiceImp.getRooms();
+        return roomServiceImpl.getRooms();
     }
     @PostMapping
     public ResponseEntity<MessageResponse> addRoom(@RequestBody RoomResponse roomResponse){
-        roomServiceImp.addRoom(roomResponse);
+        roomServiceImpl.addRoom(roomResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse(0,"Add new room sucessfully",roomResponse)
         );
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteRoom(@PathVariable Long id){
-        roomServiceImp.deleteRoom(id);
+        roomServiceImpl.deleteRoom(id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse(0,"Delete room successfully","")
         );
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateRoom(@RequestBody RoomResponse roomResponse, @PathVariable Long id){
-        roomServiceImp.updateRoom(roomResponse,id);
+        roomServiceImpl.updateRoom(roomResponse,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse(0,"Update room sucessfully",roomResponse)
         );

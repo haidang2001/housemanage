@@ -1,17 +1,21 @@
-package com.training0802.demo.service;
+package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.RoomResponse;
+import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.repository.RoomRepository;
+import com.training0802.demo.service.RoomService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RoomServiceImp implements RoomService{
+@Profile("mysql")
+public class RoomServiceImpl implements RoomService {
     @Autowired
     public RoomRepository roomRepository;
     @Autowired
@@ -40,19 +44,19 @@ public class RoomServiceImp implements RoomService{
 
     @Override
     public void updateRoom(RoomResponse roomResponse, Long id) {
-        Room modelRoom = modelMapper.map(roomResponse,Room.class);
+//        Room modelRoom = modelMapper.map(roomResponse,Room.class);
         Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("not found room with this id"));
 
         roomById.setId(id);
-        roomById.setName(modelRoom.getName());
-        roomById.setHouse(modelRoom.getHouse());
-        roomById.setFloor(modelRoom.getFloor());
-        roomById.setArea(modelRoom.getArea());
-        roomById.setImage(modelRoom.getImage());
-        roomById.setStatus(modelRoom.getStatus());
-        roomById.setService(modelRoom.getService());
-        roomById.setRents(modelRoom.getRents());
-        roomById.setDescription(modelRoom.getDescription());
+        roomById.setName(roomResponse.getName());
+        roomById.setHouse(roomById.getHouse());
+        roomById.setFloor(roomResponse.getFloor());
+        roomById.setArea(roomResponse.getArea());
+        roomById.setImage(roomResponse.getImage());
+        roomById.setStatus(roomResponse.getStatus());
+        roomById.setService(roomResponse.getService());
+        roomById.setRents(roomResponse.getRents());
+        roomById.setDescription(roomResponse.getDescription());
 
         roomRepository.save(roomById);
     }

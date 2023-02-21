@@ -28,12 +28,12 @@ public class House {
     private List<Room> roomList;
     public House(){}
 
-    public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, List<Room> roomList) {
+    public House(Long id, String location, String name, String establishDate, String manager, String status, String description, List<Room> roomList) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-        this.totalRooms = totalRooms;
+//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
@@ -65,6 +65,10 @@ public class House {
     }
 
     public int getTotalRooms() {
+//        if (roomList!= null || !roomList.isEmpty()){
+//            return roomList.size();
+//        }
+//        return 0;
         return totalRooms;
     }
 

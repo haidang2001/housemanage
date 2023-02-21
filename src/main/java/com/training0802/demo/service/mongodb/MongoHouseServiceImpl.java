@@ -1,8 +1,9 @@
-package com.training0802.demo.service;
+package com.training0802.demo.service.mongodb;
 
 import com.training0802.demo.dto.HouseResponse;
 import com.training0802.demo.model.mongo.House;
 import com.training0802.demo.repository.MongoHouseRepository;
+import com.training0802.demo.service.HouseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 @Profile("mongodb")
-public class MongoHouseServiceImp implements HouseService{
+public class MongoHouseServiceImpl implements HouseService {
     @Autowired
     private MongoHouseRepository moRepository;
     @Autowired

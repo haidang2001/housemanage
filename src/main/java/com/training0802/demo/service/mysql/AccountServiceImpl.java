@@ -1,12 +1,14 @@
-package com.training0802.demo.service;
+package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.model.Account;
 import com.training0802.demo.repository.AccountRepository;
 //import com.training0802.demo.repository.AccountRepository;
+import com.training0802.demo.service.AccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+@Profile("mysql")
+public class AccountServiceImpl implements AccountService {
     @Autowired
     public AccountRepository accountRepository;
     @Autowired

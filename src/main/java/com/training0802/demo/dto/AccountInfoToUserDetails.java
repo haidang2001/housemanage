@@ -1,4 +1,4 @@
-package com.training0802.demo.config;
+package com.training0802.demo.dto;
 
 import com.training0802.demo.model.Account;
 import org.springframework.security.core.GrantedAuthority;

@@ -57,7 +57,7 @@ public class HouseResponse {
     }
 
     public int getTotalRooms() {
-        return totalRooms;
+       return totalRooms;
     }
 
     public void setTotalRooms(int totalRooms) {
