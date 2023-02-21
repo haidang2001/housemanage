@@ -45,8 +45,17 @@ public class MysqlHouseServiceImp implements HouseService{
         House modelHouse = modelMapper.map(houseResponse,House.class);
         House houseById = mysqlHouseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found house with " +id));
+
         houseById.setId(id);
-        houseById.setAddress(modelHouse.getAddress());
+        houseById.setLocation(modelHouse.getLocation());
+        houseById.setName(modelHouse.getName());
+        houseById.setEstablishDate(modelHouse.getEstablishDate());
+        houseById.setTotalRooms(modelHouse.getTotalRooms());
+        houseById.setManager(modelHouse.getManager());
+        houseById.setStatus(modelHouse.getStatus());
+        houseById.setDescription(modelHouse.getDescription());
+        houseById.setRoomList(modelHouse.getRoomList());
+
         mysqlHouseRepository.save(houseById);
     }
 

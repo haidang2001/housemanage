@@ -28,7 +28,6 @@ public class HouseController {
     }
     @PostMapping
     public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse){
-        houseResponse.getId();
         mysqlHouseServiceImp.addHouse(houseResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse(0,"Add new house sucessfully",houseResponse)

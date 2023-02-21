@@ -1,18 +1,12 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.model.mysql.RentalFee;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name="tblRoom")
-public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class RoomResponse {
     private Long id;
     private String name;
-    @ManyToOne()
-    @JoinColumn(name = "house_id")
-//    @JoinColumn(name = "fkRoomHouse",referencedColumnName = "id")
     private House house;
     private int floor;
     private int area;
@@ -22,10 +16,10 @@ public class Room {
     private int rents;
     private String description;
 
-    public Room() {
+    public RoomResponse() {
     }
 
-    public Room(Long id, String name, House house, int floor, int area, String image, String status, String service, int rents, String description) {
+    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, String service, int rents, String description) {
         this.id = id;
         this.name = name;
         this.house = house;
@@ -54,7 +48,7 @@ public class Room {
     public void setName(String name) {
         this.name = name;
     }
-    @JsonBackReference
+
     public House getHouse() {
         return house;
     }
