@@ -4,6 +4,7 @@ import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.dto.RoomResponse;
 import com.training0802.demo.service.mysql.RoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,21 @@ public class RoomController {
     public List<RoomResponse> getRooms(){
         return roomServiceImpl.getRooms();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<MessageResponse> getRoomDetail(@PathVariable Long id){
+        try {
+            RoomResponse roomResponseFound = roomServiceImpl.getDetailRoom(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Get detail of room with id: "+ id,roomResponseFound)
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
+
+    }
     @PostMapping
     public ResponseEntity<MessageResponse> addRoom(@RequestBody RoomResponse roomResponse){
         roomServiceImpl.addRoom(roomResponse);
@@ -29,16 +45,30 @@ public class RoomController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteRoom(@PathVariable Long id){
-        roomServiceImpl.deleteRoom(id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Delete room successfully","")
-        );
+        try {
+            roomServiceImpl.deleteRoom(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Delete room successfully","")
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,"Not exist room with id: " +id,"")
+            );
+        }
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateRoom(@RequestBody RoomResponse roomResponse, @PathVariable Long id){
-        roomServiceImpl.updateRoom(roomResponse,id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Update room sucessfully",roomResponse)
-        );
+        try {
+            roomServiceImpl.updateRoom(roomResponse,id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Update room sucessfully",roomResponse)
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
     }
 }

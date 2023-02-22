@@ -6,6 +6,7 @@ import com.training0802.demo.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,20 @@ public class HouseController {
     public List<HouseResponse> getHouses(){
         return houseServiceImp.getHouses();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<MessageResponse> getHouseDetail(@PathVariable Long id){
+        try {
+            HouseResponse houseResponseDetail = houseServiceImp.getHouseDetail(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Get detail of house with id: "+ id, houseResponseDetail)
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
+    }
     @PostMapping
     public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse){
         houseServiceImp.addHouse(houseResponse);
@@ -30,17 +45,31 @@ public class HouseController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteHouse(@PathVariable Long id){
-        houseServiceImp.deleteHouse(id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Delete house successfully" + id,"")
-        );
+        try{
+            houseServiceImp.deleteHouse(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Delete house successfully" + id,"")
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,"Not exist house with id: " +id,"")
+            );
+        }
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateHouse(@RequestBody HouseResponse houseResponse,@PathVariable Long id){
-        houseServiceImp.updateHouse(houseResponse,id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-            new MessageResponse(0,"Update house sucessfully",houseResponse)
-        );
+        try{
+            houseServiceImp.updateHouse(houseResponse,id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Update house sucessfully",houseResponse)
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,e.getMessage(),"")
+            );
+        }
     }
 
 }

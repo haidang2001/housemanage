@@ -1,7 +1,7 @@
 package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.AccountInfoToUserDetails;
-import com.training0802.demo.model.Account;
+import com.training0802.demo.model.mysql.Account;
 import com.training0802.demo.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

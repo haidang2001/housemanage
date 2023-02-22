@@ -1,6 +1,6 @@
 package com.training0802.demo.repository;
 
-import com.training0802.demo.model.Account;
+import com.training0802.demo.model.mysql.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

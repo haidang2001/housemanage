@@ -1,6 +1,6 @@
 package com.training0802.demo.dto;
 
-import com.training0802.demo.model.Account;
+import com.training0802.demo.model.mysql.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

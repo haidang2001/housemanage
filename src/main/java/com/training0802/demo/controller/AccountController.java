@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/account")
@@ -51,10 +52,17 @@ public class AccountController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteAccount(@PathVariable Long id){
-        accountService.deleteAccount(id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Delete account successfully with id:" +id,"")
-        );
+        try {
+            accountService.deleteAccount(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0, "Delete account successfully with id:" + id, "")
+            );
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1,"Not found account with this id: "+id,"")
+            );
+        }
     }
 
     @PutMapping("/{id}")
@@ -70,5 +78,13 @@ public class AccountController {
                     new MessageResponse(1,e.getMessage(),"")
             );
         }
+    }
+    @PutMapping("changeone/{id}")
+    public ResponseEntity<MessageResponse> changeOneInAccount(@RequestBody String name,@PathVariable Long id){
+        accountService.updateOneChange(name,id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new MessageResponse(0,"Update name of account with id: "+ id, name)
+        );
     }
 }

@@ -1,15 +1,13 @@
 package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.AccountResponse;
-import com.training0802.demo.model.Account;
+import com.training0802.demo.model.mysql.Account;
 import com.training0802.demo.repository.AccountRepository;
 //import com.training0802.demo.repository.AccountRepository;
 import com.training0802.demo.service.AccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 //        return accountList.stream().filter(e-> e.getName().equals(name)).findFirst().get();
 
         //convert raw data to dto
-        Account modelAccount = accountRepository.findById(id).orElseThrow(() ->new RuntimeException("Not found account with this id"));
+        Account modelAccount = accountRepository.findById(id).orElseThrow(() ->new RuntimeException("Not found account with this id: "+id));
         AccountResponse dtoAccount = modelMapper.map(modelAccount,AccountResponse.class);
 
         return dtoAccount;
@@ -71,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
         Account modelAccount = modelMapper.map(account,Account.class);
 //        accountRepository.updateAccount(modelAccount,name);
 
-        Account accountByName = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id"));
+        Account accountByName = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id:" + id));
         accountByName.setId(id);
         accountByName.setName(modelAccount.getName());
         accountByName.setGender(modelAccount.getGender());
@@ -81,5 +79,11 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(accountByName);
     }
 
+    public void updateOneChange(String name, Long id){
+        Account accountById = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id:" + id));
+        accountById.setName(name);
+        accountRepository.save(accountById);
+
+    }
 
 }

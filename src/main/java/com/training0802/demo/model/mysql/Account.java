@@ -1,4 +1,4 @@
-package com.training0802.demo.model;
+package com.training0802.demo.model.mysql;
 
 import jakarta.persistence.*;
 

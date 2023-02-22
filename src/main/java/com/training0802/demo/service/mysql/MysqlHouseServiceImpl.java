@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,14 @@ public class MysqlHouseServiceImpl implements HouseService {
     }
 
     @Override
+    public HouseResponse getHouseDetail(Long id) {
+        House modelHouse = mysqlHouseRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found this house with id: " + id));
+        HouseResponse dtoHouse = modelMapper.map(modelHouse,HouseResponse.class);
+        return dtoHouse;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addHouse(HouseResponse houseResponse){
         House modelHouse = modelMapper.map(houseResponse, House.class);
         mysqlHouseRepository.save(modelHouse);
@@ -44,10 +53,11 @@ public class MysqlHouseServiceImpl implements HouseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateHouse(HouseResponse houseResponse, Long id) {
 //        House modelHouse = modelMapper.map(houseResponse,House.class);
         House houseById = mysqlHouseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found house with " +id));
+                .orElseThrow(() -> new RuntimeException("not found house with id: " +id));
 
         houseById.setId(id);
         houseById.setLocation(houseResponse.getLocation());

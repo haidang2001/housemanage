@@ -35,8 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/account/add").permitAll()
                         .anyRequest().permitAll()
 //                        .requestMatchers("/api/account").hasAuthority("admin")
-//                        .requestMatchers("/api/house/*").authenticated() // admin hay user thì định nghĩa trong controller
-//                        .requestMatchers("/api/account/{id}").hasAuthority("user")
+//                          .requestMatchers("/api/account/{id}").hasAuthority("user")
+//                                .requestMatchers("/api/account/*").authenticated() // admin hay user thì định nghĩa trong controller
                 )
                 .httpBasic(Customizer.withDefaults());
 

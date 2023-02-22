@@ -30,6 +30,11 @@ public class MongoHouseServiceImpl implements HouseService {
     }
 
     @Override
+    public HouseResponse getHouseDetail(Long id) {
+        return null;
+    }
+
+    @Override
     public void addHouse(HouseResponse houseResponse) {
 
     }
