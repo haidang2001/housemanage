@@ -21,14 +21,17 @@ public class Account {
 
     }
 
-    public Account(String name, String gender, String role, String phone, String email) {
+
+    public Account( String name, String gender, String role, String phone, String email, String username, String password) {
+
         this.name = name;
         this.gender = gender;
         this.role = role;
         this.phone = phone;
         this.email = email;
+        this.username = username;
+        this.password = password;
     }
-
     public Account(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
         this.id = id;
         this.name = name;

@@ -31,6 +31,17 @@ public class HouseResponse {
         this.description = description;
         this.roomList = roomList;
     }
+    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.establishDate = establishDate;
+
+        this.manager = manager;
+        this.status = status;
+        this.description = description;
+        this.roomList = null;
+    }
 
     public String getLocation() {
         return location;

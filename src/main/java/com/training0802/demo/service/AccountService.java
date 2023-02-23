@@ -9,7 +9,7 @@ import java.util.List;
 public interface AccountService  {
     List<AccountResponse> getAccounts();
     AccountResponse getOneAccount(Long id);
-    void addAccount(AccountResponse account);
+    AccountResponse addAccount(AccountResponse account);
     void deleteAccount(Long id);
-    void updateAccount(AccountResponse account, Long id);
+    AccountResponse updateAccount(AccountResponse account, Long id);
 }

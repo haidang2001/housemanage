@@ -14,24 +14,18 @@ public class AccountResponse {
 
     }
 
-    public AccountResponse(String name, String gender, String role, String phone, String email) {
+    public AccountResponse(String name, String gender, String role, String phone, String email, String username, String password) {
+
         this.name = name;
         this.gender = gender;
         this.role = role;
         this.phone = phone;
         this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
-    public AccountResponse(Long id, String name, String gender, String role, String phone, String email) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-        this.role = role;
-        this.phone = phone;
-        this.email = email;
-    }
-
-    public AccountResponse(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
+    public AccountResponse(Long id ,String name, String gender, String role, String phone, String email, String username, String password) {
         this.id = id;
         this.name = name;
         this.gender = gender;

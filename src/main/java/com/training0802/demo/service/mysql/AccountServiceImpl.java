@@ -49,12 +49,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addAccount(AccountResponse account){
+    public AccountResponse addAccount(AccountResponse account){
         //convert dto to model
         // repo.add(Account)
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         Account modelAccount = modelMapper.map(account,Account.class);
         accountRepository.save(modelAccount);
+        return account;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateAccount(AccountResponse account,Long id) {
+    public AccountResponse updateAccount(AccountResponse account,Long id) {
         //convert dto to model
         //repo.update(Account)
         Account modelAccount = modelMapper.map(account,Account.class);
@@ -77,6 +78,7 @@ public class AccountServiceImpl implements AccountService {
         accountByName.setPhone(modelAccount.getPhone());
         accountByName.setEmail(modelAccount.getEmail());
         accountRepository.save(accountByName);
+        return account;
     }
 
     public void updateOneChange(String name, Long id){

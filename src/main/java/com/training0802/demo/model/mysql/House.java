@@ -39,6 +39,17 @@ public class House {
         this.description = description;
         this.roomList = roomList;
     }
+    public House(Long id, String location, String name, String establishDate, String manager, String status, String description) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.establishDate = establishDate;
+//        this.totalRooms = totalRooms;
+        this.manager = manager;
+        this.status = status;
+        this.description = description;
+        this.roomList = null;
+    }
 
     public String getLocation() {
         return location;

@@ -4,6 +4,7 @@ import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.service.mysql.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class AccountController {
     @Autowired
     private AccountServiceImpl accountService;
 
-    @GetMapping
+    @GetMapping()
     @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
