@@ -18,6 +18,17 @@ public class RoomResponse {
 
     public RoomResponse() {
     }
+    public RoomResponse(Long id, String name, int floor, int area, String image, String status, String service, int rents, String description) {
+        this.id = id;
+        this.name = name;
+        this.floor = floor;
+        this.area = area;
+        this.image = image;
+        this.status = status;
+        this.service = service;
+        this.rents = rents;
+        this.description = description;
+    }
 
     public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, String service, int rents, String description) {
         this.id = id;
