@@ -20,12 +20,11 @@ public class HouseResponse {
    private List<Room> roomList;
     public HouseResponse(){}
 
-    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, List<Room> roomList) {
+    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description, List<Room> roomList) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
@@ -42,6 +41,8 @@ public class HouseResponse {
         this.description = description;
         this.roomList = null;
     }
+
+
 
     public String getLocation() {
         return location;

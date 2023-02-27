@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
+@WebMvcTest(AccountController.class)
+@AutoConfigureMockMvc(addFilters=false)
 public class AccountControllerTest {
     private MockMvc mockMvc;
     @InjectMocks
@@ -51,7 +55,6 @@ public class AccountControllerTest {
 //				.andExpect(MockMvcResultMatchers.status().isOk())
 //				.andExpect(MockMvcResultMatchers.jsonPath("$.account").exists())
 //				.andExpect(MockMvcResultMatchers.jsonPath("$.account[*].accountId").isNotEmpty());
-
     }
 
 }

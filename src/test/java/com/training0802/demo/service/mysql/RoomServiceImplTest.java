@@ -63,7 +63,7 @@ public class RoomServiceImplTest {
     }
 
     @Test
-    public void addHouseTest(){
+    public void test_addHouse_givenRoom_thenReturnIdGreaterThan0(){
         //create mock
 
         House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
@@ -78,7 +78,7 @@ public class RoomServiceImplTest {
         //ensure repo is call (optional)
     }
     @Test
-    public void deleteHouseTest(){
+    public void test_deleteHouse_givenRoomId_thenReturnDeleteOnce(){
         //create mock
         House houseMock = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
         //call service
