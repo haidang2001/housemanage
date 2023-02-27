@@ -4,9 +4,7 @@ import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.service.mysql.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,10 +41,12 @@ public class AccountController {
 
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse){
         accountService.addAccount(accountResponse);
-        return ResponseEntity.status(HttpStatus.OK).body(
+        HttpHeaders headersne = new HttpHeaders();
+        headersne.add("Content-Type", "application/json; charset=utf-8");
+        return ResponseEntity.status(HttpStatus.OK).headers(headersne).body(
                 new MessageResponse(0,"Add successful account",accountResponse)
         );
     }

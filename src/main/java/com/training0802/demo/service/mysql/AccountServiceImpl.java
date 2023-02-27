@@ -53,7 +53,14 @@ public class AccountServiceImpl implements AccountService {
         //convert dto to model
         // repo.add(Account)
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        Account modelAccount = modelMapper.map(account,Account.class);
+//        Account modelAccount = modelMapper.map(account,Account.class);
+        Account modelAccount = new Account();
+        modelAccount.setId(account.getId());
+        modelAccount.setName(account.getName());
+        modelAccount.setGender(account.getGender());
+        modelAccount.setRole(account.getRole());
+        modelAccount.setPhone(account.getPhone());
+        modelAccount.setEmail(account.getEmail());
         accountRepository.save(modelAccount);
         return account;
     }
@@ -67,8 +74,16 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse updateAccount(AccountResponse account,Long id) {
         //convert dto to model
         //repo.update(Account)
-        Account modelAccount = modelMapper.map(account,Account.class);
+//        Account modelAccount = modelMapper.map(account,Account.class);
 //        accountRepository.updateAccount(modelAccount,name);
+
+        Account modelAccount = new Account();
+        modelAccount.setId(account.getId());
+        modelAccount.setName(account.getName());
+        modelAccount.setGender(account.getGender());
+        modelAccount.setRole(account.getRole());
+        modelAccount.setPhone(account.getPhone());
+        modelAccount.setEmail(account.getEmail());
 
         Account accountByName = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id:" + id));
         accountByName.setId(id);
