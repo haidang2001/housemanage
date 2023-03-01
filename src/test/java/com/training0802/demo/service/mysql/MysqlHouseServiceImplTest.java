@@ -41,8 +41,8 @@ public class MysqlHouseServiceImplTest {
                 new Room(2L,"Room102",house,3,20,"picture2","occupied","cleaning",10000,"room of house")
         );
         List<House> listHouse = Arrays.asList(
-                new House(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC",listRoom),
-                new House(2L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC",listRoom)
+                new House(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC","C:/image1",listRoom),
+                new House(2L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC","C:/image2",listRoom)
         );
 
         when(mysqlHouseRepository.findAll())

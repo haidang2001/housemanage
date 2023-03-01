@@ -42,9 +42,10 @@ public class MysqlHouseServiceImpl implements HouseService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addHouse(HouseResponse houseResponse){
+    public HouseResponse addHouse(HouseResponse houseResponse){
         House modelHouse = modelMapper.map(houseResponse, House.class);
         mysqlHouseRepository.save(modelHouse);
+        return houseResponse;
     }
 
     @Override
@@ -54,10 +55,10 @@ public class MysqlHouseServiceImpl implements HouseService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateHouse(HouseResponse houseResponse, Long id) {
+    public HouseResponse updateHouse(HouseResponse houseResponse, Long id) {
 //        House modelHouse = modelMapper.map(houseResponse,House.class);
         House houseById = mysqlHouseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found house with id: " +id));
+                .orElseThrow(() -> new RuntimeException("Not found house with id: " +id));
 
         houseById.setId(id);
         houseById.setLocation(houseResponse.getLocation());
@@ -70,6 +71,7 @@ public class MysqlHouseServiceImpl implements HouseService {
         houseById.setRoomList(houseResponse.getRoomList());
 
         mysqlHouseRepository.save(houseById);
+        return houseResponse;
     }
 
 }

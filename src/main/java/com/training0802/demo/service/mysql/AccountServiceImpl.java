@@ -61,12 +61,14 @@ public class AccountServiceImpl implements AccountService {
         modelAccount.setRole(account.getRole());
         modelAccount.setPhone(account.getPhone());
         modelAccount.setEmail(account.getEmail());
-        accountRepository.save(modelAccount);
+        Account save = accountRepository.save(modelAccount);
+        account.setId(save.getId());
         return account;
     }
 
     @Override
     public void deleteAccount(Long id) {
+
         accountRepository.deleteById(id);
     }
 

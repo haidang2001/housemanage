@@ -35,8 +35,9 @@ public class MongoHouseServiceImpl implements HouseService {
     }
 
     @Override
-    public void addHouse(HouseResponse houseResponse) {
+    public HouseResponse addHouse(HouseResponse houseResponse) {
 
+        return houseResponse;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class MongoHouseServiceImpl implements HouseService {
     }
 
     @Override
-    public void updateHouse(HouseResponse houseResponse, Long id) {
-
+    public HouseResponse updateHouse(HouseResponse houseResponse, Long id) {
+        return houseResponse;
     }
 }

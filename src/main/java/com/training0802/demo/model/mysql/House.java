@@ -21,14 +21,12 @@ public class House {
     private  String description;
     private String image;
 
-
-
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
 //    @JoinColumn(name = "fkHouseRoom",referencedColumnName = "id")
     private List<Room> roomList;
     public House(){}
 
-    public House(Long id, String location, String name, String establishDate, String manager, String status, String description, List<Room> roomList) {
+    public House(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
         this.id = id;
         this.location = location;
         this.name = name;
@@ -37,6 +35,7 @@ public class House {
         this.manager = manager;
         this.status = status;
         this.description = description;
+        this.image=image;
         this.roomList = roomList;
     }
     public House(Long id, String location, String name, String establishDate, String manager, String status, String description) {

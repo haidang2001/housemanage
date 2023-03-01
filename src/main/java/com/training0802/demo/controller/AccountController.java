@@ -19,13 +19,13 @@ public class AccountController {
     private AccountServiceImpl accountService;
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('user')")
+//    @PreAuthorize("hasAuthority('user')")
     public  ResponseEntity<MessageResponse> getAccount(@PathVariable Long id){
         try {
             AccountResponse accountFound = accountService.getOneAccount(id);
@@ -41,13 +41,11 @@ public class AccountController {
 
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping()
     public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse){
-        accountService.addAccount(accountResponse);
-        HttpHeaders headersne = new HttpHeaders();
-        headersne.add("Content-Type", "application/json; charset=utf-8");
-        return ResponseEntity.status(HttpStatus.OK).headers(headersne).body(
-                new MessageResponse(0,"Add successful account",accountResponse)
+        AccountResponse accountResponse1 = accountService.addAccount(accountResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new MessageResponse(0,"Add successful account",accountResponse1)
         );
     }
 
@@ -56,7 +54,7 @@ public class AccountController {
         try {
             accountService.deleteAccount(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Delete account successfully with id:" + id, "")
+                    new MessageResponse(0, "Delete account successfully with id:" + id, id)
             );
         }
         catch (RuntimeException e){

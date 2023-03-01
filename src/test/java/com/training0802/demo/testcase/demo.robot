@@ -4,7 +4,7 @@ Library     JSONLibrary
 Library     Collections
 
 *** Variables ***
-${API_Base_Endpoint}        localhost:8080/
+${API_Base_Endpoint}        http://localhost:8080/
 
 *** Test Cases ***
 TC01_GetID

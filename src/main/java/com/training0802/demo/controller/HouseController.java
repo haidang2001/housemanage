@@ -40,7 +40,7 @@ public class HouseController {
     public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse){
         houseServiceImp.addHouse(houseResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Add new house sucessfully",houseResponse)
+                    new MessageResponse(0,"Add new house successfully",houseResponse)
         );
     }
     @DeleteMapping("/{id}")

@@ -1,7 +1,10 @@
 package com.training0802.demo.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.HouseResponse;
+import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.dto.RoomResponse;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
@@ -27,6 +30,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,12 +47,17 @@ public class HouseControllerTest {
     private HouseController houseController;
     @Mock
     private MysqlHouseServiceImpl mysqlHouseService;
+    private Gson gson;
     @Before
     public void setUp() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(houseController).build();
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        gson = builder.create();
     }
     @Test
-    public void test_getListHouse() throws Exception {
+    public void test_getListHouse_givenListHouse_thenReturnListHouse() throws Exception {
         House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
         List<Room> listRoom = Arrays.asList(
                 new Room(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house"),
@@ -58,8 +69,7 @@ public class HouseControllerTest {
         );
         List<HouseResponse> listHouseMock = listHouse;
         Mockito.when(mysqlHouseService.getHouses()).thenReturn(listHouseMock);
-//        List<HouseResponse> actualHouseList = houseController.getHouses();
-//        Assertions.assertThat(actualHouseList).isEqualTo(listHouseMock);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/api/house"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().contentType("application/json"))
@@ -67,42 +77,82 @@ public class HouseControllerTest {
 
     }
     @Test
-    public void test_getDetailHouse() throws Exception {
+    public void test_getDetailHouse_givenIdHouse_thenReturnHouseFound() throws Exception {
         Long id = 1L;
+        HouseResponse houseResponse = new HouseResponse(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC");
+        MessageResponse expectedMessage = new MessageResponse(0,"Get detail of house with id: "+id,houseResponse);
+        String jsonExpected = gson.toJson(expectedMessage);
+        Mockito.when(mysqlHouseService.getHouseDetail(id)).thenReturn(houseResponse);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/house/"+id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(content().string("{\"status\":0,\"message\":\"Get detail of house with id: 1\",\"data\":null}"));
+                .andExpect(content().json(jsonExpected));
+    }
+    @Test
+    public void test_getDetailHouse_givenIdHouse_thenReturnHouseNotFound() throws  Exception{
+        Long id = 1L;
+
+        MessageResponse expectedMessage = new MessageResponse(1,"Not found this house with id: " + id,"");
+        String jsonExpected = gson.toJson(expectedMessage);
+        Mockito.doThrow(new RuntimeException("Not found this house with id: " + id)).when(mysqlHouseService).getHouseDetail(id);
+        mockMvc.perform(get("/api/house/"+id))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(jsonExpected));
     }
 
     @Test
-    public void test_addHouse() throws Exception {
+    public void test_addHouse_givenNewHouse_thenReturnHouseAdded() throws Exception {
         HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
-        mysqlHouseService.addHouse(houseResponse);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/house").accept("application/json"))
+        String jsonContent = gson.toJson(houseResponse);
+
+        MessageResponse expectedMessage = new MessageResponse(0,"Add new house successfully",houseResponse);
+        String jsonExpected = gson.toJson(expectedMessage);
+
+        Mockito.when(mysqlHouseService.addHouse(houseResponse)).thenReturn(houseResponse);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/house").contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept("application/json"))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(""))
+                .andExpect(content().json(jsonExpected))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
-    public void test_deleteHouse() throws Exception {
+    public void test_deleteHouse_givenIdHouse_thenReturnHouseNotFound() throws Exception {
         Long id = 1L;
-        Mockito.doThrow(new RuntimeException("not found")).when(mysqlHouseService).deleteHouse(1L);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/house/"+id)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        MessageResponse messageExpected = new MessageResponse(1,"Not exist house with id: 1","");
+        String jsonExpected = gson.toJson(messageExpected);
+        Mockito.doThrow(new RuntimeException()).when(mysqlHouseService).deleteHouse(1L);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/house/"+id))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(jsonExpected));
     }
     @Test
-    public void test_updateHouse() throws Exception {
+    public void test_updateHouse_givenIdHouse_thenReturnHouseNotFound() throws Exception {
         Long id = 1L;
         HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
-//        Mockito.when(mysqlHouseService.updateHouse(houseResponse,id)).thenReturn(houseResponse);
-        mockMvc.perform(put("/api/account/"+id))
+        String jsonContent = gson.toJson(houseResponse);
+
+        MessageResponse messageExpected = new MessageResponse(1,"Not found house with id: " +id,"");
+        String jsonExpected = gson.toJson(messageExpected);
+
+        Mockito.when(mysqlHouseService.updateHouse(any(HouseResponse.class),eq(id))).thenThrow(new RuntimeException("Not found house with id: " +id));
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/house/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(jsonExpected));
+    }
+    @Test
+    public void test_updateHouse_givenIdHouse_thenReturnHouseUpdated() throws Exception {
+        Long id = 1L;
+        HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
+        String jsonContent = gson.toJson(houseResponse);
+
+        MessageResponse messageExpected = new MessageResponse(0,"Update house sucessfully",houseResponse);
+        String jsonExpected = gson.toJson(messageExpected);
+
+        Mockito.when(mysqlHouseService.updateHouse(any(HouseResponse.class),eq(id))).thenReturn(houseResponse);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/house/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(""));
+                .andExpect(content().json(jsonExpected));
     }
-
 }

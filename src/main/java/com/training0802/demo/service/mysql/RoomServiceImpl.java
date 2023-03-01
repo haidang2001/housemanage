@@ -37,7 +37,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomResponse getDetailRoom(Long id) {
-        Room modelRoomFindById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id: "+id ));
+        Room modelRoomFindById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id: "+ id));
         RoomResponse dtoRoom = modelMapper.map(modelRoomFindById,RoomResponse.class);
         return dtoRoom;
     }
@@ -52,6 +52,7 @@ public class RoomServiceImpl implements RoomService {
         mysqlHouseRepository.findById(idHouse).get().setTotalRooms(totalRoom + 1);
 
         roomRepository.save(modelRoom);
+
     }
 
     @Override
@@ -61,9 +62,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateRoom(RoomResponse roomResponse, Long id) {
+    public RoomResponse updateRoom(RoomResponse roomResponse, Long id) {
 //        Room modelRoom = modelMapper.map(roomResponse,Room.class);
-        Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("not found room with this id"));
+        Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id"));
 
         roomById.setId(id);
         roomById.setName(roomResponse.getName());
@@ -77,6 +78,7 @@ public class RoomServiceImpl implements RoomService {
         roomById.setDescription(roomResponse.getDescription());
 
         roomRepository.save(roomById);
+        return roomResponse;
     }
 
 }

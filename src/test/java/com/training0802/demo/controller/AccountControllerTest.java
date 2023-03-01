@@ -1,11 +1,12 @@
 package com.training0802.demo.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.training0802.demo.dto.AccountResponse;
+import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.service.mysql.AccountServiceImpl;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -25,8 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,21 +42,23 @@ public class AccountControllerTest {
     private AccountController accountController;
     @Mock
     private AccountServiceImpl accountService;
+    private Gson gson;
     @Before
     public void setUp() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        gson = builder.create();
     }
+
     @Test
-    public void test_getListAccount() throws Exception {
+    public void test_getListAccount_givenListAccount_thenReturnListAccount() throws Exception {
         AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
-//        AccountResponse accountResponse2 = new AccountResponse("Dang2","female","admin","01234","dangg@mail.com","danggdangg","1234567");
-//        List<AccountResponse> listAccMock = Arrays.asList(accountResponse1,accountResponse2);
         List<AccountResponse> listAccMock = Arrays.asList(accountResponse1);
 
         //test mockito
         Mockito.when(accountService.getAccounts()).thenReturn(listAccMock);
-//        List<AccountResponse> actualAccountList = accountController.getListAccount();
-//        Assertions.assertThat(actualAccountList).isEqualTo(listAccMock);
 
         //test mockMvc
         mockMvc.perform(MockMvcRequestBuilders.get("/api/account"))
@@ -63,8 +66,9 @@ public class AccountControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().string("[{\"id\":1,\"name\":\"Dang\",\"gender\":\"male\",\"role\":\"admin\",\"phone\":\"0123\",\"email\":\"dang@mail.com\",\"username\":\"dangdang\",\"password\":\"123456\"}]"));
     }
+
     @Test
-    public void test_getListAccount_empty() throws Exception {
+    public void test_getListAccount_giventEmptyList_thenReturnEmptyList() throws Exception {
         List<AccountResponse> listAccMock = new ArrayList<>();;
         Mockito.when(accountService.getAccounts()).thenReturn(listAccMock);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/account"))
@@ -72,8 +76,9 @@ public class AccountControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json("[]"));
     }
+
     @Test
-    public void test_getAccount() throws Exception {
+    public void test_getAccount_givenIdAccount_thenReturnAccountFound() throws Exception {
         Long id = 1L;
         AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
         Mockito.when(accountService.getOneAccount(id)).thenReturn(accountResponse1);
@@ -81,15 +86,10 @@ public class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().string("{\"status\":0,\"message\":\"Account found with id: 1\",\"data\":{\"id\":1,\"name\":\"Dang\",\"gender\":\"male\",\"role\":\"admin\",\"phone\":\"0123\",\"email\":\"dang@mail.com\",\"username\":\"dangdang\",\"password\":\"123456\"}}"));
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L));
-
-        //		mockMvc.perform(MockMvcRequestBuilders.get("/api/account").accept(MediaType.APPLICATION_JSON))
-//				.andExpect(MockMvcResultMatchers.status().isOk())
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.account").exists())
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.account[*].accountId").isNotEmpty());
     }
+
     @Test
-    public void test_getAccount_notFound() throws Exception {
+    public void test_getAccount_giventIdAccount_thenReturnAccountNotFound() throws Exception {
         Long id = 1L;
         Mockito.when(accountService.getOneAccount(id)).thenThrow(new RuntimeException("Not found account with this id: "+id)).toString();
         MvcResult mvcResult= mockMvc.perform(MockMvcRequestBuilders.get("/api/account/"+id))
@@ -98,39 +98,72 @@ public class AccountControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().string("{\"status\":1,\"message\":\"Not found account with this id: 1\",\"data\":\"\"}"))
                 .andReturn();
-//        String actualJson = mvcResult.getResponse().getContentAsString();
-//        Assert.assertEquals(Mockito.when(accountService.getOneAccount(id)).thenThrow(new RuntimeException("Not found account with this id: "+id)).toString(),actualJson);
-    }
+        }
     @Test
-    public void test_addAccount() throws Exception {
-//        AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
-//        Mockito.when(accountService.addAccount(accountResponse1)).thenReturn(accountResponse1);
+    public void test_addAccount_givenNewAccount_thenReturnAccountAdded() throws Exception {
+        AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
+        Mockito.when(accountService.addAccount(accountResponse1)).thenReturn(accountResponse1);
         String json = "{\"name\":\"user\",\"gender\":\"female\",\"role\":\"ROLE_USER\",\"phone\":\"0395677415\",\"email\":\"user@gmail.com\",\"username\":\"user\",\"password\":\"123456\"}";
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/account").accept("application/json"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType("application/json").content(json).accept("application/json"))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(json))
+                .andExpect(content().string("{\"status\":0,\"message\":\"Add successful account\",\"data\":{\"id\":null,\"name\":\"user\",\"gender\":\"female\",\"role\":\"ROLE_USER\",\"phone\":\"0395677415\",\"email\":\"user@gmail.com\",\"username\":\"user\",\"password\":\"123456\"}}"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
     @Test
-    public void test_deleteAccount() throws Exception {
-        Long id = 2L;
-        Mockito.doThrow(new RuntimeException("not found")).when(accountService).deleteAccount(1L);
-//        accountService.deleteAccount(id);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/account/"+id)
-                        .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+    public void test_deleteAccount_givenIdAccount_thenReturnAccountDeleted() throws Exception {
+        Long id = 1L;
+        Mockito.doNothing().when(accountService).deleteAccount(id);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/account/"+id))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"status\":0,\"message\":\"Delete account successfully with id:1\",\"data\":1}"));
     }
     @Test
-    public void test_updateAccount() throws Exception {
+    public void test_deleteAccount_givenIdAccount_thenReturnAccountNotFound() throws Exception{
+        Long id = 1L;
+        Mockito.doThrow(new RuntimeException()).when(accountService).deleteAccount(id);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/account/"+id))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{\"status\":1,\"message\":\"Not found account with this id: 1\",\"data\":\"\"}"));
+    }
+    @Test
+    public void test_updateAccount_givenIdAccountToUpdate_thenReturnNotFound() throws Exception {
         Long id = 1L;
         AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
+
+        String json = gson.toJson(accountResponse1);
+
+        MessageResponse messageExpected = new MessageResponse();
+        messageExpected.setStatus(1);
+        messageExpected.setMessage("Not found account with this id: " + id);
+        messageExpected.setData("");
+        String expectedContent = gson.toJson(messageExpected);
+        //any(kèm eq) không quan tâm địa chỉ vùng nhớ của object
+        Mockito.when(accountService.updateAccount(any(AccountResponse.class), eq(id))).thenThrow(new RuntimeException("Not found account with this id: "+ id));
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/account/"+id).contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expectedContent));
+    }
+    @Test
+    public void test_updateAccount_givenAccountUpdate_thenReturnAccountUpdate() throws Exception {
+        Long id = 1L;
+        AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
+
+        String jsonContent = gson.toJson(accountResponse1);
+
+        MessageResponse messageResponse = new MessageResponse();
+        messageResponse.setStatus(0);
+        messageResponse.setMessage("Update account successfully with id: "+id);
+        messageResponse.setData(accountResponse1);
+        String expectedContent = gson.toJson(messageResponse);
+
         Mockito.when(accountService.updateAccount(accountResponse1,id)).thenReturn(accountResponse1);
-        mockMvc.perform(put("/api/account/"+id))
+        mockMvc.perform(put("/api/account/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(""));
+                .andExpect(content().json(expectedContent));
     }
 
 }
