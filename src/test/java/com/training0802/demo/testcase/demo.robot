@@ -43,3 +43,33 @@ TC04_Delete
     ${status_list}=     get value from json     ${jsonres}      status
     ${status}=      get from list       ${status_list}      0
     should be equal     ${status}       true
+
+TC01_GetIDHouse
+    create session      API_GetID_Testing     ${API_Base_Endpoint}
+    ${Get_Response}=    Get On Session  API_GetID_Testing             api/house/1
+    log to console      ${Get_Response.status_code}
+    log to console      ${Get_Response.content}
+    ${statusCode}=      convert to string                       ${Get_Response.status_code}
+    should be equal     ${statusCode}                           200
+
+TC02_GetHouses
+    create session      API_Get_Testing     ${API_Base_Endpoint}
+    ${Get_Response}=    Get On Session  API_Get_Testing             api/house
+    log to console      ${Get_Response.status_code}
+    log to console      ${Get_Response.content}
+    should be equal     ${statusCode}                           200
+
+TC01_GetIDRoom
+    create session      API_GetID_Testing     ${API_Base_Endpoint}
+    ${Get_Response}=    Get On Session  API_GetID_Testing             api/room/1
+    log to console      ${Get_Response.status_code}
+    log to console      ${Get_Response.content}
+    ${statusCode}=      convert to string                       ${Get_Response.status_code}
+    should be equal     ${statusCode}                           200
+
+TC02_GetRooms
+    create session      API_Get_Testing     ${API_Base_Endpoint}
+    ${Get_Response}=    Get On Session  API_Get_Testing             api/room
+    log to console      ${Get_Response.status_code}
+    log to console      ${Get_Response.content}
+    should be equal     ${statusCode}                           200
