@@ -61,7 +61,7 @@ public class AccountControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/account"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string("[{\"id\":null,\"name\":\"Dang\",\"gender\":\"male\",\"role\":\"admin\",\"phone\":\"0123\",\"email\":\"dang@mail.com\",\"username\":\"dangdang\",\"password\":\"123456\"}]"));
+                .andExpect(content().string("[{\"id\":1,\"name\":\"Dang\",\"gender\":\"male\",\"role\":\"admin\",\"phone\":\"0123\",\"email\":\"dang@mail.com\",\"username\":\"dangdang\",\"password\":\"123456\"}]"));
     }
     @Test
     public void test_getListAccount_empty() throws Exception {
