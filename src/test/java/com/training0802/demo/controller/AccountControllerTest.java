@@ -102,9 +102,9 @@ public class AccountControllerTest {
     @Test
     public void test_addAccount_givenNewAccount_thenReturnAccountAdded() throws Exception {
         AccountResponse accountResponse1 = new AccountResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang","123456");
-        Mockito.when(accountService.addAccount(accountResponse1)).thenReturn(accountResponse1);
+        Mockito.when(accountService.addAccount(any())).thenReturn(accountResponse1);
         String json = "{\"name\":\"user\",\"gender\":\"female\",\"role\":\"ROLE_USER\",\"phone\":\"0395677415\",\"email\":\"user@gmail.com\",\"username\":\"user\",\"password\":\"123456\"}";
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType("application/json").content(json).accept("application/json"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/account/add").contentType("application/json").content(json).accept("application/json"))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"status\":0,\"message\":\"Add successful account\",\"data\":{\"id\":null,\"name\":\"user\",\"gender\":\"female\",\"role\":\"ROLE_USER\",\"phone\":\"0395677415\",\"email\":\"user@gmail.com\",\"username\":\"user\",\"password\":\"123456\"}}"))
@@ -159,7 +159,7 @@ public class AccountControllerTest {
         messageResponse.setData(accountResponse1);
         String expectedContent = gson.toJson(messageResponse);
 
-        Mockito.when(accountService.updateAccount(accountResponse1,id)).thenReturn(accountResponse1);
+//        Mockito.when(accountService.updateAccount(accountResponse1,id)).thenReturn(accountResponse1);
         mockMvc.perform(put("/api/account/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

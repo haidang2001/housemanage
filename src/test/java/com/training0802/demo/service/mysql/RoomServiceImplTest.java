@@ -1,10 +1,9 @@
 package com.training0802.demo.service.mysql;
 
-import com.training0802.demo.dto.HouseResponse;
 import com.training0802.demo.dto.RoomResponse;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
-import com.training0802.demo.repository.MysqlHouseRepository;
+import com.training0802.demo.model.mysql.RoomSer;
 import com.training0802.demo.repository.RoomRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -37,9 +36,13 @@ public class RoomServiceImplTest {
     @Test
     public void test_getRooms_givenRooms_thenReturnSize(){
         House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        List<RoomSer> listRoomSer = Arrays.asList(
+                new RoomSer(),
+                new RoomSer()
+        );
         List<Room> listRoom = Arrays.asList(
-                new Room(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house"),
-                new Room(2L,"Room102",house,3,20,"picture2","occupied","cleaning",10000,"room of house")
+                new Room(1L,"Room101",house,4,20,"picture","occupied",listRoomSer,10000,"room of house"),
+                new Room(2L,"Room102",house,3,20,"picture2","occupied",listRoomSer,10000,"room of house")
         );
         when(roomRepository.findAll()).thenReturn(listRoom);
         assertEquals(2,roomService.getRooms().size());
@@ -49,9 +52,12 @@ public class RoomServiceImplTest {
     @Test
     public void test_getDetailRoom_givenRoomId_thenReturnRoomName(){
         Long id = 1L;
-
+        List<RoomSer> listRoomSer = Arrays.asList(
+                new RoomSer(),
+                new RoomSer()
+        );
         //create mock
-        Room roomByMock = new Room(1L,"Room101",4,20,"picture","occupied","cleaning",10000,"room of house");
+        Room roomByMock = new Room(1L,"Room101",4,20,"picture","occupied",listRoomSer,10000,"room of house");
         //define behavior repo
         doReturn(Optional.of(roomByMock)).when(roomRepository).findById(id);
         //call service
@@ -65,9 +71,13 @@ public class RoomServiceImplTest {
     @Test
     public void test_addHouse_givenRoom_thenReturnIdGreaterThan0(){
         //create mock
-
+        List<RoomSer> listRoomSer = Arrays.asList(
+                new RoomSer(),
+                new RoomSer()
+        );
         House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        Room roomByMock = new Room(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        RoomSer roomSer = new RoomSer();
+        Room roomByMock = new Room(1L,"Room101",house,4,20,"picture","occupied",listRoomSer,10000,"room of house");
         //define behavior repo
         when(roomRepository.save(roomByMock)).thenReturn(roomByMock);
         //call service

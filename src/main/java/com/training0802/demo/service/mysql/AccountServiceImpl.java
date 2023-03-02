@@ -49,21 +49,31 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponse addAccount(AccountResponse account){
+    public AccountResponse addAccount(AccountResponse accountResponse){
         //convert dto to model
-        // repo.add(Account)
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountResponse.setPassword(passwordEncoder.encode(accountResponse.getPassword()));
 //        Account modelAccount = modelMapper.map(account,Account.class);
+
         Account modelAccount = new Account();
-        modelAccount.setId(account.getId());
-        modelAccount.setName(account.getName());
-        modelAccount.setGender(account.getGender());
-        modelAccount.setRole(account.getRole());
-        modelAccount.setPhone(account.getPhone());
-        modelAccount.setEmail(account.getEmail());
+        modelAccount.setId(accountResponse.getId());
+        modelAccount.setName(accountResponse.getName());
+        modelAccount.setGender(accountResponse.getGender());
+        modelAccount.setRole(accountResponse.getRole());
+        modelAccount.setPhone(accountResponse.getPhone());
+        modelAccount.setEmail(accountResponse.getEmail());
+        modelAccount.setUsername(accountResponse.getUsername());
+        modelAccount.setPassword(accountResponse.getPassword());
+        modelAccount.setBirthDate(accountResponse.getBirthDate());
+        modelAccount.setDescription(accountResponse.getDescription());
+        modelAccount.setIdNumber(accountResponse.getIdNumber());
+        modelAccount.setPosition(accountResponse.getPosition());
+        modelAccount.setStartedDate(accountResponse.getStartedDate());
+        modelAccount.setStatus(accountResponse.getStatus());
+        modelAccount.setHouse(accountResponse.getHouse());
+
         Account save = accountRepository.save(modelAccount);
-        account.setId(save.getId());
-        return account;
+        accountResponse.setId(save.getId());
+        return accountResponse;
     }
 
     @Override

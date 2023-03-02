@@ -33,10 +33,11 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests((authr)->authr
                         .requestMatchers("/api/account/add").permitAll()
-                        .anyRequest().permitAll()
+                                .anyRequest().authenticated()
+//                        .requestMatchers("/api/account/*").authenticated() // admin hay user thì định nghĩa trong controller
+//                        .anyRequest().permitAll()
 //                        .requestMatchers("/api/account").hasAuthority("admin")
 //                          .requestMatchers("/api/account/{id}").hasAuthority("user")
-//                                .requestMatchers("/api/account/*").authenticated() // admin hay user thì định nghĩa trong controller
                 )
                 .httpBasic(Customizer.withDefaults());
 

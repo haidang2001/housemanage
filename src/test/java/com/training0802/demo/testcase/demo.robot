@@ -20,6 +20,7 @@ TC02_Get
     ${Get_Response}=    Get On Session  API_Get_Testing             api/account
     log to console      ${Get_Response.status_code}
     log to console      ${Get_Response.content}
+     ${statusCode}=      convert to string                       ${Get_Response.status_code}
     should be equal     ${statusCode}                           200
 
 TC03_Post

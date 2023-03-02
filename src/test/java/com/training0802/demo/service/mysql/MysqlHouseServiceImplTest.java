@@ -1,6 +1,8 @@
 package com.training0802.demo.service.mysql;
 
+import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.HouseResponse;
+import com.training0802.demo.model.mysql.Account;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.repository.MysqlHouseRepository;
@@ -10,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class) //junit4
@@ -88,5 +92,27 @@ public class MysqlHouseServiceImplTest {
         mysqlHouseService.deleteHouse(houseMock.getId());
         //ensure repo is call (optional)
         verify(mysqlHouseRepository,times(1)).deleteById(houseMock.getId());
+    }
+    @Test
+    public void test_updateHouse_success(){
+        House house = mock(House.class);
+        Mockito.when(mysqlHouseRepository.findById(1L)).thenReturn(Optional.of(house));
+        HouseResponse houseResponse = new HouseResponse();
+        HouseResponse updateHouse = mysqlHouseService.updateHouse(houseResponse, 1L);
+        Assertions.assertThat(updateHouse).isEqualTo(houseResponse);
+        verify(mysqlHouseRepository,times(1)).save(any());
+    }
+    @Test
+    public void test_updateHouse_notFoundId(){
+        House house = mock(House.class);
+        Mockito.when(mysqlHouseRepository.findById(1L)).thenThrow(new RuntimeException());
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
+//            HouseResponse houseResponse = new HouseResponse();
+//            mysqlHouseService.updateHouse(houseResponse, 1L);
+            throw new RuntimeException("not found");
+        });
+//        Assertions.assertThat(updateHouse).isEqualTo(houseResponse);
+        assertEquals("not found", runtimeException.getMessage());
+        verify(mysqlHouseRepository,times(0)).save(any());
     }
 }

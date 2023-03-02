@@ -1,51 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.0.2 (Python 3.10.0 on win32)" generated="20230301 15:48:13.382" rpa="false" schemaversion="3">
+<robot generator="Robot 6.0.2 (Python 3.10.0 on win32)" generated="20230301 17:25:08.189" rpa="false" schemaversion="3">
 <suite id="s1" name="Demo" source="C:\Users\nchdang\Desktop\TrainingProject\nchdang\src\test\java\com\training0802\demo\testcase\demo.robot">
-<test id="s1-t1" name="TC02_Get" line="18">
+<test id="s1-t1" name="TC03_Post" line="26">
 <kw name="Create Session" library="RequestsLibrary">
-<arg>API_Get_Testing</arg>
+<arg>AddData</arg>
 <arg>${API_Base_Endpoint}</arg>
 <doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20230301 15:48:13.482" level="INFO">Creating Session using : alias=API_Get_Testing, url=http://localhost:8080/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20230301 15:48:13.482" endtime="20230301 15:48:13.482"/>
+<msg timestamp="20230301 17:25:08.308" level="INFO">Creating Session using : alias=AddData, url=http://localhost:8080/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230301 17:25:08.308" endtime="20230301 17:25:08.309"/>
 </kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${Get_Response}</var>
-<arg>API_Get_Testing</arg>
-<arg>api/account</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20230301 15:48:13.493" level="INFO">GET Request : url=http://localhost:8080/api/account 
- path_url=/api/account 
- headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${body}</var>
+<arg>name=dang</arg>
+<arg>gender=male</arg>
+<arg>role=user</arg>
+<arg>phone=123</arg>
+<arg>email=dang@mail.com username=dangdang</arg>
+<arg>password=123456</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230301 17:25:08.309" level="INFO">${body} = {'name': 'dang', 'gender': 'male', 'role': 'user', 'phone': '123', 'email': 'dang@mail.com username=dangdang', 'password': '123456'}</msg>
+<status status="PASS" starttime="20230301 17:25:08.309" endtime="20230301 17:25:08.309"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230301 17:25:08.309" level="INFO">${header} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230301 17:25:08.309" endtime="20230301 17:25:08.309"/>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<var>${res}</var>
+<arg>AddData</arg>
+<arg>api/account data=${body}</arg>
+<arg>headers=${header}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<msg timestamp="20230301 17:25:08.309" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg timestamp="20230301 17:25:08.350" level="INFO">POST Request : url=http://localhost:8080/api/account%20data=%7B'name':%20'dang',%20'gender':%20'male',%20'role':%20'user',%20'phone':%20'123',%20'email':%20'dang@mail.com%20username=dangdang',%20'password':%20'123456'%7D 
+ path_url=/api/account%20data=%7B'name':%20'dang',%20'gender':%20'male',%20'role':%20'user',%20'phone':%20'123',%20'email':%20'dang@mail.com%20username=dangdang',%20'password':%20'123456'%7D 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '0'} 
  body=None 
  </msg>
-<msg timestamp="20230301 15:48:13.493" level="INFO">GET Response : url=http://localhost:8080/api/account 
- status=401, reason= 
- headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'Set-Cookie': 'JSESSIONID=B72FEE2B190746036200A465F8EA176D; Path=/; HttpOnly', 'WWW-Authenticate': 'Basic realm="Realm"', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 01 Mar 2023 08:48:13 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
- body={"timestamp":"2023-03-01T08:48:13.492+00:00","status":401,"error":"Unauthorized","path":"/api/account"} 
+<msg timestamp="20230301 17:25:08.350" level="INFO">POST Response : url=http://localhost:8080/api/account%20data=%7B'name':%20'dang',%20'gender':%20'male',%20'role':%20'user',%20'phone':%20'123',%20'email':%20'dang@mail.com%20username=dangdang',%20'password':%20'123456'%7D 
+ status=404, reason= 
+ headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Disposition': 'inline;filename=f.txt', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Wed, 01 Mar 2023 10:25:08 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"timestamp":"2023-03-01T10:25:08.326+00:00","status":404,"error":"Not Found","path":"/api/account%20data=%7B'name':%20'dang',%20'gender':%20'male',%20'role':%20'user',%20'phone':%20'123',%20'email':%20'dang@mail.com%20username=dangdang',%20'password':%20'123456'%7D"} 
  </msg>
-<msg timestamp="20230301 15:48:13.493" level="FAIL">HTTPError: 401 Client Error:  for url: http://localhost:8080/api/account</msg>
-<status status="FAIL" starttime="20230301 15:48:13.482" endtime="20230301 15:48:13.495"/>
+<msg timestamp="20230301 17:25:08.350" level="INFO">${res} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20230301 17:25:08.309" endtime="20230301 17:25:08.350"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${Get_Response.status_code}</arg>
+<arg>${res.status_code}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="NOT RUN" starttime="20230301 15:48:13.495" endtime="20230301 15:48:13.495"/>
+<status status="PASS" starttime="20230301 17:25:08.350" endtime="20230301 17:25:08.351"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
-<arg>${Get_Response.content}</arg>
+<arg>${res.content}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="NOT RUN" starttime="20230301 15:48:13.495" endtime="20230301 15:48:13.495"/>
+<status status="PASS" starttime="20230301 17:25:08.351" endtime="20230301 17:25:08.351"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${statusCode}</var>
+<arg>${res.status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20230301 17:25:08.352" level="INFO">${statusCode} = 404</msg>
+<status status="PASS" starttime="20230301 17:25:08.351" endtime="20230301 17:25:08.352"/>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <arg>${statusCode}</arg>
-<arg>200</arg>
+<arg>201</arg>
 <doc>Fails if the given objects are unequal.</doc>
-<status status="NOT RUN" starttime="20230301 15:48:13.495" endtime="20230301 15:48:13.495"/>
+<msg timestamp="20230301 17:25:08.352" level="FAIL">404 != 201</msg>
+<status status="FAIL" starttime="20230301 17:25:08.352" endtime="20230301 17:25:08.352"/>
 </kw>
-<status status="FAIL" starttime="20230301 15:48:13.481" endtime="20230301 15:48:13.495">HTTPError: 401 Client Error:  for url: http://localhost:8080/api/account</status>
+<status status="FAIL" starttime="20230301 17:25:08.308" endtime="20230301 17:25:08.352">404 != 201</status>
 </test>
-<status status="FAIL" starttime="20230301 15:48:13.383" endtime="20230301 15:48:13.495"/>
+<status status="FAIL" starttime="20230301 17:25:08.191" endtime="20230301 17:25:08.353"/>
 </suite>
 <statistics>
 <total>
@@ -58,7 +87,7 @@
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20230301 15:48:13.476" level="ERROR">Error in file 'C:\Users\nchdang\Desktop\TrainingProject\nchdang\src\test\java\com\training0802\demo\testcase\demo.robot' on line 3: Importing library 'JSONLibrary' failed: ModuleNotFoundError: No module named 'JSONLibrary'
+<msg timestamp="20230301 17:25:08.303" level="ERROR">Error in file 'C:\Users\nchdang\Desktop\TrainingProject\nchdang\src\test\java\com\training0802\demo\testcase\demo.robot' on line 3: Importing library 'JSONLibrary' failed: ModuleNotFoundError: No module named 'JSONLibrary'
 Traceback (most recent call last):
   None
 PYTHONPATH:
@@ -68,5 +97,6 @@ PYTHONPATH:
   C:\Users\nchdang\AppData\Local\Programs\Python\Python310\lib
   C:\Users\nchdang\AppData\Local\Programs\Python\Python310
   C:\Users\nchdang\AppData\Local\Programs\Python\Python310\lib\site-packages</msg>
+<msg timestamp="20230301 17:25:08.309" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
 </errors>
 </robot>

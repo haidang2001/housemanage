@@ -1,7 +1,6 @@
 package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.RoomResponse;
-import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.repository.RoomRepository;
@@ -73,7 +72,7 @@ public class RoomServiceImpl implements RoomService {
         roomById.setArea(roomResponse.getArea());
         roomById.setImage(roomResponse.getImage());
         roomById.setStatus(roomResponse.getStatus());
-        roomById.setService(roomResponse.getService());
+//        roomById.setService(roomResponse.getService());
         roomById.setRents(roomResponse.getRents());
         roomById.setDescription(roomResponse.getDescription());
 

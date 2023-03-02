@@ -1,8 +1,6 @@
 package com.training0802.demo.dto;
 
 import com.training0802.demo.model.mysql.House;
-import com.training0802.demo.model.mysql.RentalFee;
-import jakarta.persistence.*;
 
 public class RoomResponse {
     private Long id;
@@ -12,25 +10,25 @@ public class RoomResponse {
     private int area;
     private String image;
     private String status;
-    private String service;
+    private String roomSer;
     private int rents;
     private String description;
 
     public RoomResponse() {
     }
-    public RoomResponse(Long id, String name, int floor, int area, String image, String status, String service, int rents, String description) {
+    public RoomResponse(Long id, String name, int floor, int area, String image, String status, String roomSer, int rents, String description) {
         this.id = id;
         this.name = name;
         this.floor = floor;
         this.area = area;
         this.image = image;
         this.status = status;
-        this.service = service;
+        this.roomSer = roomSer;
         this.rents = rents;
         this.description = description;
     }
 
-    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, String service, int rents, String description) {
+    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, String roomSer, int rents, String description) {
         this.id = id;
         this.name = name;
         this.house = house;
@@ -38,7 +36,7 @@ public class RoomResponse {
         this.area = area;
         this.image = image;
         this.status = status;
-        this.service = service;
+        this.roomSer = roomSer;
         this.rents = rents;
         this.description = description;
     }
@@ -101,11 +99,11 @@ public class RoomResponse {
     }
 
     public String getService() {
-        return service;
+        return roomSer;
     }
 
-    public void setService(String service) {
-        this.service = service;
+    public void setService(String roomSer) {
+        this.roomSer = roomSer;
     }
 
     public int getRents() {
@@ -134,7 +132,7 @@ public class RoomResponse {
                 ", area=" + area +
                 ", image='" + image + '\'' +
                 ", status='" + status + '\'' +
-                ", service='" + service + '\'' +
+                ", roomService='" + roomSer + '\'' +
                 ", rents=" + rents +
                 ", description='" + description + '\'' +
                 '}';

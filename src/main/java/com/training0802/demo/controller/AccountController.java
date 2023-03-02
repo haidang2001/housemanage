@@ -19,12 +19,14 @@ public class AccountController {
     private AccountServiceImpl accountService;
 
     @GetMapping()
-//    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin') or hasAuthority('manager')")
+    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccount(){
         return accountService.getAccounts();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
 //    @PreAuthorize("hasAuthority('user')")
     public  ResponseEntity<MessageResponse> getAccount(@PathVariable Long id){
         try {
@@ -41,7 +43,7 @@ public class AccountController {
 
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse){
         AccountResponse accountResponse1 = accountService.addAccount(accountResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -50,6 +52,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> deleteAccount(@PathVariable Long id){
         try {
             accountService.deleteAccount(id);
@@ -65,6 +68,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> updateAccount(@RequestBody AccountResponse accountResponse, @PathVariable Long id){
         try{
             accountService.updateAccount(accountResponse,id);
@@ -78,12 +82,5 @@ public class AccountController {
             );
         }
     }
-    @PutMapping("changeone/{id}")
-    public ResponseEntity<MessageResponse> changeOneInAccount(@RequestBody String name,@PathVariable Long id){
-        accountService.updateOneChange(name,id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Update name of account with id: "+ id, name)
-        );
-    }
 }

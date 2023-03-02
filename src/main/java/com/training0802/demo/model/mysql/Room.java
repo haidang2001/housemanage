@@ -3,6 +3,8 @@ package com.training0802.demo.model.mysql;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="tblRoom")
 public class Room {
@@ -18,14 +20,15 @@ public class Room {
     private int area;
     private String image;
     private String status;
-    private String service;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
+    private List<RoomSer> roomSers;
     private int rents;
     private String description;
 
     public Room() {
     }
 
-    public Room(Long id, String name, House house, int floor, int area, String image, String status, String service, int rents, String description) {
+    public Room(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
         this.id = id;
         this.name = name;
         this.house = house;
@@ -33,18 +36,18 @@ public class Room {
         this.area = area;
         this.image = image;
         this.status = status;
-        this.service = service;
+        this.roomSers = roomSers;
         this.rents = rents;
         this.description = description;
     }
-    public Room(Long id, String name, int floor, int area, String image, String status, String service, int rents, String description) {
+    public Room(Long id, String name, int floor, int area, String image, String status, List<RoomSer> service, int rents, String description) {
         this.id = id;
         this.name = name;
         this.floor = floor;
         this.area = area;
         this.image = image;
         this.status = status;
-        this.service = service;
+        this.roomSers = service;
         this.rents = rents;
         this.description = description;
     }
@@ -106,12 +109,12 @@ public class Room {
         this.status = status;
     }
 
-    public String getService() {
-        return service;
+    public List<RoomSer> getRoomSers() {
+        return roomSers;
     }
 
-    public void setService(String service) {
-        this.service = service;
+    public void setRoomSers(List<RoomSer> roomSers) {
+        this.roomSers = roomSers;
     }
 
     public int getRents() {
@@ -140,7 +143,7 @@ public class Room {
                 ", area=" + area +
                 ", image='" + image + '\'' +
                 ", status='" + status + '\'' +
-                ", service='" + service + '\'' +
+                ", roomService='" + roomSers + '\'' +
                 ", rents=" + rents +
                 ", description='" + description + '\'' +
                 '}';

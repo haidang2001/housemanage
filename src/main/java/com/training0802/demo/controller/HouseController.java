@@ -6,6 +6,7 @@ import com.training0802.demo.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,12 @@ public class HouseController {
     private HouseService houseServiceImp;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('admin')")
     public List<HouseResponse> getHouses(){
         return houseServiceImp.getHouses();
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> getHouseDetail(@PathVariable Long id){
         try {
             HouseResponse houseResponseDetail = houseServiceImp.getHouseDetail(id);
@@ -37,6 +40,7 @@ public class HouseController {
         }
     }
     @PostMapping
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse){
         houseServiceImp.addHouse(houseResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -44,6 +48,7 @@ public class HouseController {
         );
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> deleteHouse(@PathVariable Long id){
         try{
             houseServiceImp.deleteHouse(id);
@@ -58,6 +63,7 @@ public class HouseController {
         }
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> updateHouse(@RequestBody HouseResponse houseResponse,@PathVariable Long id){
         try{
             houseServiceImp.updateHouse(houseResponse,id);

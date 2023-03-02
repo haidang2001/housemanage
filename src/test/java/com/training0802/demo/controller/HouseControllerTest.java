@@ -108,7 +108,7 @@ public class HouseControllerTest {
         MessageResponse expectedMessage = new MessageResponse(0,"Add new house successfully",houseResponse);
         String jsonExpected = gson.toJson(expectedMessage);
 
-        Mockito.when(mysqlHouseService.addHouse(houseResponse)).thenReturn(houseResponse);
+//        Mockito.when(mysqlHouseService.addHouse(houseResponse)).thenReturn(houseResponse);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/house").contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept("application/json"))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -149,7 +149,7 @@ public class HouseControllerTest {
         MessageResponse messageExpected = new MessageResponse(0,"Update house sucessfully",houseResponse);
         String jsonExpected = gson.toJson(messageExpected);
 
-        Mockito.when(mysqlHouseService.updateHouse(any(HouseResponse.class),eq(id))).thenReturn(houseResponse);
+//        Mockito.when(mysqlHouseService.updateHouse(any(HouseResponse.class),eq(id))).thenReturn(houseResponse);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/house/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -104,7 +104,7 @@ public class RoomControllerTest {
         MessageResponse messageExpected = new MessageResponse(0,"Add new room sucessfully",roomResponse);
         String jsonExpected = gson.toJson(messageExpected);
 
-        Mockito.doNothing().when(roomService).addRoom(roomResponse);
+//        Mockito.doNothing().when(roomService).addRoom(roomResponse);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/room").contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept("application/json"))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -130,7 +130,7 @@ public class RoomControllerTest {
         String jsonContent = gson.toJson(roomResponse);
         MessageResponse messageExpected = new MessageResponse(0,"Update room sucessfully",roomResponse);
         String jsonExpect = gson.toJson(messageExpected);
-        Mockito.when(roomService.updateRoom(roomResponse,id)).thenReturn(roomResponse);
+//        Mockito.when(roomService.updateRoom(roomResponse,id)).thenReturn(roomResponse);
         mockMvc.perform(put("/api/room/"+id).contentType(MediaType.APPLICATION_JSON).content(jsonContent).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
