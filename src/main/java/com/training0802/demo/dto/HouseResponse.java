@@ -2,14 +2,19 @@ package com.training0802.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 //import com.training0802.demo.model.mysql.RentalFeeHouse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.training0802.demo.model.mysql.RentalFeeHouse;
 import com.training0802.demo.model.mysql.Room;
+import com.training0802.demo.model.mysql.Tenant;
 import jakarta.persistence.*;
 import org.bson.types.ObjectId;
 
 import java.util.List;
 
 public class HouseResponse {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String location;
     private String name;
@@ -19,8 +24,13 @@ public class HouseResponse {
     private String status;
     private  String description;
     private String image;
+
+
     private List<Room> roomList;
+
     private List<RentalFeeHouse> rentalFeeHouseList;
+
+    private List<Tenant> tenantList;
     public HouseResponse(){}
 
     public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
@@ -60,6 +70,28 @@ public class HouseResponse {
         this.roomList = roomList;
         this.rentalFeeHouseList = rentalFeeHouseList;
     }
+    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.establishDate = establishDate;
+        this.totalRooms = totalRooms;
+        this.manager = manager;
+        this.status = status;
+        this.description = description;
+        this.image = image;
+        this.roomList = roomList;
+        this.rentalFeeHouseList = rentalFeeHouseList;
+        this.tenantList = tenantList;
+    }
+
+    public List<Tenant> getTenantList() {
+        return tenantList;
+    }
+
+    public void setTenantList(List<Tenant> tenantList) {
+        this.tenantList = tenantList;
+    }
     //    @JsonBackReference
     public List<RentalFeeHouse> getRentalFeeHouseList() {
         return rentalFeeHouseList;
@@ -68,6 +100,8 @@ public class HouseResponse {
     public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
         this.rentalFeeHouseList = rentalFeeHouseList;
     }
+
+
 
     public String getLocation() {
         return location;
@@ -124,6 +158,7 @@ public class HouseResponse {
     public void setDescription(String description) {
         this.description = description;
     }
+    //    @JsonBackReference
     public List<Room> getRoomList() {
         return roomList;
     }

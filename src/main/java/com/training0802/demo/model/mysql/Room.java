@@ -31,7 +31,10 @@ public class Room {
     private List<RoomSer> roomSers;
     private int rents;
     private String description;
-
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
+//    @JsonManagedReference
+//    @JsonIgnore
+//    private List<Tenant> tenantList;
     public Room() {
     }
 
@@ -59,6 +62,27 @@ public class Room {
         this.description = description;
     }
 
+    public Room(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description, List<Tenant> tenantList) {
+        this.id = id;
+        this.name = name;
+        this.house = house;
+        this.floor = floor;
+        this.area = area;
+        this.image = image;
+        this.status = status;
+        this.roomSers = roomSers;
+        this.rents = rents;
+        this.description = description;
+//        this.tenantList = tenantList;
+    }
+
+//    public List<Tenant> getTenantList() {
+//        return tenantList;
+//    }
+//
+//    public void setTenantList(List<Tenant> tenantList) {
+//        this.tenantList = tenantList;
+//    }
 
     public Long getId() {
         return id;

@@ -28,7 +28,6 @@ public class MysqlHouseServiceImpl implements HouseService {
             HouseResponse dtoHouse = modelMapper.map(house,HouseResponse.class);
             house.getTotalRooms();
             dtoHouses.add(dtoHouse);
-
         }
         return dtoHouses;
     }

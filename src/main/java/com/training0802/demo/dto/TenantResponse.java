@@ -1,16 +1,14 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.model.mysql.Room;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "tblTenant")
-public class Tenant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class TenantResponse {
     private Long id;
     private String name;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -20,11 +18,9 @@ public class Tenant {
     private String email;
     private int idNumber;
     private String permanentAddress;
-    @ManyToOne()
-    @JsonBackReference
-    @JoinColumn(name = "house_id")
+
     private House house;
-//    @ManyToOne()
+    //    @ManyToOne()
 //    @JsonBackReference
 //    @JoinColumn(name = "room_id")
 //    private Room room;
@@ -33,10 +29,10 @@ public class Tenant {
     private String status;
     private String description;
 
-    public Tenant() {
+    public TenantResponse() {
     }
 
-    public Tenant(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house,  Date rentDate, String status, String description) {
+    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house,  Date rentDate, String status, String description) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
