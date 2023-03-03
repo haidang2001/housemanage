@@ -1,28 +1,18 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import com.training0802.demo.model.mysql.House;
 
-@Entity
-@Table(name = "tblRentalFeeHouse")
-public class RentalFeeHouse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class RentalFeeHouseResponse {
+    private String id;
     private String type;
     private int price;
     private String unit;
-//    @JsonIgnore
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name="house_id")
     private House house;
 
-    public RentalFeeHouse() {
+    public RentalFeeHouseResponse() {
     }
 
-    public RentalFeeHouse(Long id, String type, int price, String unit, House house) {
+    public RentalFeeHouseResponse(String id, String type, int price, String unit, House house) {
         this.id = id;
         this.type = type;
         this.price = price;
@@ -30,11 +20,11 @@ public class RentalFeeHouse {
         this.house = house;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -61,7 +51,6 @@ public class RentalFeeHouse {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-//    @JsonBackReference
 
     public House getHouse() {
         return house;
@@ -81,4 +70,5 @@ public class RentalFeeHouse {
                 ", house=" + house +
                 '}';
     }
+
 }

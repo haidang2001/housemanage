@@ -72,7 +72,7 @@ public class RoomServiceImpl implements RoomService {
         roomById.setArea(roomResponse.getArea());
         roomById.setImage(roomResponse.getImage());
         roomById.setStatus(roomResponse.getStatus());
-//        roomById.setService(roomResponse.getService());
+        roomById.setRoomSers(roomResponse.getRoomSers());
         roomById.setRents(roomResponse.getRents());
         roomById.setDescription(roomResponse.getDescription());
 

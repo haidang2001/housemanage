@@ -1,6 +1,8 @@
 package com.training0802.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.training0802.demo.model.mysql.RentalFeeHouse;
+import com.training0802.demo.model.mysql.RentalFeeHouse;
 import com.training0802.demo.model.mysql.Room;
 import jakarta.persistence.*;
 import org.bson.types.ObjectId;
@@ -17,17 +19,20 @@ public class HouseResponse {
     private String status;
     private  String description;
     private String image;
-   private List<Room> roomList;
+    private List<Room> roomList;
+    private List<RentalFeeHouse> rentalFeeHouseList;
     public HouseResponse(){}
 
-    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description, List<Room> roomList) {
+    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
+//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
+        this.image=image;
         this.roomList = roomList;
     }
     public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description) {
@@ -35,14 +40,34 @@ public class HouseResponse {
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-
+//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
         this.roomList = null;
     }
 
+    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.establishDate = establishDate;
+        this.totalRooms = totalRooms;
+        this.manager = manager;
+        this.status = status;
+        this.description = description;
+        this.image = image;
+        this.roomList = roomList;
+        this.rentalFeeHouseList = rentalFeeHouseList;
+    }
+    //    @JsonBackReference
+    public List<RentalFeeHouse> getRentalFeeHouseList() {
+        return rentalFeeHouseList;
+    }
 
+    public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
+        this.rentalFeeHouseList = rentalFeeHouseList;
+    }
 
     public String getLocation() {
         return location;
@@ -69,7 +94,7 @@ public class HouseResponse {
     }
 
     public int getTotalRooms() {
-       return totalRooms;
+        return totalRooms;
     }
 
     public void setTotalRooms(int totalRooms) {
@@ -99,7 +124,6 @@ public class HouseResponse {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public List<Room> getRoomList() {
         return roomList;
     }

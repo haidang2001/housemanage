@@ -1,6 +1,11 @@
 package com.training0802.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.model.mysql.RoomSer;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 public class RoomResponse {
     private Long id;
@@ -10,25 +15,14 @@ public class RoomResponse {
     private int area;
     private String image;
     private String status;
-    private String roomSer;
+    private List<RoomSer> roomSers;
     private int rents;
     private String description;
 
     public RoomResponse() {
     }
-    public RoomResponse(Long id, String name, int floor, int area, String image, String status, String roomSer, int rents, String description) {
-        this.id = id;
-        this.name = name;
-        this.floor = floor;
-        this.area = area;
-        this.image = image;
-        this.status = status;
-        this.roomSer = roomSer;
-        this.rents = rents;
-        this.description = description;
-    }
 
-    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, String roomSer, int rents, String description) {
+    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
         this.id = id;
         this.name = name;
         this.house = house;
@@ -36,10 +30,21 @@ public class RoomResponse {
         this.area = area;
         this.image = image;
         this.status = status;
-        this.roomSer = roomSer;
+        this.roomSers = roomSers;
         this.rents = rents;
         this.description = description;
     }
+//    public RoomResponse(Long id, String name, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
+//        this.id = id;
+//        this.name = name;
+//        this.floor = floor;
+//        this.area = area;
+//        this.image = image;
+//        this.status = status;
+//        this.roomSers = roomSers;
+//        this.rents = rents;
+//        this.description = description;
+//    }
 
 
     public Long getId() {
@@ -57,7 +62,6 @@ public class RoomResponse {
     public void setName(String name) {
         this.name = name;
     }
-
     public House getHouse() {
         return house;
     }
@@ -98,12 +102,12 @@ public class RoomResponse {
         this.status = status;
     }
 
-    public String getService() {
-        return roomSer;
+    public List<RoomSer> getRoomSers() {
+        return roomSers;
     }
 
-    public void setService(String roomSer) {
-        this.roomSer = roomSer;
+    public void setRoomSers(List<RoomSer> roomSers) {
+        this.roomSers = roomSers;
     }
 
     public int getRents() {
@@ -132,7 +136,7 @@ public class RoomResponse {
                 ", area=" + area +
                 ", image='" + image + '\'' +
                 ", status='" + status + '\'' +
-                ", roomService='" + roomSer + '\'' +
+                ", roomService='" + roomSers + '\'' +
                 ", rents=" + rents +
                 ", description='" + description + '\'' +
                 '}';

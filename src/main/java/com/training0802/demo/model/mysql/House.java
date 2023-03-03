@@ -1,6 +1,8 @@
 package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,7 +25,13 @@ public class House {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
 //    @JoinColumn(name = "fkHouseRoom",referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
     private List<Room> roomList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
+    @JsonManagedReference
+    @JsonIgnore
+    private List<RentalFeeHouse> rentalFeeHouseList;
     public House(){}
 
     public House(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
@@ -48,6 +56,28 @@ public class House {
         this.status = status;
         this.description = description;
         this.roomList = null;
+    }
+
+    public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+        this.establishDate = establishDate;
+        this.totalRooms = totalRooms;
+        this.manager = manager;
+        this.status = status;
+        this.description = description;
+        this.image = image;
+        this.roomList = roomList;
+        this.rentalFeeHouseList = rentalFeeHouseList;
+    }
+//    @JsonBackReference
+    public List<RentalFeeHouse> getRentalFeeHouseList() {
+        return rentalFeeHouseList;
+    }
+
+    public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
+        this.rentalFeeHouseList = rentalFeeHouseList;
     }
 
     public String getLocation() {
@@ -75,10 +105,6 @@ public class House {
     }
 
     public int getTotalRooms() {
-//        if (roomList!= null || !roomList.isEmpty()){
-//            return roomList.size();
-//        }
-//        return 0;
         return totalRooms;
     }
 
@@ -109,7 +135,7 @@ public class House {
     public void setDescription(String description) {
         this.description = description;
     }
-    @JsonBackReference
+//    @JsonBackReference
     public List<Room> getRoomList() {
         return roomList;
     }

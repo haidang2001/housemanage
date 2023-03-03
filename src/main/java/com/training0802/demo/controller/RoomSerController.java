@@ -17,11 +17,11 @@ public class RoomSerController {
     @Autowired
     private RoomSerServiceImpl roomSerService;
     @GetMapping
-    public List<RoomSerResponse> getRooms(){
+    public List<RoomSerResponse> getRoomSers(){
         return roomSerService.getListRoomService();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<MessageResponse> getRoomDetail(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> getRoomSerDetail(@PathVariable Long id){
         try {
             RoomSerResponse roomSerResponseFound = roomSerService.getDetailRoomService(id);
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -36,14 +36,14 @@ public class RoomSerController {
 
     }
     @PostMapping
-    public ResponseEntity<MessageResponse> addRoom(@RequestBody RoomSerResponse roomSerResponse){
+    public ResponseEntity<MessageResponse> addRoomSer(@RequestBody RoomSerResponse roomSerResponse){
         roomSerService.addRoomService(roomSerResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse(0,"Add new room ser sucessfully",roomSerResponse)
         );
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteRoom(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> deleteRoomSer(@PathVariable Long id){
         try {
             roomSerService.deleteRoomService(id);
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -57,7 +57,7 @@ public class RoomSerController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<MessageResponse> updateRoom(@RequestBody RoomSerResponse roomSerResponse, @PathVariable Long id){
+    public ResponseEntity<MessageResponse> updateRoomSer(@RequestBody RoomSerResponse roomSerResponse, @PathVariable Long id){
         try {
             roomSerService.updateRoomService(roomSerResponse,id);
             return ResponseEntity.status(HttpStatus.OK).body(

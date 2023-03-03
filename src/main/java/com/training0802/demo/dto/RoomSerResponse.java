@@ -1,25 +1,28 @@
 package com.training0802.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.training0802.demo.model.mysql.Room;
-public class RoomSerResponse {
-    private String id;
-    private String name;
-    private Room room;
+import jakarta.persistence.*;
 
+public class RoomSerResponse {
+    private Long id;
+    private String name;
+
+    private Room room;
     public RoomSerResponse() {
     }
 
-    public RoomSerResponse(String id, String name, Room room) {
+    public RoomSerResponse(Long id, String name, Room room) {
         this.id = id;
         this.name = name;
         this.room = room;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -30,7 +33,6 @@ public class RoomSerResponse {
     public void setName(String name) {
         this.name = name;
     }
-
     public Room getRoom() {
         return room;
     }

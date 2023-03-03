@@ -33,9 +33,9 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests((authr)->authr
                         .requestMatchers("/api/account/add").permitAll()
-                                .anyRequest().authenticated()
+//                                .anyRequest().authenticated()
 //                        .requestMatchers("/api/account/*").authenticated() // admin hay user thì định nghĩa trong controller
-//                        .anyRequest().permitAll()
+                        .anyRequest().permitAll()
 //                        .requestMatchers("/api/account").hasAuthority("admin")
 //                          .requestMatchers("/api/account/{id}").hasAuthority("user")
                 )

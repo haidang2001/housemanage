@@ -64,7 +64,7 @@ public class MysqlHouseServiceImpl implements HouseService {
         houseById.setLocation(houseResponse.getLocation());
         houseById.setName(houseResponse.getName());
         houseById.setEstablishDate(houseResponse.getEstablishDate());
-//        houseById.setTotalRooms(houseResponse.getTotalRooms());
+        houseById.setTotalRooms(houseResponse.getTotalRooms());
         houseById.setManager(houseResponse.getManager());
         houseById.setStatus(houseResponse.getStatus());
         houseById.setDescription(houseResponse.getDescription());

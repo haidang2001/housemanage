@@ -1,6 +1,8 @@
 package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +15,8 @@ public class Room {
     private Long id;
     private String name;
     @ManyToOne()
+//    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "house_id")
 //    @JoinColumn(name = "fkRoomHouse",referencedColumnName = "id")
     private House house;
@@ -21,6 +25,9 @@ public class Room {
     private String image;
     private String status;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
+    @JsonManagedReference
+    @JsonIgnore
+//    @JsonBackReference
     private List<RoomSer> roomSers;
     private int rents;
     private String description;
@@ -40,14 +47,14 @@ public class Room {
         this.rents = rents;
         this.description = description;
     }
-    public Room(Long id, String name, int floor, int area, String image, String status, List<RoomSer> service, int rents, String description) {
+    public Room(Long id, String name, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
         this.id = id;
         this.name = name;
         this.floor = floor;
         this.area = area;
         this.image = image;
         this.status = status;
-        this.roomSers = service;
+        this.roomSers = roomSers;
         this.rents = rents;
         this.description = description;
     }
@@ -68,7 +75,6 @@ public class Room {
     public void setName(String name) {
         this.name = name;
     }
-    @JsonBackReference
     public House getHouse() {
         return house;
     }
@@ -108,10 +114,12 @@ public class Room {
     public void setStatus(String status) {
         this.status = status;
     }
+//    @JsonBackReference
 
     public List<RoomSer> getRoomSers() {
         return roomSers;
     }
+//    @JsonBackReference
 
     public void setRoomSers(List<RoomSer> roomSers) {
         this.roomSers = roomSers;

@@ -2,36 +2,34 @@ package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.HouseResponse;
 import com.training0802.demo.dto.MessageResponse;
+import com.training0802.demo.dto.RentalFeeHouseResponse;
 import com.training0802.demo.service.HouseService;
+import com.training0802.demo.service.mysql.RentalFeeHouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
-@RequestMapping("/api/house")
+@RequestMapping("/api/rentalFeeHouse")
+public class RentalFeeHouseController {
 
-public class HouseController {
     @Autowired
-    private HouseService houseServiceImp;
+    private RentalFeeHouseServiceImpl rentalFeeHouseService;
 
     @GetMapping
 //    @PreAuthorize("hasAuthority('admin')")
-    public List<HouseResponse> getHouses(){
-        return houseServiceImp.getHouses();
+    public List<RentalFeeHouseResponse> getListRentalFeeHouse(){
+        return rentalFeeHouseService.getListRentalFeeHouse();
     }
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<MessageResponse> getHouseDetail(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> getRentalFeeHouseDetail(@PathVariable Long id){
         try {
-            HouseResponse houseResponseDetail = houseServiceImp.getHouseDetail(id);
+            RentalFeeHouseResponse rentalFeeHouseResponse = rentalFeeHouseService.getRentalFeeHouseDetail(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Get detail of house with id: "+ id, houseResponseDetail)
+                    new MessageResponse(0,"Get detail of rental fee house with id: "+ id, rentalFeeHouseResponse)
             );
         }
         catch (RuntimeException e){
@@ -42,34 +40,34 @@ public class HouseController {
     }
     @PostMapping(consumes = {"application/json"})
 //    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse){
-        houseServiceImp.addHouse(houseResponse);
+    public ResponseEntity<MessageResponse> addRentalFeeHouse(@RequestBody RentalFeeHouseResponse rentalFeeHouseResponse){
+        rentalFeeHouseService.addRetalFeeHouse(rentalFeeHouseResponse);
         return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Add new house successfully",houseResponse)
+                new MessageResponse(0,"Add new rental fee house successfully",rentalFeeHouseResponse)
         );
     }
     @DeleteMapping("/{id}")
 //    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<MessageResponse> deleteHouse(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> deleteRentalFeeHouse(@PathVariable Long id){
         try{
-            houseServiceImp.deleteHouse(id);
+            rentalFeeHouseService.deleteRentalFeeHouse(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Delete house successfully" + id,"")
+                    new MessageResponse(0,"Delete rental fee house successfully" + id,"")
             );
         }
         catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new MessageResponse(1,"Not exist house with id: " +id,"")
+                    new MessageResponse(1,e.getMessage(),"")
             );
         }
     }
     @PutMapping("/{id}")
 //    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<MessageResponse> updateHouse(@RequestBody HouseResponse houseResponse,@PathVariable Long id){
+    public ResponseEntity<MessageResponse> updateRentalHouse(@RequestBody RentalFeeHouseResponse rentalFeeHouseResponse,@PathVariable Long id){
         try{
-            houseServiceImp.updateHouse(houseResponse,id);
+            rentalFeeHouseService.updateRentalFeeHouse(rentalFeeHouseResponse,id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Update house sucessfully",houseResponse)
+                    new MessageResponse(0,"Update rental fee house sucessfully",rentalFeeHouseResponse)
             );
         }
         catch (RuntimeException e){

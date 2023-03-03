@@ -1,5 +1,7 @@
 package com.training0802.demo.model.mysql;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class RoomSer {
     private Long id;
     private String name;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "room_id")
     private Room room;
     public RoomSer() {
@@ -36,7 +39,7 @@ public class RoomSer {
     public void setName(String name) {
         this.name = name;
     }
-
+//    @JsonBackReference
     public Room getRoom() {
         return room;
     }
