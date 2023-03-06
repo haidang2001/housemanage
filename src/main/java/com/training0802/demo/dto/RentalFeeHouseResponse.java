@@ -60,15 +60,5 @@ public class RentalFeeHouseResponse {
         this.house = house;
     }
 
-    @Override
-    public String toString() {
-        return "RentalFeeHouse{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", unit='" + unit + '\'' +
-                ", house=" + house +
-                '}';
-    }
 
 }

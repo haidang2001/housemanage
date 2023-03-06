@@ -1,26 +1,18 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.model.mysql.Room;
+import com.training0802.demo.model.mysql.Tenant;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "tblInvoice")
-public class Invoice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class InvoiceResponse {
     private Long id;
     private String type;
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "house_id")
     private House house;
-    @OneToOne
-    @JoinColumn(name = "room_id")
     private Room room;
-    @OneToOne
-    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
     private String phoneNumber;
     private String email;
@@ -30,10 +22,10 @@ public class Invoice {
     private String status;
     private int currentIndexElectricity;
     private int currentIndexWaterBill;
-    public Invoice() {
+    public InvoiceResponse() {
     }
 
-    public Invoice( String type, House house, Room room, Tenant tenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
+    public InvoiceResponse( String type, House house, Room room, Tenant tenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
         this.type = type;
         this.house = house;
         this.room = room;

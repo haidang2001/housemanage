@@ -1,7 +1,6 @@
 package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,10 +12,9 @@ public class RentalFeeHouse {
     private String type;
     private int price;
     private String unit;
-//    @JsonIgnore
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name="house_id")
+    @JoinColumn(name = "house_id")
     private House house;
 
     public RentalFeeHouse() {
@@ -61,7 +59,6 @@ public class RentalFeeHouse {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-//    @JsonBackReference
 
     public House getHouse() {
         return house;
@@ -71,14 +68,5 @@ public class RentalFeeHouse {
         this.house = house;
     }
 
-    @Override
-    public String toString() {
-        return "RentalFeeHouse{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", unit='" + unit + '\'' +
-                ", house=" + house +
-                '}';
-    }
+
 }

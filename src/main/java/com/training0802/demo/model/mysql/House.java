@@ -1,6 +1,5 @@
 package com.training0802.demo.model.mysql;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,14 +23,15 @@ public class House {
     private String image;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
-//    @JoinColumn(name = "fkHouseRoom",referencedColumnName = "id")
     @JsonManagedReference
     @JsonIgnore
     private List<Room> roomList;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
     @JsonManagedReference
     @JsonIgnore
     private List<RentalFeeHouse> rentalFeeHouseList;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "house")
     @JsonManagedReference
     @JsonIgnore
@@ -43,7 +43,6 @@ public class House {
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
@@ -55,7 +54,6 @@ public class House {
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
@@ -97,7 +95,6 @@ public class House {
     public void setTenantList(List<Tenant> tenantList) {
         this.tenantList = tenantList;
     }
-//    @JsonBackReference
     public List<RentalFeeHouse> getRentalFeeHouseList() {
         return rentalFeeHouseList;
     }
@@ -163,7 +160,6 @@ public class House {
     public void setDescription(String description) {
         this.description = description;
     }
-//    @JsonBackReference
     public List<Room> getRoomList() {
         return roomList;
     }
@@ -186,19 +182,5 @@ public class House {
 
     public void setImage(String image) {
         this.image = image;
-    }
-    @Override
-    public String toString() {
-        return "House{" +
-                "id=" + id +
-                ", location='" + location + '\'' +
-                ", name='" + name + '\'' +
-                ", establishDate='" + establishDate + '\'' +
-                ", totalRooms=" + totalRooms +
-                ", manager='" + manager + '\'' +
-                ", status='" + status + '\'' +
-                ", description='" + description + '\'' +
-                ", roomList=" + roomList +
-                '}';
     }
 }

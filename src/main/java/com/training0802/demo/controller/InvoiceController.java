@@ -1,7 +1,9 @@
 package com.training0802.demo.controller;
 
+import com.training0802.demo.dto.InvoiceResponse;
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.dto.TenantResponse;
+import com.training0802.demo.service.InvoiceService;
 import com.training0802.demo.service.mysql.TenantServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +14,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tenant")
-public class TenantController {
+@RequestMapping("/api/invoice")
+public class InvoiceController {
+
     @Autowired
-    private TenantServiceImpl tenantService;
+    private InvoiceService invoiceService;
 
     @GetMapping
-    public List<TenantResponse> getListTenant() {
-        return tenantService.getListTenant();
+    public List<InvoiceResponse> getListInvoice() {
+        return invoiceService.getListInvoice();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MessageResponse> getTenantDetail(@PathVariable Long id) {
+    public ResponseEntity<MessageResponse> getDetailInvoice(@PathVariable Long id) {
         try {
-            TenantResponse tenantResponse = tenantService.getTenantDetail(id);
+            InvoiceResponse invoiceResponse = invoiceService.getDetailInvoice(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Get detail of tenant with id: " + id, tenantResponse)
+                    new MessageResponse(0, "Get detail of invoice with id: " + id, invoiceResponse)
             );
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -37,11 +40,11 @@ public class TenantController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponse> addTenant(@RequestBody TenantResponse tenantResponse) {
+    public ResponseEntity<MessageResponse> addTenant(@RequestBody InvoiceResponse invoiceResponse) {
         try{
-            TenantResponse tenantResponse1 = tenantService.addTenant(tenantResponse);
+            InvoiceResponse invoiceResponse1 = invoiceService.addInvoice(invoiceResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Add new tenant successfully", tenantResponse1)
+                    new MessageResponse(0, "Add new invoice successfully", invoiceResponse1)
             );
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -51,11 +54,11 @@ public class TenantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteTenant(@PathVariable Long id) {
+    public ResponseEntity<MessageResponse> deleteInvoice(@PathVariable Long id) {
         try {
-            tenantService.deleteTenant(id);
+            invoiceService.deleteInvoice(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Delete tenant successfully" + id, "")
+                    new MessageResponse(0, "Delete invoice successfully" + id, "")
             );
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -65,11 +68,11 @@ public class TenantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MessageResponse> updateTenant(@RequestBody TenantResponse tenantResponse, @PathVariable Long id) {
+    public ResponseEntity<MessageResponse> updateInvoice(@RequestBody InvoiceResponse invoiceResponse, @PathVariable Long id) {
         try {
-            tenantService.updateTenant(tenantResponse, id);
+            invoiceService.updateInvoice(invoiceResponse, id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Update tenant sucessfully", tenantResponse)
+                    new MessageResponse(0, "Update invoice sucessfully", invoiceResponse)
             );
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

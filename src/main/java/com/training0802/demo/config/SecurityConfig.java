@@ -18,7 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -26,23 +27,19 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new AccountInfoToUserDetailsService();
     }
-   @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .cors().and()
-                .authorizeHttpRequests((authr)->authr
+                .authorizeHttpRequests((authr) -> authr
                         .requestMatchers("/api/account/add").permitAll()
-//                                .anyRequest().authenticated()
-//                        .requestMatchers("/api/account/*").authenticated() // admin hay user thì định nghĩa trong controller
-                        .anyRequest().permitAll()
-//                        .requestMatchers("/api/account").hasAuthority("admin")
-//                          .requestMatchers("/api/account/{id}").hasAuthority("user")
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
-    };
-
+    }
 }
 

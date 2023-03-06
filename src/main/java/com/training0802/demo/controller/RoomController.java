@@ -38,10 +38,18 @@ public class RoomController {
     }
     @PostMapping
     public ResponseEntity<MessageResponse> addRoom(@RequestBody RoomResponse roomResponse){
-        roomServiceImpl.addRoom(roomResponse);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse(0,"Add new room sucessfully",roomResponse)
-        );
+        try{
+            RoomResponse roomResponse1 = roomServiceImpl.addRoom(roomResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0,"Add new room sucessfully",roomResponse1)
+            );
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new MessageResponse(1, e.getMessage(), "")
+            );
+        }
+
+
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteRoom(@PathVariable Long id){
@@ -53,7 +61,7 @@ public class RoomController {
         }
         catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new MessageResponse(1,"Not exist room with id: " +id,"")
+                    new MessageResponse(1, e.getMessage(), "")
             );
         }
     }

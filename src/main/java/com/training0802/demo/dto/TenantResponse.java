@@ -1,9 +1,7 @@
 package com.training0802.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
-import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -11,7 +9,6 @@ import java.util.Date;
 public class TenantResponse {
     private Long id;
     private String name;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
     private String gender;
     private String phone;
@@ -20,11 +17,7 @@ public class TenantResponse {
     private String permanentAddress;
 
     private House house;
-    //    @ManyToOne()
-//    @JsonBackReference
-//    @JoinColumn(name = "room_id")
-//    private Room room;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Room room;
     private Date rentDate;
     private String status;
     private String description;
@@ -32,7 +25,7 @@ public class TenantResponse {
     public TenantResponse() {
     }
 
-    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house,  Date rentDate, String status, String description) {
+    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Date rentDate, String status, String description) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -42,7 +35,22 @@ public class TenantResponse {
         this.idNumber = idNumber;
         this.permanentAddress = permanentAddress;
         this.house = house;
-//        this.room = room;
+        this.rentDate = rentDate;
+        this.status = status;
+        this.description = description;
+    }
+
+    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Room room, Date rentDate, String status, String description) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.idNumber = idNumber;
+        this.permanentAddress = permanentAddress;
+        this.house = house;
+        this.room = room;
         this.rentDate = rentDate;
         this.status = status;
         this.description = description;
@@ -120,13 +128,13 @@ public class TenantResponse {
         this.house = house;
     }
 
-//    public Room getRoom() {
-//        return room;
-//    }
-//
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public Date getRentDate() {
         return rentDate;

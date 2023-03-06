@@ -1,7 +1,5 @@
 package com.training0802.demo;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.training0802.demo.repository.AccountRepository;
 import com.training0802.demo.repository.MongoHouseRepository;
 import org.modelmapper.ModelMapper;
@@ -14,18 +12,18 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = AccountRepository.class)
-//@EnableJpaRepositories(basePackages = "com.training0802.demo.repository.*")
 @EnableMongoRepositories(basePackageClasses = MongoHouseRepository.class)
 public class DemoApplication implements CommandLineRunner {
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {}
+    @Override
+    public void run(String... args) throws Exception {
+    }
 }

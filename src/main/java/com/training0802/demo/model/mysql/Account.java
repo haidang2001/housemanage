@@ -2,20 +2,17 @@ package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Entity(name="ACCOUNT")
-@Table(name="tblAccount")
+@Entity(name = "ACCOUNT")
+@Table(name = "tblAccount")
 public class Account {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthDate;
     private String gender;
     private String role;
@@ -28,17 +25,17 @@ public class Account {
     private String position;
     private String username;
     private String password;
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startedDate;
     private String status;
     private String description;
+
     public Account() {
 
     }
 
 
-    public Account( String name, String gender, String role, String phone, String email, String username, String password) {
+    public Account(String name, String gender, String role, String phone, String email, String username, String password) {
 
         this.name = name;
         this.gender = gender;
@@ -48,6 +45,7 @@ public class Account {
         this.username = username;
         this.password = password;
     }
+
     public Account(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
         this.id = id;
         this.name = name;

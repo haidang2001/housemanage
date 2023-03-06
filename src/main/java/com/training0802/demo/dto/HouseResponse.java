@@ -1,20 +1,12 @@
 package com.training0802.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-//import com.training0802.demo.model.mysql.RentalFeeHouse;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.training0802.demo.model.mysql.RentalFeeHouse;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.model.mysql.Tenant;
-import jakarta.persistence.*;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
 public class HouseResponse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String location;
     private String name;
@@ -22,7 +14,7 @@ public class HouseResponse {
     private int totalRooms;
     private String manager;
     private String status;
-    private  String description;
+    private String description;
     private String image;
 
 
@@ -31,26 +23,27 @@ public class HouseResponse {
     private List<RentalFeeHouse> rentalFeeHouseList;
 
     private List<Tenant> tenantList;
-    public HouseResponse(){}
 
-    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
+    public HouseResponse() {
+    }
+
+    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description, String image, List<Room> roomList) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
-        this.image=image;
+        this.image = image;
         this.roomList = roomList;
     }
+
     public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description) {
         this.id = id;
         this.location = location;
         this.name = name;
         this.establishDate = establishDate;
-//        this.totalRooms = totalRooms;
         this.manager = manager;
         this.status = status;
         this.description = description;
@@ -70,6 +63,7 @@ public class HouseResponse {
         this.roomList = roomList;
         this.rentalFeeHouseList = rentalFeeHouseList;
     }
+
     public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
         this.id = id;
         this.location = location;
@@ -92,7 +86,7 @@ public class HouseResponse {
     public void setTenantList(List<Tenant> tenantList) {
         this.tenantList = tenantList;
     }
-    //    @JsonBackReference
+
     public List<RentalFeeHouse> getRentalFeeHouseList() {
         return rentalFeeHouseList;
     }
@@ -100,7 +94,6 @@ public class HouseResponse {
     public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
         this.rentalFeeHouseList = rentalFeeHouseList;
     }
-
 
 
     public String getLocation() {
@@ -158,7 +151,7 @@ public class HouseResponse {
     public void setDescription(String description) {
         this.description = description;
     }
-    //    @JsonBackReference
+
     public List<Room> getRoomList() {
         return roomList;
     }
@@ -182,18 +175,5 @@ public class HouseResponse {
     public void setImage(String image) {
         this.image = image;
     }
-    @Override
-    public String toString() {
-        return "House{" +
-                "id=" + id +
-                ", location='" + location + '\'' +
-                ", name='" + name + '\'' +
-                ", establishDate='" + establishDate + '\'' +
-                ", totalRooms=" + totalRooms +
-                ", manager='" + manager + '\'' +
-                ", status='" + status + '\'' +
-                ", description='" + description + '\'' +
-                ", roomList=" + roomList +
-                '}';
-    }
+
 }

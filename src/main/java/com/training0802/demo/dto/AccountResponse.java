@@ -1,8 +1,6 @@
 package com.training0802.demo.dto;
 
 import com.training0802.demo.model.mysql.House;
-import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,12 +20,13 @@ public class AccountResponse {
     private Date startedDate;
     private String status;
     private String description;
+
     public AccountResponse() {
 
     }
 
 
-    public AccountResponse( String name, String gender, String role, String phone, String email, String username, String password) {
+    public AccountResponse(String name, String gender, String role, String phone, String email, String username, String password) {
 
         this.name = name;
         this.gender = gender;
@@ -37,6 +36,7 @@ public class AccountResponse {
         this.username = username;
         this.password = password;
     }
+
     public AccountResponse(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
         this.id = id;
         this.name = name;

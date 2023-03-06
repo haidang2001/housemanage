@@ -6,7 +6,9 @@ import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.RentalFeeHouse;
 import com.training0802.demo.repository.RentalFeeHouseRepository;
 import com.training0802.demo.service.RentalFeeHouseService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,7 @@ public class RentalFeeHouseServiceImpl implements RentalFeeHouseService {
     public List<RentalFeeHouseResponse> getListRentalFeeHouse() {
         List<RentalFeeHouse> mysqlModelRentalHouses = rentalFeeHouseRepository.findAll();
         List<RentalFeeHouseResponse> dtoRentalFeeHouses = new ArrayList<RentalFeeHouseResponse>();
-        for (RentalFeeHouse rentalFeeHouse : mysqlModelRentalHouses){
-            //convert model to dto
-            RentalFeeHouseResponse dtoRentalFeeHouse = modelMapper.map(rentalFeeHouse,RentalFeeHouseResponse.class);
-            dtoRentalFeeHouses.add(dtoRentalFeeHouse);
-        }
+        dtoRentalFeeHouses = modelMapper.map(mysqlModelRentalHouses, new TypeToken<List<RentalFeeHouseResponse>>(){}.getType());
         return dtoRentalFeeHouses;
     }
 
@@ -48,6 +46,7 @@ public class RentalFeeHouseServiceImpl implements RentalFeeHouseService {
 
     @Override
     public void deleteRentalFeeHouse(Long id) {
+        rentalFeeHouseRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Not found rental fee house with id: " +id));
         rentalFeeHouseRepository.deleteById(id);
     }
 

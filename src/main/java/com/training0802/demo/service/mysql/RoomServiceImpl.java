@@ -1,11 +1,14 @@
 package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.RoomResponse;
+import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.repository.RoomRepository;
 import com.training0802.demo.service.RoomService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,7 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomResponse> getRooms() {
         List<Room> modelRoomList = roomRepository.findAll();
         List<RoomResponse> dtoRoomList = new ArrayList<RoomResponse>();
-        for (Room room: modelRoomList){
-            RoomResponse roomResponse = modelMapper.map(room,RoomResponse.class);
-            dtoRoomList.add(roomResponse);
-        }
+        dtoRoomList = modelMapper.map(modelRoomList,new TypeToken<List<RoomResponse>>(){}.getType());
         return dtoRoomList;
     }
 
@@ -43,26 +43,28 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addRoom(RoomResponse roomResponse) {
+    public RoomResponse addRoom(RoomResponse roomResponse) {
+        Long idHouse = roomResponse.getHouse().getId();
+        House house = mysqlHouseRepository.findById(idHouse).orElseThrow(() -> new EntityNotFoundException("Not exist house with id: "+idHouse));
+        int totalRoom = house.getTotalRooms();
+        house.setTotalRooms(totalRoom + 1);
+        mysqlHouseRepository.save(house);
+
         Room modelRoom = modelMapper.map(roomResponse,Room.class);
-
-        long idHouse = modelRoom.getHouse().getId();
-        int totalRoom = mysqlHouseRepository.findById(idHouse).get().getTotalRooms();
-        mysqlHouseRepository.findById(idHouse).get().setTotalRooms(totalRoom + 1);
-
         roomRepository.save(modelRoom);
-
+        return roomResponse;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(Long id) {
+        roomRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found room with id: "+id));
         roomRepository.deleteById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoomResponse updateRoom(RoomResponse roomResponse, Long id) {
-//        Room modelRoom = modelMapper.map(roomResponse,Room.class);
         Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id"));
 
         roomById.setId(id);

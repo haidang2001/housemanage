@@ -1,33 +1,24 @@
 package com.training0802.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.RoomSer;
 import com.training0802.demo.model.mysql.Tenant;
-import jakarta.persistence.*;
 
 import java.util.List;
 
 public class RoomResponse {
     private Long id;
     private String name;
-//    @JoinColumn(name = "fkRoomHouse",referencedColumnName = "id")
     private House house;
     private int floor;
     private int area;
     private String image;
     private String status;
-
-//    @JsonBackReference
     private List<RoomSer> roomSers;
     private int rents;
     private String description;
-    //    @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
-//    @JsonManagedReference
-//    @JsonIgnore
-//    private List<Tenant> tenantList;
+    private List<Tenant> tenantList;
+
     public RoomResponse() {
     }
 
@@ -43,6 +34,7 @@ public class RoomResponse {
         this.rents = rents;
         this.description = description;
     }
+
     public RoomResponse(Long id, String name, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
         this.id = id;
         this.name = name;
@@ -66,16 +58,17 @@ public class RoomResponse {
         this.roomSers = roomSers;
         this.rents = rents;
         this.description = description;
-//        this.tenantList = tenantList;
+        this.tenantList = tenantList;
     }
 
-//    public List<Tenant> getTenantList() {
-//        return tenantList;
-//    }
-//
-//    public void setTenantList(List<Tenant> tenantList) {
-//        this.tenantList = tenantList;
-//    }
+
+    public List<Tenant> getTenantList() {
+        return tenantList;
+    }
+
+    public void setTenantList(List<Tenant> tenantList) {
+        this.tenantList = tenantList;
+    }
 
     public Long getId() {
         return id;
@@ -92,6 +85,7 @@ public class RoomResponse {
     public void setName(String name) {
         this.name = name;
     }
+
     public House getHouse() {
         return house;
     }
@@ -131,12 +125,10 @@ public class RoomResponse {
     public void setStatus(String status) {
         this.status = status;
     }
-//    @JsonBackReference
 
     public List<RoomSer> getRoomSers() {
         return roomSers;
     }
-//    @JsonBackReference
 
     public void setRoomSers(List<RoomSer> roomSers) {
         this.roomSers = roomSers;
@@ -156,21 +148,5 @@ public class RoomResponse {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", house=" + house +
-                ", floor=" + floor +
-                ", area=" + area +
-                ", image='" + image + '\'' +
-                ", status='" + status + '\'' +
-                ", roomService='" + roomSers + '\'' +
-                ", rents=" + rents +
-                ", description='" + description + '\'' +
-                '}';
     }
 }
