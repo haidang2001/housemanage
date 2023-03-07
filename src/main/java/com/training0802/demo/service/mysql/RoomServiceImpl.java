@@ -3,8 +3,10 @@ package com.training0802.demo.service.mysql;
 import com.training0802.demo.dto.RoomResponse;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
+import com.training0802.demo.model.mysql.RoomSer;
 import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.repository.RoomRepository;
+import com.training0802.demo.repository.RoomSerRepository;
 import com.training0802.demo.service.RoomService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -16,12 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Profile("mysql")
 public class RoomServiceImpl implements RoomService {
     @Autowired
     public RoomRepository roomRepository;
+    @Autowired
+    public RoomSerRepository roomSerRepository;
     @Autowired
     public MysqlHouseRepository mysqlHouseRepository;
     @Autowired
@@ -67,16 +73,30 @@ public class RoomServiceImpl implements RoomService {
     public RoomResponse updateRoom(RoomResponse roomResponse, Long id) {
         Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id"));
 
-        roomById.setId(id);
+//        roomById.setId(id);
         roomById.setName(roomResponse.getName());
-        roomById.setHouse(roomById.getHouse());
         roomById.setFloor(roomResponse.getFloor());
         roomById.setArea(roomResponse.getArea());
         roomById.setImage(roomResponse.getImage());
         roomById.setStatus(roomResponse.getStatus());
-        roomById.setRoomSers(roomResponse.getRoomSers());
         roomById.setRents(roomResponse.getRents());
         roomById.setDescription(roomResponse.getDescription());
+
+//        roomById.setHouse(roomById.getHouse());
+        if (roomResponse.getRoomSers() != null) {
+            List<RoomSer> oldRoomSers = roomById.getRoomSers();
+            List<Long> newRoomSerIds = roomResponse.getRoomSers().stream().map(RoomSer::getId).collect(Collectors.toList());
+            List<RoomSer> newRoomSers = roomSerRepository.findAllById(newRoomSerIds);
+
+            for (RoomSer roomSer : newRoomSers) {
+                if (!oldRoomSers.contains(roomSer)) {
+                    roomSer.setRoom(roomById);
+                }
+            }
+            roomById.setRoomSers(newRoomSers);
+        } else {
+            roomById.setRoomSers(new ArrayList<>());
+        }
 
         roomRepository.save(roomById);
         return roomResponse;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -141,11 +142,15 @@ public class Room {
     }
 
     public List<RoomSer> getRoomSers() {
-        return roomSers;
+        return roomSers != null ? roomSers : new ArrayList<>();
     }
 
     public void setRoomSers(List<RoomSer> roomSers) {
-        this.roomSers = roomSers;
+        if (this.roomSers == null) {
+            this.roomSers = new ArrayList<>();
+        }
+        this.roomSers.clear();
+        this.roomSers.addAll(roomSers);
     }
 
     public int getRents() {
