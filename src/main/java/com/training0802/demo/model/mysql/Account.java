@@ -22,6 +22,7 @@ public class Account {
     @OneToOne()
     @JoinColumn(name = "house_id")
     private House house;
+
     private String position;
     private String username;
     private String password;
@@ -146,6 +147,7 @@ public class Account {
     public void setHouse(House house) {
         this.house = house;
     }
+
 
     public String getPosition() {
         return position;

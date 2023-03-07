@@ -2,7 +2,9 @@ package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.model.mysql.Account;
+import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.repository.AccountRepository;
+import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.service.AccountService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,8 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     public AccountRepository accountRepository;
+    @Autowired
+    public MysqlHouseRepository mysqlHouseRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -64,10 +68,13 @@ public class AccountServiceImpl implements AccountService {
         modelAccount.setPosition(accountResponse.getPosition());
         modelAccount.setStartedDate(accountResponse.getStartedDate());
         modelAccount.setStatus(accountResponse.getStatus());
-        modelAccount.setHouse(accountResponse.getHouse());
+
+        House house = mysqlHouseRepository.findById(accountResponse.getHouse().getId()).orElseThrow(() -> new EntityNotFoundException("Not found house id"));
+        modelAccount.setHouse(house);
 
         Account save = accountRepository.save(modelAccount);
-        accountResponse.setId(save.getId());
+
+        accountResponse = modelMapper.map(save,AccountResponse.class);
         return accountResponse;
     }
 
@@ -81,14 +88,29 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse updateAccount(AccountResponse accountResponse, Long id) {
         Account accountById = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id:" + id));
 
-        accountById.setId(id);
+//        accountById.setId(id);
         accountById.setName(accountResponse.getName());
         accountById.setGender(accountResponse.getGender());
         accountById.setRole(accountResponse.getRole());
         accountById.setPhone(accountResponse.getPhone());
         accountById.setEmail(accountResponse.getEmail());
+        accountById.setUsername(accountResponse.getUsername());
+        accountById.setPassword(accountResponse.getPassword());
+        accountById.setBirthDate(accountResponse.getBirthDate());
+        accountById.setDescription(accountResponse.getDescription());
+        accountById.setIdNumber(accountResponse.getIdNumber());
+        accountById.setPosition(accountResponse.getPosition());
+        accountById.setStartedDate(accountResponse.getStartedDate());
+        accountById.setStatus(accountResponse.getStatus());
+        
+        House house = mysqlHouseRepository.findById(accountResponse.getHouse().getId()).orElseThrow(() -> new EntityNotFoundException("Not found house id"));
+        accountById.setHouse(house);
 
-        accountRepository.save(accountById);
+        house.setManager(accountById.getName());
+        mysqlHouseRepository.save(house);
+
+        Account save = accountRepository.save(accountById);
+        accountResponse = modelMapper.map(save,AccountResponse.class);
         return accountResponse;
     }
 }

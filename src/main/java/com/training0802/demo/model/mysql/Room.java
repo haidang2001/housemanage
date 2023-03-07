@@ -141,16 +141,26 @@ public class Room {
         this.status = status;
     }
 
+
+//    public List<RoomSer> getRoomSers() {
+//        return roomSers != null ? roomSers : new ArrayList<>();
+//    }
+//
+//    public void setRoomSers(List<RoomSer> roomSers) {
+//        if (this.roomSers == null) {
+//            this.roomSers = new ArrayList<>();
+//        }
+//        this.roomSers.clear();
+//        this.roomSers.addAll(roomSers);
+//    }
+
+
     public List<RoomSer> getRoomSers() {
-        return roomSers != null ? roomSers : new ArrayList<>();
+        return roomSers;
     }
 
     public void setRoomSers(List<RoomSer> roomSers) {
-        if (this.roomSers == null) {
-            this.roomSers = new ArrayList<>();
-        }
-        this.roomSers.clear();
-        this.roomSers.addAll(roomSers);
+        this.roomSers = roomSers;
     }
 
     public int getRents() {

@@ -68,9 +68,9 @@ public class RoomController {
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateRoom(@RequestBody RoomResponse roomResponse, @PathVariable Long id){
         try {
-            roomServiceImpl.updateRoom(roomResponse,id);
+            RoomResponse roomResponse1 = roomServiceImpl.updateRoom(roomResponse, id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0,"Update room sucessfully",roomResponse)
+                    new MessageResponse(0,"Update room sucessfully",roomResponse1)
             );
         }
         catch (RuntimeException e){

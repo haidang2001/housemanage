@@ -71,7 +71,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoomResponse updateRoom(RoomResponse roomResponse, Long id) {
-        Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found room with this id"));
+        Room roomById = roomRepository.findById(id).orElseThrow(() -> new RuntimeException  ("Not found room with this id"));
 
 //        roomById.setId(id);
         roomById.setName(roomResponse.getName());
@@ -83,22 +83,24 @@ public class RoomServiceImpl implements RoomService {
         roomById.setDescription(roomResponse.getDescription());
 
 //        roomById.setHouse(roomById.getHouse());
-        if (roomResponse.getRoomSers() != null) {
-            List<RoomSer> oldRoomSers = roomById.getRoomSers();
-            List<Long> newRoomSerIds = roomResponse.getRoomSers().stream().map(RoomSer::getId).collect(Collectors.toList());
-            List<RoomSer> newRoomSers = roomSerRepository.findAllById(newRoomSerIds);
+//        if (roomResponse.getRoomSers() != null) {
+//            List<RoomSer> oldRoomSers = roomById.getRoomSers();
+//            List<Long> newRoomSerIds = roomResponse.getRoomSers().stream().map(RoomSer::getId).collect(Collectors.toList());
+//            List<RoomSer> newRoomSers = roomSerRepository.findAllById(newRoomSerIds);
+//
+//            for (RoomSer roomSer : newRoomSers) {
+//                if (!oldRoomSers.contains(roomSer)) {
+//                    roomSer.setRoom(roomById);
+//                }
+//            }
+//            roomById.setRoomSers(newRoomSers);
+//        } else {
+//            roomById.setRoomSers(new ArrayList<>());
+//        }
 
-            for (RoomSer roomSer : newRoomSers) {
-                if (!oldRoomSers.contains(roomSer)) {
-                    roomSer.setRoom(roomById);
-                }
-            }
-            roomById.setRoomSers(newRoomSers);
-        } else {
-            roomById.setRoomSers(new ArrayList<>());
-        }
 
-        roomRepository.save(roomById);
+        Room save = roomRepository.save(roomById);
+        roomResponse = modelMapper.map(save,RoomResponse.class);
         return roomResponse;
     }
 
