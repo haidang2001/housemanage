@@ -14,40 +14,17 @@ public class RoomResponse {
     private int area;
     private String image;
     private String status;
-    private List<RoomSer> roomSers;
+    private List<RoomSerResponse> roomSers;
     private int rents;
     private String description;
-    private List<Tenant> tenantList;
+    private List<TenantResponse> tenantList;
 
     public RoomResponse() {
     }
+    //    @JsonBackReference
 
-    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
-        this.id = id;
-        this.name = name;
-        this.house = house;
-        this.floor = floor;
-        this.area = area;
-        this.image = image;
-        this.status = status;
-        this.roomSers = roomSers;
-        this.rents = rents;
-        this.description = description;
-    }
 
-    public RoomResponse(Long id, String name, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description) {
-        this.id = id;
-        this.name = name;
-        this.floor = floor;
-        this.area = area;
-        this.image = image;
-        this.status = status;
-        this.roomSers = roomSers;
-        this.rents = rents;
-        this.description = description;
-    }
-
-    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSer> roomSers, int rents, String description, List<Tenant> tenantList) {
+    public RoomResponse(Long id, String name, House house, int floor, int area, String image, String status, List<RoomSerResponse> roomSers, int rents, String description, List<TenantResponse> tenantList) {
         this.id = id;
         this.name = name;
         this.house = house;
@@ -61,12 +38,19 @@ public class RoomResponse {
         this.tenantList = tenantList;
     }
 
+    public List<RoomSerResponse> getRoomSers() {
+        return roomSers;
+    }
 
-    public List<Tenant> getTenantList() {
+    public void setRoomSers(List<RoomSerResponse> roomSers) {
+        this.roomSers = roomSers;
+    }
+
+    public List<TenantResponse> getTenantList() {
         return tenantList;
     }
 
-    public void setTenantList(List<Tenant> tenantList) {
+    public void setTenantList(List<TenantResponse> tenantList) {
         this.tenantList = tenantList;
     }
 
@@ -126,13 +110,7 @@ public class RoomResponse {
         this.status = status;
     }
 
-    public List<RoomSer> getRoomSers() {
-        return roomSers;
-    }
 
-    public void setRoomSers(List<RoomSer> roomSers) {
-        this.roomSers = roomSers;
-    }
 
     public int getRents() {
         return rents;

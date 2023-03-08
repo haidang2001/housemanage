@@ -42,7 +42,8 @@ public class MysqlHouseServiceImpl implements HouseService {
     @Transactional(rollbackFor = Exception.class)
     public HouseResponse addHouse(HouseResponse houseResponse) {
         House modelHouse = modelMapper.map(houseResponse, House.class);
-        mysqlHouseRepository.save(modelHouse);
+        House save = mysqlHouseRepository.save(modelHouse);
+        houseResponse.setId(save.getId());
         return houseResponse;
     }
 
@@ -59,17 +60,20 @@ public class MysqlHouseServiceImpl implements HouseService {
         House houseById = mysqlHouseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found house with id: " + id));
 
-        houseById.setId(id);
+//        houseById.setId(id);
         houseById.setLocation(houseResponse.getLocation());
         houseById.setName(houseResponse.getName());
         houseById.setEstablishDate(houseResponse.getEstablishDate());
-        houseById.setTotalRooms(houseResponse.getTotalRooms());
+//        houseById.setTotalRooms(houseResponse.getTotalRooms());
         houseById.setManager(houseResponse.getManager());
+        houseById.setImage(houseResponse.getImage());
         houseById.setStatus(houseResponse.getStatus());
         houseById.setDescription(houseResponse.getDescription());
-        houseById.setRoomList(houseResponse.getRoomList());
+//        houseById.setRentalFeeHouseList(houseResponse.getRentalFeeHouseList());
+//        houseById.setRoomList(houseResponse.getRoomList());
 
-        mysqlHouseRepository.save(houseById);
+        House save = mysqlHouseRepository.save(houseById);
+        houseResponse.setId(save.getId());
         return houseResponse;
     }
 

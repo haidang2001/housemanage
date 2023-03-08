@@ -38,41 +38,6 @@ public class House {
     private List<Tenant> tenantList;
     public House(){}
 
-    public House(Long id, String location, String name, String establishDate, String manager, String status, String description,String image, List<Room> roomList) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.image=image;
-        this.roomList = roomList;
-    }
-    public House(Long id, String location, String name, String establishDate, String manager, String status, String description) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.roomList = null;
-    }
-
-    public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.totalRooms = totalRooms;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.image = image;
-        this.roomList = roomList;
-        this.rentalFeeHouseList = rentalFeeHouseList;
-    }
     public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
         this.id = id;
         this.location = location;

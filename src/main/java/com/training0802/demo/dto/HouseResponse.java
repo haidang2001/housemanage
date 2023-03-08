@@ -14,57 +14,17 @@ public class HouseResponse {
     private int totalRooms;
     private String manager;
     private String status;
-    private String description;
+    private  String description;
     private String image;
 
-
-    private List<Room> roomList;
-
-    private List<RentalFeeHouse> rentalFeeHouseList;
-
-    private List<Tenant> tenantList;
+    private List<RoomResponse> roomList;
+    private List<RentalFeeHouseResponse> rentalFeeHouseList;
+    private List<TenantResponse> tenantList;
 
     public HouseResponse() {
     }
 
-    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description, String image, List<Room> roomList) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.image = image;
-        this.roomList = roomList;
-    }
-
-    public HouseResponse(Long id, String location, String name, String establishDate, String manager, String status, String description) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.roomList = null;
-    }
-
-    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList) {
-        this.id = id;
-        this.location = location;
-        this.name = name;
-        this.establishDate = establishDate;
-        this.totalRooms = totalRooms;
-        this.manager = manager;
-        this.status = status;
-        this.description = description;
-        this.image = image;
-        this.roomList = roomList;
-        this.rentalFeeHouseList = rentalFeeHouseList;
-    }
-
-    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
+    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<RoomResponse> roomList, List<RentalFeeHouseResponse> rentalFeeHouseList, List<TenantResponse> tenantList) {
         this.id = id;
         this.location = location;
         this.name = name;
@@ -79,22 +39,13 @@ public class HouseResponse {
         this.tenantList = tenantList;
     }
 
-    public List<Tenant> getTenantList() {
-        return tenantList;
+    public String getImage() {
+        return image;
     }
 
-    public void setTenantList(List<Tenant> tenantList) {
-        this.tenantList = tenantList;
+    public void setImage(String image) {
+        this.image = image;
     }
-
-    public List<RentalFeeHouse> getRentalFeeHouseList() {
-        return rentalFeeHouseList;
-    }
-
-    public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
-        this.rentalFeeHouseList = rentalFeeHouseList;
-    }
-
 
     public String getLocation() {
         return location;
@@ -152,14 +103,6 @@ public class HouseResponse {
         this.description = description;
     }
 
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
-    }
-
     public Long getId() {
         return id;
     }
@@ -168,12 +111,27 @@ public class HouseResponse {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public List<RoomResponse> getRoomList() {
+        return roomList;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setRoomList(List<RoomResponse> roomList) {
+        this.roomList = roomList;
     }
 
+    public List<RentalFeeHouseResponse> getRentalFeeHouseList() {
+        return rentalFeeHouseList;
+    }
+
+    public void setRentalFeeHouseList(List<RentalFeeHouseResponse> rentalFeeHouseList) {
+        this.rentalFeeHouseList = rentalFeeHouseList;
+    }
+
+    public List<TenantResponse> getTenantList() {
+        return tenantList;
+    }
+
+    public void setTenantList(List<TenantResponse> tenantList) {
+        this.tenantList = tenantList;
+    }
 }

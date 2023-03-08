@@ -22,7 +22,7 @@ public class AccountResponse {
     private Date startedDate;
     private String status;
     private String description;
-
+    private Long acc_id;
     public AccountResponse() {
 
     }
@@ -66,6 +66,22 @@ public class AccountResponse {
         this.startedDate = startedDate;
         this.status = status;
         this.description = description;
+    }
+
+    public AccountResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, Long house_id, String position, Date startedDate, String status, String description, Long acc_id) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.idNumber = idNumber;
+        this.house_id = house_id;
+        this.position = position;
+        this.startedDate = startedDate;
+        this.status = status;
+        this.description = description;
+        this.acc_id = acc_id;
     }
 
     public Long getId() {
@@ -132,12 +148,30 @@ public class AccountResponse {
         this.idNumber = idNumber;
     }
 
-    public Long getHouse() {
+
+//    public Long getHouse() {
+//        return house_id;
+//    }
+//
+//    public void setHouse(Long house_id) {
+//        this.house_id = house_id;
+//    }
+
+
+    public Long getHouse_id() {
         return house_id;
     }
 
-    public void setHouse(Long house_id) {
+    public void setHouse_id(Long house_id) {
         this.house_id = house_id;
+    }
+
+    public Long getAcc_id() {
+        return acc_id;
+    }
+
+    public void setAcc_id(Long acc_id) {
+        this.acc_id = acc_id;
     }
 
     public String getPosition() {

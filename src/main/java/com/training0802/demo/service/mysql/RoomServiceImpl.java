@@ -81,7 +81,12 @@ public class RoomServiceImpl implements RoomService {
         roomById.setStatus(roomResponse.getStatus());
         roomById.setRents(roomResponse.getRents());
         roomById.setDescription(roomResponse.getDescription());
-        roomById.setRoomSers(roomResponse.getRoomSers());
+        List<RoomSer> listRoomSer = new ArrayList<RoomSer>();
+//        dtoRoomList = modelMapper.map(modelRoomList,new TypeToken<List<RoomResponse>>(){}.getType());
+        //convert dto to model
+        listRoomSer = modelMapper.map(roomResponse.getRoomSers(),new TypeToken<List<RoomSer>>(){}.getType());
+//        roomResponse.getRoomSers() = modelMapper.map(roomResponse.getRoomSers(),listRoomSer);
+        roomById.setRoomSers(listRoomSer);
 //        roomById.setHouse(roomById.getHouse());
 //        if (roomResponse.getRoomSers() != null) {
 //            List<RoomSer> oldRoomSers = roomById.getRoomSers();

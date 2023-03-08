@@ -8,15 +8,15 @@ public class RoomSerResponse {
     private Long id;
     private String name;
 
-    private List<Room> roomList;
+//    private List<RoomResponse> roomList;
 
     public RoomSerResponse() {
     }
 
-    public RoomSerResponse(Long id, String name, List<Room> roomList) {
+    public RoomSerResponse(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.roomList = roomList;
+//        this.roomList = roomList;
     }
 
     public Long getId() {
@@ -35,12 +35,12 @@ public class RoomSerResponse {
         this.name = name;
     }
 
-    public List<Room> getRoom() {
-        return roomList;
-    }
-
-    public void setRoom(List<Room> roomList) {
-        this.roomList = roomList;
-    }
+//    public List<RoomResponse> getRoom() {
+//        return roomList;
+//    }
+//
+//    public void setRoom(List<RoomResponse> roomList) {
+//        this.roomList = roomList;
+//    }
 }
 

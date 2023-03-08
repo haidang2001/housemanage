@@ -1,8 +1,12 @@
 package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.AccountResponse;
+import com.training0802.demo.model.mysql.Acc;
 import com.training0802.demo.model.mysql.Account;
+import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.repository.AccRepository;
 import com.training0802.demo.repository.AccountRepository;
+import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.service.AccountService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -19,6 +23,10 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     public AccountRepository accountRepository;
+    @Autowired
+    public MysqlHouseRepository mysqlHouseRepository;
+    @Autowired
+    public AccRepository accRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -64,7 +72,11 @@ public class AccountServiceImpl implements AccountService {
         modelAccount.setPosition(accountResponse.getPosition());
         modelAccount.setStartedDate(accountResponse.getStartedDate());
         modelAccount.setStatus(accountResponse.getStatus());
-//        modelAccount.setHouse(accountResponse.getHouse());
+
+        House house = mysqlHouseRepository.findById(accountResponse.getHouse_id()).orElseThrow(() -> new EntityNotFoundException("Not found house with this id"));
+        modelAccount.setHouse(house);
+        Acc acc = accRepository.findById(accountResponse.getAcc_id()).orElseThrow(() -> new EntityNotFoundException("Not found acc with this id"));
+        modelAccount.setAcc(acc);
 
         Account save = accountRepository.save(modelAccount);
         accountResponse.setId(save.getId());

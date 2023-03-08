@@ -13,10 +13,6 @@ public class RoomSer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-//    @ManyToOne
-//    @JsonBackReference
-//    @JoinColumn(name = "room_id")
-
     @ManyToMany(mappedBy = "roomSers")
     @JsonBackReference
     private List<Room> roomList;
@@ -46,12 +42,11 @@ public class RoomSer {
         this.name = name;
     }
 
-    //    @JsonBackReference
-    public List<Room> getRoom() {
-        return roomList;
-    }
-
-    public void setRoom(List<Room> roomList) {
-        this.roomList = roomList;
-    }
+//    public List<Room> getRoom() {
+//        return roomList;
+//    }
+//
+//    public void setRoom(List<Room> roomList) {
+//        this.roomList = roomList;
+//    }
 }

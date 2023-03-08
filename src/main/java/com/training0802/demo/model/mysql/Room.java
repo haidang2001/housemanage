@@ -23,9 +23,6 @@ public class Room {
     private int area;
     private String image;
     private String status;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
-//    @JsonManagedReference
-//    @JsonIgnore
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "Room_RoomSer",

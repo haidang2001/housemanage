@@ -58,7 +58,7 @@ public class RoomSerServiceImpl implements RoomSerService {
 
         roomSerById.setId(id);
         roomSerById.setName(RoomSerResponse.getName());
-        roomSerById.setRoom(roomSerById.getRoom());
+//        roomSerById.setRoom(roomSerById.getRoom());
 
         roomSerRespository.save(roomSerById);
         return RoomSerResponse;

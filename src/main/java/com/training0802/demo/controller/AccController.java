@@ -48,12 +48,6 @@ public class AccController {
 
     @PostMapping("/add")
     public ResponseEntity<MessageResponse> addAccount(@RequestBody @Valid AccResponse accResponse, BindingResult bindingResult) {
-//        Acc existingUser = userService.findUserByEmail(userDto.getEmail());
-//
-//        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
-//            result.rejectValue("email", null,
-//                    "There is already an account registered with the same email");
-//        }
         if(bindingResult.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, bindingResult.getAllErrors().get(0).getDefaultMessage(), "")
