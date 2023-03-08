@@ -1,6 +1,8 @@
 package com.training0802.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.training0802.demo.model.mysql.House;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -9,14 +11,14 @@ public class AccountResponse {
     private String name;
     private Date birthDate;
     private String gender;
-    private String role;
+    //    private String role;
     private String phone;
     private String email;
     private int idNumber;
-    private House house;
+    private Long house_id;
     private String position;
-    private String username;
-    private String password;
+    //    private String username;
+//    private String password;
     private Date startedDate;
     private String status;
     private String description;
@@ -30,37 +32,37 @@ public class AccountResponse {
 
         this.name = name;
         this.gender = gender;
-        this.role = role;
+//        this.role = role;
         this.phone = phone;
         this.email = email;
-        this.username = username;
-        this.password = password;
+//        this.username = username;
+//        this.password = password;
     }
 
     public AccountResponse(Long id, String name, String gender, String role, String phone, String email, String username, String password) {
         this.id = id;
         this.name = name;
         this.gender = gender;
-        this.role = role;
+//        this.role = role;
         this.phone = phone;
         this.email = email;
-        this.username = username;
-        this.password = password;
+//        this.username = username;
+//        this.password = password;
     }
 
-    public AccountResponse(Long id, String name, Date birthDate, String gender, String role, String phone, String email, int idNumber, House house, String position, String username, String password, Date startedDate, String status, String description) {
+    public AccountResponse(Long id, String name, Date birthDate, String gender, String role, String phone, String email, int idNumber, Long house_id, String position, String username, String password, Date startedDate, String status, String description) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.role = role;
+//        this.role = role;
         this.phone = phone;
         this.email = email;
         this.idNumber = idNumber;
-        this.house = house;
+        this.house_id = house_id;
         this.position = position;
-        this.username = username;
-        this.password = password;
+//        this.username = username;
+//        this.password = password;
         this.startedDate = startedDate;
         this.status = status;
         this.description = description;
@@ -98,13 +100,13 @@ public class AccountResponse {
         this.gender = gender;
     }
 
-    public String getRole() {
-        return role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 
     public String getPhone() {
         return phone;
@@ -130,12 +132,12 @@ public class AccountResponse {
         this.idNumber = idNumber;
     }
 
-    public House getHouse() {
-        return house;
+    public Long getHouse() {
+        return house_id;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
+    public void setHouse(Long house_id) {
+        this.house_id = house_id;
     }
 
     public String getPosition() {
@@ -146,21 +148,22 @@ public class AccountResponse {
         this.position = position;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public Date getStartedDate() {
         return startedDate;

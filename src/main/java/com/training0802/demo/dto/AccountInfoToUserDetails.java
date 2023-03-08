@@ -1,5 +1,6 @@
 package com.training0802.demo.dto;
 
+import com.training0802.demo.model.mysql.Acc;
 import com.training0802.demo.model.mysql.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +16,7 @@ public class AccountInfoToUserDetails implements UserDetails {
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public AccountInfoToUserDetails(Account account) {
+    public AccountInfoToUserDetails(Acc account) {
         username = account.getUsername();
         password = account.getPassword();
         authorities = Arrays.stream(account.getRole().split(","))

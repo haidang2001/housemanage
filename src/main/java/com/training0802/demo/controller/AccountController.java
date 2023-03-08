@@ -80,7 +80,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Update account successfully with id: " + id, accountResponse1)
             );
-        } catch (RuntimeException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     new MessageResponse(1, e.getMessage(), "")
             );

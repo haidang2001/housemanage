@@ -81,7 +81,7 @@ public class RoomServiceImpl implements RoomService {
         roomById.setStatus(roomResponse.getStatus());
         roomById.setRents(roomResponse.getRents());
         roomById.setDescription(roomResponse.getDescription());
-
+        roomById.setRoomSers(roomResponse.getRoomSers());
 //        roomById.setHouse(roomById.getHouse());
 //        if (roomResponse.getRoomSers() != null) {
 //            List<RoomSer> oldRoomSers = roomById.getRoomSers();

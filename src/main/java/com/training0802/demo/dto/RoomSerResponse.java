@@ -2,19 +2,21 @@ package com.training0802.demo.dto;
 
 import com.training0802.demo.model.mysql.Room;
 
+import java.util.List;
+
 public class RoomSerResponse {
     private Long id;
     private String name;
 
-    private Room room;
+    private List<Room> roomList;
 
     public RoomSerResponse() {
     }
 
-    public RoomSerResponse(Long id, String name, Room room) {
+    public RoomSerResponse(Long id, String name, List<Room> roomList) {
         this.id = id;
         this.name = name;
-        this.room = room;
+        this.roomList = roomList;
     }
 
     public Long getId() {
@@ -33,12 +35,12 @@ public class RoomSerResponse {
         this.name = name;
     }
 
-    public Room getRoom() {
-        return room;
+    public List<Room> getRoom() {
+        return roomList;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoom(List<Room> roomList) {
+        this.roomList = roomList;
     }
 }
 

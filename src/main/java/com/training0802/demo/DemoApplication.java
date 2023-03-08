@@ -1,5 +1,6 @@
 package com.training0802.demo;
 
+import com.training0802.demo.repository.AccRepository;
 import com.training0802.demo.repository.AccountRepository;
 import com.training0802.demo.repository.MongoHouseRepository;
 import org.modelmapper.ModelMapper;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackageClasses = AccountRepository.class)
+@EnableJpaRepositories(basePackageClasses = AccRepository.class)
 @EnableMongoRepositories(basePackageClasses = MongoHouseRepository.class)
 public class DemoApplication implements CommandLineRunner {
     @Bean

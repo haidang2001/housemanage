@@ -23,9 +23,14 @@ public class Room {
     private int area;
     private String image;
     private String status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
-    @JsonManagedReference
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+//    @JsonManagedReference
+//    @JsonIgnore
+    @ManyToMany
     @JsonIgnore
+    @JoinTable(name = "Room_RoomSer",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "roomser_id"))
     private List<RoomSer> roomSers;
     private int rents;
     private String description;

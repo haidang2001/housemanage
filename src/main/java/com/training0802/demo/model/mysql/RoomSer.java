@@ -1,7 +1,10 @@
 package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tblRoomSer")
@@ -10,18 +13,21 @@ public class RoomSer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToOne
+//    @ManyToOne
+//    @JsonBackReference
+//    @JoinColumn(name = "room_id")
+
+    @ManyToMany(mappedBy = "roomSers")
     @JsonBackReference
-    @JoinColumn(name = "room_id")
-    private Room room;
+    private List<Room> roomList;
 
     public RoomSer() {
     }
 
-    public RoomSer(Long id, String name, Room room) {
+    public RoomSer(Long id, String name, List<Room> roomList) {
         this.id = id;
         this.name = name;
-        this.room = room;
+        this.roomList = roomList;
     }
 
     public Long getId() {
@@ -41,11 +47,11 @@ public class RoomSer {
     }
 
     //    @JsonBackReference
-    public Room getRoom() {
-        return room;
+    public List<Room> getRoom() {
+        return roomList;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoom(List<Room> roomList) {
+        this.roomList = roomList;
     }
 }
