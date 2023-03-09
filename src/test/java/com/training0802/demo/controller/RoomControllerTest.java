@@ -55,10 +55,10 @@ public class RoomControllerTest {
     }
     @Test
     public void test_getListRoom_givenListRoom_thenReturnListRoom() throws Exception {
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House house = new House();
         List<RoomResponse> listRoom = Arrays.asList(
-                new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house"),
-                new RoomResponse(2L,"Room102",house,3,20,"picture2","occupied","cleaning",10000,"room of house")
+                new RoomResponse(),
+                new RoomResponse()
         );
         List<RoomResponse> listRoomMock = listRoom;
         Mockito.when(roomService.getRooms()).thenReturn(listRoomMock);
@@ -72,8 +72,8 @@ public class RoomControllerTest {
     @Test
     public void test_getDetailRoom_givenIdRoom_thenReturnRoomDetail() throws Exception {
         Long id = 1L;
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        RoomResponse roomResponse = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        House house = new House();
+        RoomResponse roomResponse = new RoomResponse();
 
         Mockito.when(roomService.getDetailRoom(id)).thenReturn(roomResponse);
 
@@ -85,8 +85,8 @@ public class RoomControllerTest {
     @Test
     public void test_getDetailRoom_givenIdRoom_thenReturnRoomNotFound() throws Exception {
         Long id = 1L;
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        RoomResponse roomResponse = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        House house = new House();
+        RoomResponse roomResponse = new RoomResponse();
 
         Mockito.when(roomService.getDetailRoom(id)).thenThrow(new RuntimeException("Not found room with this id: "+id ));
 
@@ -97,8 +97,8 @@ public class RoomControllerTest {
     }
     @Test
     public void test_addRoom_givenNewRoom_thenReturnRoomAdded() throws Exception {
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        RoomResponse roomResponse = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        House house = new House();
+        RoomResponse roomResponse = new RoomResponse();
         String jsonContent = gson.toJson(roomResponse);
 
         MessageResponse messageExpected = new MessageResponse(0,"Add new room sucessfully",roomResponse);
@@ -125,8 +125,8 @@ public class RoomControllerTest {
     @Test
     public void test_updateRoom_givenIdRoom_thenReturnRoomResponse() throws Exception {
         Long id = 1L;
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        RoomResponse roomResponse = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        House house = new House();
+        RoomResponse roomResponse = new RoomResponse();
         String jsonContent = gson.toJson(roomResponse);
         MessageResponse messageExpected = new MessageResponse(0,"Update room sucessfully",roomResponse);
         String jsonExpect = gson.toJson(messageExpected);
@@ -139,8 +139,8 @@ public class RoomControllerTest {
     @Test
     public void test_updateRoom_givenIdRoom_thenReturnRoomNotFound() throws Exception {
         Long id = 1L;
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
-        RoomResponse roomResponse = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        House house = new House();
+        RoomResponse roomResponse = new RoomResponse();
         String jsonContent = gson.toJson(roomResponse);
         MessageResponse messageExpected = new MessageResponse(1,"Not found room with this id","");
         String jsonExpect = gson.toJson(messageExpected);

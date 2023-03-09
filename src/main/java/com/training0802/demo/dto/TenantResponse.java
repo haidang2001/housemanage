@@ -16,8 +16,10 @@ public class TenantResponse {
     private int idNumber;
     private String permanentAddress;
 
-    private House house;
-    private Room room;
+//    private House house;
+//    private Room room;
+    private Long idHouse;
+    private Long idRoom;
     private Date rentDate;
     private String status;
     private String description;
@@ -25,7 +27,7 @@ public class TenantResponse {
     public TenantResponse() {
     }
 
-    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Date rentDate, String status, String description) {
+    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, Long idHouse, Long idRoom, Date rentDate, String status, String description) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -34,23 +36,8 @@ public class TenantResponse {
         this.email = email;
         this.idNumber = idNumber;
         this.permanentAddress = permanentAddress;
-        this.house = house;
-        this.rentDate = rentDate;
-        this.status = status;
-        this.description = description;
-    }
-
-    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Room room, Date rentDate, String status, String description) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.phone = phone;
-        this.email = email;
-        this.idNumber = idNumber;
-        this.permanentAddress = permanentAddress;
-        this.house = house;
-        this.room = room;
+        this.idHouse = idHouse;
+        this.idRoom = idRoom;
         this.rentDate = rentDate;
         this.status = status;
         this.description = description;
@@ -120,20 +107,37 @@ public class TenantResponse {
         this.permanentAddress = permanentAddress;
     }
 
-    public House getHouse() {
-        return house;
+//    public House getHouse() {
+//        return house;
+//    }
+//
+//    public void setHouse(House house) {
+//        this.house = house;
+//    }
+//
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
+
+
+    public Long getIdHouse() {
+        return idHouse;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
+    public void setIdHouse(Long idHouse) {
+        this.idHouse = idHouse;
     }
 
-    public Room getRoom() {
-        return room;
+    public Long getIdRoom() {
+        return idRoom;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setIdRoom(Long idRoom) {
+        this.idRoom = idRoom;
     }
 
     public Date getRentDate() {

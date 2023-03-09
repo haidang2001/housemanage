@@ -35,7 +35,7 @@ public class RoomServiceImplTest {
     }
     @Test
     public void test_getRooms_givenRooms_thenReturnSize(){
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House house = new House();
         List<RoomSer> listRoomSer = Arrays.asList(
                 new RoomSer(),
                 new RoomSer()
@@ -75,13 +75,13 @@ public class RoomServiceImplTest {
                 new RoomSer(),
                 new RoomSer()
         );
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House house = new House();
         RoomSer roomSer = new RoomSer();
         Room roomByMock = new Room(1L,"Room101",house,4,20,"picture","occupied",listRoomSer,10000,"room of house");
         //define behavior repo
         when(roomRepository.save(roomByMock)).thenReturn(roomByMock);
         //call service
-        RoomResponse roomRes = new RoomResponse(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house");
+        RoomResponse roomRes = new RoomResponse();
         roomService.addRoom(roomRes);
         //result
         Assertions.assertThat(roomRes.getId()).isGreaterThan(0);
@@ -90,7 +90,7 @@ public class RoomServiceImplTest {
     @Test
     public void test_deleteHouse_givenRoomId_thenReturnDeleteOnce(){
         //create mock
-        House houseMock = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House houseMock = new House();
         //call service
         roomService.deleteRoom(houseMock.getId());
         //ensure repo is call (optional)

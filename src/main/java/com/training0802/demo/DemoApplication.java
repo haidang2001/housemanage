@@ -1,7 +1,6 @@
 package com.training0802.demo;
 
 import com.training0802.demo.repository.AccRepository;
-import com.training0802.demo.repository.AccountRepository;
 import com.training0802.demo.repository.MongoHouseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;

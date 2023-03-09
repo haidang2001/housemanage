@@ -58,14 +58,14 @@ public class HouseControllerTest {
     }
     @Test
     public void test_getListHouse_givenListHouse_thenReturnListHouse() throws Exception {
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House house = new House();
         List<Room> listRoom = Arrays.asList(
-                new Room(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house"),
-                new Room(2L,"Room102",house,3,20,"picture2","occupied","cleaning",10000,"room of house")
+                new Room(),
+                new Room()
         );
         List<HouseResponse> listHouse = Arrays.asList(
-                new HouseResponse(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC",listRoom),
-                new HouseResponse(2L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC",listRoom)
+                new HouseResponse(),
+                new HouseResponse()
         );
         List<HouseResponse> listHouseMock = listHouse;
         Mockito.when(mysqlHouseService.getHouses()).thenReturn(listHouseMock);
@@ -79,7 +79,7 @@ public class HouseControllerTest {
     @Test
     public void test_getDetailHouse_givenIdHouse_thenReturnHouseFound() throws Exception {
         Long id = 1L;
-        HouseResponse houseResponse = new HouseResponse(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC");
+        HouseResponse houseResponse = new HouseResponse();
         MessageResponse expectedMessage = new MessageResponse(0,"Get detail of house with id: "+id,houseResponse);
         String jsonExpected = gson.toJson(expectedMessage);
         Mockito.when(mysqlHouseService.getHouseDetail(id)).thenReturn(houseResponse);
@@ -102,7 +102,7 @@ public class HouseControllerTest {
 
     @Test
     public void test_addHouse_givenNewHouse_thenReturnHouseAdded() throws Exception {
-        HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
+            HouseResponse houseResponse = new HouseResponse();
         String jsonContent = gson.toJson(houseResponse);
 
         MessageResponse expectedMessage = new MessageResponse(0,"Add new house successfully",houseResponse);
@@ -128,7 +128,7 @@ public class HouseControllerTest {
     @Test
     public void test_updateHouse_givenIdHouse_thenReturnHouseNotFound() throws Exception {
         Long id = 1L;
-        HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
+        HouseResponse houseResponse = new HouseResponse();
         String jsonContent = gson.toJson(houseResponse);
 
         MessageResponse messageExpected = new MessageResponse(1,"Not found house with id: " +id,"");
@@ -143,7 +143,7 @@ public class HouseControllerTest {
     @Test
     public void test_updateHouse_givenIdHouse_thenReturnHouseUpdated() throws Exception {
         Long id = 1L;
-        HouseResponse houseResponse = new HouseResponse(1L,"Dang","male","admin","0123","dang@mail.com","dangdang");
+        HouseResponse houseResponse = new HouseResponse();
         String jsonContent = gson.toJson(houseResponse);
 
         MessageResponse messageExpected = new MessageResponse(0,"Update house sucessfully",houseResponse);

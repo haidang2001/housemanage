@@ -41,8 +41,8 @@ public class RoomSerServiceImpl implements RoomSerService {
     @Override
     public RoomSerResponse addRoomService(RoomSerResponse roomSerResponse) {
         RoomSer modelRoomSer = modelMapper.map(roomSerResponse, RoomSer.class);
-        roomSerRespository.save(modelRoomSer);
-
+        RoomSer save = roomSerRespository.save(modelRoomSer);
+        roomSerResponse.setId(save.getId());
         return roomSerResponse;
     }
 
@@ -60,7 +60,8 @@ public class RoomSerServiceImpl implements RoomSerService {
         roomSerById.setName(RoomSerResponse.getName());
 //        roomSerById.setRoom(roomSerById.getRoom());
 
-        roomSerRespository.save(roomSerById);
+        RoomSer save = roomSerRespository.save(roomSerById);
+        RoomSerResponse.setId(save.getId());
         return RoomSerResponse;
     }
 }

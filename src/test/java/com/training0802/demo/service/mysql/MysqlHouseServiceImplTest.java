@@ -39,14 +39,14 @@ public class MysqlHouseServiceImplTest {
     }
     @Test
     public void test_getHouses_givenListHouse_thenReturnSizeList(){
-        House house = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House house = new House();
         List<Room> listRoom = Arrays.asList(
-                new Room(1L,"Room101",house,4,20,"picture","occupied","cleaning",10000,"room of house"),
-                new Room(2L,"Room102",house,3,20,"picture2","occupied","cleaning",10000,"room of house")
+                new Room(),
+                new Room()
         );
         List<House> listHouse = Arrays.asList(
-                new House(1L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC","C:/image1",listRoom),
-                new House(2L,"Truong chinh","Chinh","02/08/2022","Hai","available","house at TC","C:/image2",listRoom)
+                new House(),
+                new House()
         );
 
         when(mysqlHouseRepository.findAll())
@@ -60,7 +60,7 @@ public class MysqlHouseServiceImplTest {
     public void test_getHouseDetail_givenHouse_thenReturnHouseName(){
         Long id = 1L;
         //create mock
-        House houseByMock = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House houseByMock = new House();
         //define behavior repo
         doReturn(Optional.of(houseByMock)).when(mysqlHouseRepository).findById(id);
         //call service
@@ -74,11 +74,11 @@ public class MysqlHouseServiceImplTest {
     @Test
     public void test_addHouse_givenHouse_thenReturnHouseId(){
         //create mock
-        House houseByMock = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House houseByMock = new House();
         //define behavior repo
         when(mysqlHouseRepository.save(houseByMock)).thenReturn(houseByMock);
         //call service
-        HouseResponse houseRes = new HouseResponse(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        HouseResponse houseRes = new HouseResponse();
         mysqlHouseService.addHouse(houseRes);
         //result
         Assertions.assertThat(houseRes.getId()).isGreaterThan(0);
@@ -87,7 +87,7 @@ public class MysqlHouseServiceImplTest {
     @Test
     public void test_deleteHouse_givenHouseId_thenReturnDeleteOnce(){
         //create mock
-        House houseMock = new House(1L,"Truong Chinh","TC house","08/02/2022","Hai","avalable","this is house at TC");
+        House houseMock = new House();
         //call service
         mysqlHouseService.deleteHouse(houseMock.getId());
         //ensure repo is call (optional)
