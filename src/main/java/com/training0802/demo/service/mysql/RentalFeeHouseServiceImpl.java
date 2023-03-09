@@ -26,7 +26,18 @@ public class RentalFeeHouseServiceImpl implements RentalFeeHouseService {
     public List<RentalFeeHouseResponse> getListRentalFeeHouse() {
         List<RentalFeeHouse> mysqlModelRentalHouses = rentalFeeHouseRepository.findAll();
         List<RentalFeeHouseResponse> dtoRentalFeeHouses = new ArrayList<RentalFeeHouseResponse>();
-        dtoRentalFeeHouses = modelMapper.map(mysqlModelRentalHouses, new TypeToken<List<RentalFeeHouseResponse>>(){}.getType());
+
+        for (RentalFeeHouse rentalFeeHouse: mysqlModelRentalHouses){
+            RentalFeeHouseResponse dtoRentalFeeHouse = new RentalFeeHouseResponse();
+            dtoRentalFeeHouse.setId(rentalFeeHouse.getId());
+            dtoRentalFeeHouse.setType(rentalFeeHouse.getType());
+            dtoRentalFeeHouse.setPrice(rentalFeeHouse.getPrice());
+            dtoRentalFeeHouse.setUnit(rentalFeeHouse.getUnit());
+            dtoRentalFeeHouse.setHouse(rentalFeeHouse.getHouse().getId());
+//            RentalFeeHouseResponse dtoRentalFeeHouse = modelMapper.map(rentalFeeHouse,RentalFeeHouseResponse.class);
+            dtoRentalFeeHouses.add(dtoRentalFeeHouse);
+        }
+//        dtoRentalFeeHouses = modelMapper.map(mysqlModelRentalHouses, new TypeToken<List<RentalFeeHouseResponse>>(){}.getType());
         return dtoRentalFeeHouses;
     }
 

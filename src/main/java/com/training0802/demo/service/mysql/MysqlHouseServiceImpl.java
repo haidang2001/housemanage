@@ -1,7 +1,10 @@
 package com.training0802.demo.service.mysql;
 
+import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.HouseResponse;
+import com.training0802.demo.model.mysql.Account;
 import com.training0802.demo.model.mysql.House;
+import com.training0802.demo.repository.AccountRepository;
 import com.training0802.demo.repository.MysqlHouseRepository;
 import com.training0802.demo.service.HouseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Profile("mysql")
@@ -21,12 +25,28 @@ public class MysqlHouseServiceImpl implements HouseService {
     @Autowired
     public MysqlHouseRepository mysqlHouseRepository;
     @Autowired
+    public AccountRepository accountRepository;
+    @Autowired
     public ModelMapper modelMapper;
 
     @Override
     public List<HouseResponse> getHouses() {
         List<House> mysqlModelHouses = mysqlHouseRepository.findAll();
         List<HouseResponse> dtoHouses = new ArrayList<HouseResponse>();
+//        for (House house: mysqlModelHouses){
+//            HouseResponse dtoHouse = new HouseResponse();
+//            dtoHouse.setId(house.getId());
+//            dtoHouse.setName(house.getName());
+//            dtoHouse.setEstablishDate(house.getEstablishDate());
+//            dtoHouse.setTotalRooms(house.getTotalRooms());
+//            AccountResponse accountResponse = modelMapper.map(house.getManager(),AccountResponse.class);
+//            dtoHouse.setManager(accountResponse);
+//            dtoHouse.setImage(house.getImage());
+//            dtoHouse.setStatus(house.getStatus());
+//            dtoHouse.setDescription(house.getDescription());
+////            HouseResponse dtoHouse = modelMapper.map(house,HouseResponse.class);
+//            dtoHouses.add(dtoHouse);
+//        }
         dtoHouses = modelMapper.map(mysqlModelHouses, new TypeToken<List<HouseResponse>>() {}.getType());
         return dtoHouses;
     }
@@ -60,12 +80,15 @@ public class MysqlHouseServiceImpl implements HouseService {
         House houseById = mysqlHouseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found house with id: " + id));
 
-//        houseById.setId(id);
-        houseById.setLocation(houseResponse.getLocation());
         houseById.setName(houseResponse.getName());
+        houseById.setLocation(houseResponse.getLocation());
         houseById.setEstablishDate(houseResponse.getEstablishDate());
-//        houseById.setTotalRooms(houseResponse.getTotalRooms());
-        houseById.setManager(houseResponse.getManager());
+        houseById.setTotalRooms(houseResponse.getTotalRooms());
+
+//        Account ManagerFoundByName = accountRepository.findByName(houseResponse.getManager());
+//        houseById.setManager(ManagerFoundByName);
+        Account managerEntity = modelMapper.map(houseResponse.getManager(),Account.class);
+        houseById.setManager(managerEntity);
         houseById.setImage(houseResponse.getImage());
         houseById.setStatus(houseResponse.getStatus());
         houseById.setDescription(houseResponse.getDescription());

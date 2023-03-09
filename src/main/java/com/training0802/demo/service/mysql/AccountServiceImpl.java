@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class AccountServiceImpl implements AccountService {
         List<AccountResponse> accountList = new ArrayList<AccountResponse>();
         for (Account acc : rawAccountList) {
             AccountResponse dto = modelMapper.map(acc, AccountResponse.class);
+            dto.setAcc_id(acc.getAcc().getId());
+            dto.setHouse_id(acc.getHouse().getId());
             accountList.add(dto);
         }
         return accountList;
@@ -54,6 +57,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AccountResponse addAccount(AccountResponse accountResponse) {
 //        accountResponse.setPassword(passwordEncoder.encode(accountResponse.getPassword()));
 
@@ -84,12 +88,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteAccount(Long id) {
         accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found account with id: " + id));
         accountRepository.deleteById(id);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AccountResponse updateAccount(AccountResponse accountResponse, Long id) {
         Account accountById = accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found acount with this id:" + id));
 

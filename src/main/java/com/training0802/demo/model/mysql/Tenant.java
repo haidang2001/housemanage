@@ -34,6 +34,7 @@ public class Tenant {
     private Date rentDate;
     private String status;
     private String description;
+    private String avatar;
 
     public Tenant() {
     }
@@ -67,6 +68,31 @@ public class Tenant {
         this.rentDate = rentDate;
         this.status = status;
         this.description = description;
+    }
+
+    public Tenant(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Room room, Date rentDate, String status, String description, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.idNumber = idNumber;
+        this.permanentAddress = permanentAddress;
+        this.house = house;
+        this.room = room;
+        this.rentDate = rentDate;
+        this.status = status;
+        this.description = description;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Long getId() {

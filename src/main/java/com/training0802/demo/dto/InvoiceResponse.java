@@ -11,13 +11,12 @@ import java.util.Date;
 public class InvoiceResponse {
     private Long id;
     private String type;
-    private House house;
-    private Room room;
-    private Tenant tenant;
-    private String phoneNumber;
-    private String email;
+    private Long idHouse;
+    private Long idRoom;
+    private Long idTenant;
     private String creator;
     private Date createdDate;
+    private Date closingDate;
     private String paymentMethod;
     private String status;
     private int currentIndexElectricity;
@@ -25,17 +24,34 @@ public class InvoiceResponse {
     public InvoiceResponse() {
     }
 
-    public InvoiceResponse( String type, House house, Room room, Tenant tenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
+    public InvoiceResponse(Long id, String type, Long idHouse, Long idRoom, Long idTenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
+        this.id = id;
         this.type = type;
-        this.house = house;
-        this.room = room;
-        this.tenant = tenant;
+        this.idHouse = idHouse;
+        this.idRoom = idRoom;
+        this.idTenant = idTenant;
         this.creator = creator;
         this.createdDate = createdDate;
         this.paymentMethod = paymentMethod;
         this.status = status;
         this.currentIndexElectricity = currentIndexElectricity;
         this.currentIndexWaterBill = currentIndexWaterBill;
+    }
+
+    public Long getIdHouse() {
+        return idHouse;
+    }
+
+    public void setIdHouse(Long idHouse) {
+        this.idHouse = idHouse;
+    }
+
+    public Long getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(Long idRoom) {
+        this.idRoom = idRoom;
     }
 
     public Long getId() {
@@ -54,44 +70,13 @@ public class InvoiceResponse {
         this.type = type;
     }
 
-    public House getHouse() {
-        return house;
+
+    public Long getIdTenant() {
+        return idTenant;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIdTenant(Long idTenant) {
+        this.idTenant = idTenant;
     }
 
     public String getCreator() {

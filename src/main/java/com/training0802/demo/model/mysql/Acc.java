@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class Acc {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    @SequenceGenerator(name="yourSequenceGenerator", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="yourSequenceGenerator")
+    @SequenceGenerator(name = "yourSequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "yourSequenceGenerator")
     private Long id;
     @Column(nullable = false, unique = true)
     private String username;
@@ -17,10 +17,11 @@ public class Acc {
     private String role;
     @OneToOne(mappedBy = "acc")
     private Account account;
+
     public Acc() {
     }
 
-    public Acc(Long id, String username, String password,String repassword, String role) {
+    public Acc(Long id, String username, String password, String repassword, String role) {
         this.id = id;
         this.username = username;
         this.password = password;

@@ -23,7 +23,7 @@ public class TenantResponse {
     private Date rentDate;
     private String status;
     private String description;
-
+    private String avatar;
     public TenantResponse() {
     }
 
@@ -41,6 +41,30 @@ public class TenantResponse {
         this.rentDate = rentDate;
         this.status = status;
         this.description = description;
+    }
+    public TenantResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String permanentAddress, House house, Room room, Date rentDate, String status, String description, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.idNumber = idNumber;
+        this.permanentAddress = permanentAddress;
+        this.idHouse = idHouse;
+        this.idRoom = idRoom;
+        this.rentDate = rentDate;
+        this.status = status;
+        this.description = description;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Long getId() {

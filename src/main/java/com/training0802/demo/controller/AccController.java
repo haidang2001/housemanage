@@ -31,20 +31,20 @@ public class AccController {
         return accService.getAcc();
     }
 
-//    @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('admin')")
-//    public ResponseEntity<MessageResponse> getAccount(@PathVariable Long id) {
-//        try {
-//            AccountResponse accountFound = accountService.getOneAccount(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new MessageResponse(0, "Account found with id: " + id, accountFound)
-//            );
-//        } catch (EntityNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                    new MessageResponse(1, e.getMessage(), "")
-//            );
-//        }
-//    }
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin')")
+    public ResponseEntity<MessageResponse> getAccount(@PathVariable Long id) {
+        try {
+            AccResponse accResponse = accService.getOneAcc(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MessageResponse(0, "Acc found with id: " + id, accResponse)
+            );
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new MessageResponse(1, e.getMessage(), "")
+            );
+        }
+    }
 
     @PostMapping("/add")
     public ResponseEntity<MessageResponse> addAccount(@RequestBody @Valid AccResponse accResponse, BindingResult bindingResult) {
@@ -63,38 +63,6 @@ public class AccController {
                     new MessageResponse(1, e.getMessage(), "")
             );
         }
-
-
     }
 
-//    @DeleteMapping("/{id}")
-//    @PreAuthorize("hasAuthority('admin')")
-//    public ResponseEntity<MessageResponse> deleteAccount(@PathVariable Long id) {
-//        try {
-//            accountService.deleteAccount(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new MessageResponse(0, "Delete account successfully with id:" + id, id)
-//            );
-//        } catch (EntityNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                    new MessageResponse(1, e.getMessage(), "")
-//            );
-//        }
-//    }
-//
-//    @PutMapping("/{id}")
-//    @PreAuthorize("hasAuthority('admin')")
-//    public ResponseEntity<MessageResponse> updateAccount(@RequestBody AccountResponse accountResponse, @PathVariable Long id) {
-//        try {
-//            AccountResponse accountResponse1 = accountService.updateAccount(accountResponse, id);
-//            accountResponse.setId(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new MessageResponse(0, "Update account successfully with id: " + id, accountResponse1)
-//            );
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                    new MessageResponse(1, e.getMessage(), "")
-//            );
-//        }
-//    }
 }

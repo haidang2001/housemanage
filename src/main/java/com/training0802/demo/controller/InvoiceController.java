@@ -4,6 +4,7 @@ import com.training0802.demo.dto.InvoiceResponse;
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.dto.TenantResponse;
 import com.training0802.demo.service.InvoiceService;
+import com.training0802.demo.service.mysql.InvoiceServiceImpl;
 import com.training0802.demo.service.mysql.TenantServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 public class InvoiceController {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private InvoiceServiceImpl invoiceService;
 
     @GetMapping
     public List<InvoiceResponse> getListInvoice() {
@@ -40,7 +41,7 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponse> addTenant(@RequestBody InvoiceResponse invoiceResponse) {
+    public ResponseEntity<MessageResponse> addInvoice(@RequestBody InvoiceResponse invoiceResponse) {
         try{
             InvoiceResponse invoiceResponse1 = invoiceService.addInvoice(invoiceResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -70,9 +71,9 @@ public class InvoiceController {
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateInvoice(@RequestBody InvoiceResponse invoiceResponse, @PathVariable Long id) {
         try {
-            invoiceService.updateInvoice(invoiceResponse, id);
+            InvoiceResponse invoiceResponse1 = invoiceService.updateInvoice(invoiceResponse, id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Update invoice sucessfully", invoiceResponse)
+                    new MessageResponse(0, "Update invoice sucessfully", invoiceResponse1)
             );
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

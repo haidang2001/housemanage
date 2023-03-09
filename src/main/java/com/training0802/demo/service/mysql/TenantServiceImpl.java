@@ -56,8 +56,12 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public void deleteTenant(Long id) {
+
+
         tenantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found tenant with id: " + id));
         tenantRepository.deleteById(id);
+
+
     }
 
     @Override
@@ -72,11 +76,11 @@ public class TenantServiceImpl implements TenantService {
         tenantById.setEmail(tenantById.getEmail());
         tenantById.setIdNumber(tenantResponse.getIdNumber());
         tenantById.setPermanentAddress(tenantById.getPermanentAddress());
-        House house = mysqlHouseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not exist house with id: " + id));
+        House house = mysqlHouseRepository.findById(tenantResponse.getIdHouse()).orElseThrow(() -> new EntityNotFoundException("Not exist house with id: " + id));
         tenantById.setHouse(house);
-        Room room = roomRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not exist room with id: " + id));
+        Room room = roomRepository.findById(tenantResponse.getIdRoom()).orElseThrow(() -> new EntityNotFoundException("Not exist room with id: " + id));
         tenantById.setRoom(room);
-        tenantById.setRoom(tenantResponse.getRoom());
+//        tenantById.setRoom(tenantResponse.getRoom());
         tenantById.setRentDate(tenantResponse.getRentDate());
         tenantById.setStatus(tenantResponse.getStatus());
         tenantById.setDescription(tenantResponse.getDescription());

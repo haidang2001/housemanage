@@ -17,7 +17,9 @@ public class House {
     private String name;
     private String establishDate;
     private int totalRooms;
-    private String manager;
+    @OneToOne(mappedBy = "house")
+    @JsonIgnore
+    private Account manager;
     private String status;
     private  String description;
     private String image;
@@ -38,7 +40,7 @@ public class House {
     private List<Tenant> tenantList;
     public House(){}
 
-    public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
+    public House(Long id, String location, String name, String establishDate, int totalRooms, Account manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
         this.id = id;
         this.location = location;
         this.name = name;
@@ -67,8 +69,6 @@ public class House {
     public void setRentalFeeHouseList(List<RentalFeeHouse> rentalFeeHouseList) {
         this.rentalFeeHouseList = rentalFeeHouseList;
     }
-
-
 
     public String getLocation() {
         return location;
@@ -102,11 +102,11 @@ public class House {
         this.totalRooms = totalRooms;
     }
 
-    public String getManager() {
+    public Account getManager() {
         return manager;
     }
 
-    public void setManager(String manager) {
+    public void setManager(Account manager) {
         this.manager = manager;
     }
 

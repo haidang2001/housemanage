@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class AccountController {
     }
 
     @PostMapping("/add")
+
     public ResponseEntity<MessageResponse> addAccount(@RequestBody AccountResponse accountResponse) {
         try {
             AccountResponse accountResponse1 = accountService.addAccount(accountResponse);

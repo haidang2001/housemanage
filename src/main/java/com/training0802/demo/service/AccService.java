@@ -8,7 +8,7 @@ import java.util.List;
 public interface AccService {
     List<AccResponse> getAcc();
 
-//    AccountResponse getOneAccount(Long id);
+    AccResponse getOneAcc(Long id);
 
     AccResponse addAcc(AccResponse account);
 

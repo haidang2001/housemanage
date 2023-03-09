@@ -19,7 +19,8 @@ public class RentalFeeHouseController {
 
     @GetMapping
     public List<RentalFeeHouseResponse> getListRentalFeeHouse() {
-        return rentalFeeHouseService.getListRentalFeeHouse();
+        List<RentalFeeHouseResponse> listRentalFeeHouse = rentalFeeHouseService.getListRentalFeeHouse();
+        return listRentalFeeHouse;
     }
 
     @GetMapping("/{id}")

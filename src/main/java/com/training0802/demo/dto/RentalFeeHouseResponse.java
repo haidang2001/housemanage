@@ -3,28 +3,28 @@ package com.training0802.demo.dto;
 import com.training0802.demo.model.mysql.House;
 
 public class RentalFeeHouseResponse {
-    private String id;
+    private Long id;
     private String type;
     private int price;
     private String unit;
-    private House house;
+    private Long idHouse;
 
     public RentalFeeHouseResponse() {
     }
 
-    public RentalFeeHouseResponse(String id, String type, int price, String unit, House house) {
+    public RentalFeeHouseResponse(Long id, String type, int price, String unit, Long idHouse) {
         this.id = id;
         this.type = type;
         this.price = price;
         this.unit = unit;
-        this.house = house;
+        this.idHouse = idHouse;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,12 +52,12 @@ public class RentalFeeHouseResponse {
         this.unit = unit;
     }
 
-    public House getHouse() {
-        return house;
+    public Long getHouse() {
+        return idHouse;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
+    public void setHouse(Long idHouse) {
+        this.idHouse = idHouse;
     }
 
 

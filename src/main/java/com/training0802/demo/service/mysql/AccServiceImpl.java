@@ -44,13 +44,13 @@ public class AccServiceImpl implements AccService {
         return accountList;
     }
 
-//    @Override
-//    public AccountResponse getOneAccount(Long id) {
-//        Account modelAccount = accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found account with this id: " + id));
-//        AccountResponse dtoAccount = modelMapper.map(modelAccount, AccountResponse.class);
-//
-//        return dtoAccount;
-//    }
+    @Override
+    public AccResponse getOneAcc(Long id) {
+        Acc modelAcc = accRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found acc with this id: " + id));
+        AccResponse dtoAcc = modelMapper.map(modelAcc, AccResponse.class);
+
+        return dtoAcc;
+    }
 
     @Override
     public AccResponse addAcc(AccResponse accResponse) {
@@ -77,31 +77,4 @@ public class AccServiceImpl implements AccService {
 
 
 
-//    @Override
-//    public void deleteAccount(Long id) {
-//        accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found account with id: " + id));
-//        accountRepository.deleteById(id);
-//    }
-//
-//    @Override
-//    public AccountResponse updateAccount(AccountResponse accountResponse, Long id) {
-//        Account accountById = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found acount with this id:" + id));
-//
-////        accountById.setId(id);
-//        accountById.setName(accountResponse.getName());
-//        accountById.setGender(accountResponse.getGender());
-////        accountById.setRole(accountResponse.getRole());
-//        accountById.setPhone(accountResponse.getPhone());
-//        accountById.setEmail(accountResponse.getEmail());
-//        accountById.setBirthDate(accountResponse.getBirthDate());
-//        accountById.setDescription(accountResponse.getDescription());
-//        accountById.setIdNumber(accountResponse.getIdNumber());
-//        accountById.setPosition(accountResponse.getPosition());
-//        accountById.setStartedDate(accountResponse.getStartedDate());
-//        accountById.setStatus(accountResponse.getStatus());
-////        accountById.setHouse(accountResponse.getHouse());
-//
-//        accountRepository.save(accountById);
-//        return accountResponse;
-//    }
 }

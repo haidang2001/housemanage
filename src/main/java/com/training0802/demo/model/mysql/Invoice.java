@@ -1,6 +1,7 @@
 package com.training0802.demo.model.mysql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -25,7 +26,10 @@ public class Invoice {
     private String phoneNumber;
     private String email;
     private String creator;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date createdDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date closingDate;
     private String paymentMethod;
     private String status;
     private int currentIndexElectricity;
