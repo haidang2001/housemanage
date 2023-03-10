@@ -50,7 +50,8 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public TenantResponse addTenant(TenantResponse tenantResponse) {
         Tenant modelTenant = modelMapper.map(tenantResponse, Tenant.class);
-        tenantRepository.save(modelTenant);
+        Tenant save = tenantRepository.save(modelTenant);
+        tenantResponse.setId(save.getId());
         return tenantResponse;
     }
 
@@ -85,7 +86,8 @@ public class TenantServiceImpl implements TenantService {
         tenantById.setStatus(tenantResponse.getStatus());
         tenantById.setDescription(tenantResponse.getDescription());
 
-        tenantRepository.save(tenantById);
+        Tenant save = tenantRepository.save(tenantById);
+        tenantResponse.setId(save.getId());
         return tenantResponse;
     }
 }

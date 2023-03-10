@@ -39,18 +39,16 @@ public class RentalFeeHouseController {
 
     @PostMapping
     public ResponseEntity<MessageResponse> addRentalFeeHouse(@RequestBody RentalFeeHouseResponse rentalFeeHouseResponse) {
-        try{
+        try {
             RentalFeeHouseResponse rentalFeeHouseResponse1 = rentalFeeHouseService.addRetalFeeHouse(rentalFeeHouseResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Add new rental fee house successfully", rentalFeeHouseResponse1)
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );
         }
-
-
     }
 
     @DeleteMapping("/{id}")
@@ -58,7 +56,7 @@ public class RentalFeeHouseController {
         try {
             rentalFeeHouseService.deleteRentalFeeHouse(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Delete rental fee house successfully" + id, "")
+                    new MessageResponse(0, "Delete rental fee house successfully with id: " + id, "")
             );
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -70,9 +68,9 @@ public class RentalFeeHouseController {
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateRentalHouse(@RequestBody RentalFeeHouseResponse rentalFeeHouseResponse, @PathVariable Long id) {
         try {
-            rentalFeeHouseService.updateRentalFeeHouse(rentalFeeHouseResponse, id);
+            RentalFeeHouseResponse rentalFeeHouseResponse1 = rentalFeeHouseService.updateRentalFeeHouse(rentalFeeHouseResponse, id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Update rental fee house sucessfully", rentalFeeHouseResponse)
+                    new MessageResponse(0, "Update rental fee house sucessfully", rentalFeeHouseResponse1)
             );
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

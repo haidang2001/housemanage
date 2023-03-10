@@ -38,6 +38,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceResponse getDetailInvoice(Long id) {
         Invoice modelInvoice = invoiceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found invoice with id: " + id));
         InvoiceResponse dtoInvoice = modelMapper.map(modelInvoice, InvoiceResponse.class);
+
         return dtoInvoice;
     }
 

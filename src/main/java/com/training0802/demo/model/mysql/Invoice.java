@@ -32,8 +32,12 @@ public class Invoice {
     private Date closingDate;
     private String paymentMethod;
     private String status;
+    private int preIndexElectricity;
+    private int preIndexWaterBill;
     private int currentIndexElectricity;
     private int currentIndexWaterBill;
+    private int cleaningfee;
+    private int total;
     public Invoice() {
     }
 
@@ -48,6 +52,67 @@ public class Invoice {
         this.status = status;
         this.currentIndexElectricity = currentIndexElectricity;
         this.currentIndexWaterBill = currentIndexWaterBill;
+    }
+
+    public Invoice(Long id, String type, House house, Room room, Tenant tenant, String phoneNumber, String email, String creator, Date createdDate, Date closingDate, String paymentMethod, String status, int preIndexElectricity, int preIndexWaterBill, int currentIndexElectricity, int currentIndexWaterBill, int cleaningfee, int total) {
+        this.id = id;
+        this.type = type;
+        this.house = house;
+        this.room = room;
+        this.tenant = tenant;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.creator = creator;
+        this.createdDate = createdDate;
+        this.closingDate = closingDate;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.preIndexElectricity = preIndexElectricity;
+        this.preIndexWaterBill = preIndexWaterBill;
+        this.currentIndexElectricity = currentIndexElectricity;
+        this.currentIndexWaterBill = currentIndexWaterBill;
+        this.cleaningfee = cleaningfee;
+        this.total = total;
+    }
+
+    public int getCleaningfee() {
+        return cleaningfee;
+    }
+
+    public void setCleaningfee(int cleaningfee) {
+        this.cleaningfee = cleaningfee;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Date getClosingDate() {
+        return closingDate;
+    }
+
+    public void setClosingDate(Date closingDate) {
+        this.closingDate = closingDate;
+    }
+
+    public int getPreIndexElectricity() {
+        return preIndexElectricity;
+    }
+
+    public void setPreIndexElectricity(int preIndexElectricity) {
+        this.preIndexElectricity = preIndexElectricity;
+    }
+
+    public int getPreIndexWaterBill() {
+        return preIndexWaterBill;
+    }
+
+    public void setPreIndexWaterBill(int preIndexWaterBill) {
+        this.preIndexWaterBill = preIndexWaterBill;
     }
 
     public Long getId() {

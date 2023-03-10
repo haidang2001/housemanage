@@ -1,5 +1,6 @@
 package com.training0802.demo.model.mysql;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -19,6 +20,7 @@ public class Account {
     private String email;
     private int idNumber;
     @OneToOne()
+    @JsonBackReference
     @JoinColumn(name = "house_id")
     private House house;
     private String position;

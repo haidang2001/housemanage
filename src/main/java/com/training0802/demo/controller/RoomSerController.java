@@ -33,23 +33,20 @@ public class RoomSerController {
                     new MessageResponse(1, e.getMessage(), "")
             );
         }
-
     }
 
     @PostMapping
     public ResponseEntity<MessageResponse> addRoomSer(@RequestBody RoomSerResponse roomSerResponse) {
-        try{
+        try {
             RoomSerResponse roomSerResponse1 = roomSerService.addRoomService(roomSerResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Add new room ser sucessfully", roomSerResponse1)
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(1,e.getMessage(), "")
+                    new MessageResponse(1, e.getMessage(), "")
             );
         }
-
-
     }
 
     @DeleteMapping("/{id}")

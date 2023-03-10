@@ -47,20 +47,6 @@ public class HouseResponse {
     public void setTenantList(List<Tenant> tenantList) {
         this.tenantList = tenantList;
     }
-
-//    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, Account manager, String status, String description, String image, List<RentalFeeHouse> rentalFeeHouseList) {
-//        this.id = id;
-//        this.location = location;
-//        this.name = name;
-//        this.establishDate = establishDate;
-//        this.totalRooms = totalRooms;
-//        this.manager = manager;
-//        this.status = status;
-//        this.description = description;
-//        this.image = image;
-//        this.rentalFeeHouseList = rentalFeeHouseList;
-//    }
-
     public List<RentalFeeHouse> getRentalFeeHouseList() {
         return rentalFeeHouseList;
     }

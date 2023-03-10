@@ -52,7 +52,8 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse getOneAccount(Long id) {
         Account modelAccount = accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found account with this id: " + id));
         AccountResponse dtoAccount = modelMapper.map(modelAccount, AccountResponse.class);
-
+        dtoAccount.setHouse_id(modelAccount.getHouse().getId());
+        dtoAccount.setAcc_id(modelAccount.getAcc().getId());
         return dtoAccount;
     }
 
@@ -113,7 +114,8 @@ public class AccountServiceImpl implements AccountService {
         accountById.setStatus(accountResponse.getStatus());
 //        accountById.setHouse(accountResponse.getHouse());
 
-        accountRepository.save(accountById);
+        Account save = accountRepository.save(accountById);
+        accountResponse.setAcc_id(save.getAcc().getId());
         return accountResponse;
     }
 }

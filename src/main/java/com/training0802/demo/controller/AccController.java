@@ -1,13 +1,9 @@
 package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.AccResponse;
-import com.training0802.demo.dto.AccountResponse;
 import com.training0802.demo.dto.MessageResponse;
-import com.training0802.demo.model.mysql.Acc;
 import com.training0802.demo.service.mysql.AccServiceImpl;
-import com.training0802.demo.service.mysql.AccountServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
-//import jakarta.validation.Valid;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,17 +44,18 @@ public class AccController {
 
     @PostMapping("/add")
     public ResponseEntity<MessageResponse> addAccount(@RequestBody @Valid AccResponse accResponse, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, bindingResult.getAllErrors().get(0).getDefaultMessage(), "")
             );
-        };
+        }
+        ;
         try {
             AccResponse accResponse1 = accService.addAcc(accResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Add successful account", accResponse1)
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );

@@ -1,6 +1,7 @@
 package com.training0802.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.Room;
 import com.training0802.demo.model.mysql.Tenant;
@@ -11,9 +12,11 @@ import java.util.Date;
 public class InvoiceResponse {
     private Long id;
     private String type;
-    private Long idHouse;
-    private Long idRoom;
-    private Long idTenant;
+    private House house;
+    private Room room;
+    private Tenant tenant;
+    private String phoneNumber;
+    private String email;
     private String creator;
     private Date createdDate;
     private Date closingDate;
@@ -24,12 +27,11 @@ public class InvoiceResponse {
     public InvoiceResponse() {
     }
 
-    public InvoiceResponse(Long id, String type, Long idHouse, Long idRoom, Long idTenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
-        this.id = id;
+    public InvoiceResponse( String type, House house, Room room, Tenant tenant, String creator, Date createdDate, String paymentMethod, String status, int currentIndexElectricity, int currentIndexWaterBill) {
         this.type = type;
-        this.idHouse = idHouse;
-        this.idRoom = idRoom;
-        this.idTenant = idTenant;
+        this.house = house;
+        this.room = room;
+        this.tenant = tenant;
         this.creator = creator;
         this.createdDate = createdDate;
         this.paymentMethod = paymentMethod;
@@ -38,21 +40,31 @@ public class InvoiceResponse {
         this.currentIndexWaterBill = currentIndexWaterBill;
     }
 
-    public Long getIdHouse() {
-        return idHouse;
+    public InvoiceResponse(Long id, String type, House house, Room room, Tenant tenant, String phoneNumber, String email, String creator, Date createdDate, Date closingDate, String paymentMethod, String status, int preIndexElectricity, int preIndexWaterBill, int currentIndexElectricity, int currentIndexWaterBill) {
+        this.id = id;
+        this.type = type;
+        this.house = house;
+        this.room = room;
+        this.tenant = tenant;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.creator = creator;
+        this.createdDate = createdDate;
+        this.closingDate = closingDate;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.currentIndexElectricity = currentIndexElectricity;
+        this.currentIndexWaterBill = currentIndexWaterBill;
     }
 
-    public void setIdHouse(Long idHouse) {
-        this.idHouse = idHouse;
+    public Date getClosingDate() {
+        return closingDate;
     }
 
-    public Long getIdRoom() {
-        return idRoom;
+    public void setClosingDate(Date closingDate) {
+        this.closingDate = closingDate;
     }
 
-    public void setIdRoom(Long idRoom) {
-        this.idRoom = idRoom;
-    }
 
     public Long getId() {
         return id;
@@ -70,13 +82,44 @@ public class InvoiceResponse {
         this.type = type;
     }
 
-
-    public Long getIdTenant() {
-        return idTenant;
+    public House getHouse() {
+        return house;
     }
 
-    public void setIdTenant(Long idTenant) {
-        this.idTenant = idTenant;
+    public void setHouse(House house) {
+        this.house = house;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCreator() {

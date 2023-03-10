@@ -38,12 +38,12 @@ public class TenantController {
 
     @PostMapping
     public ResponseEntity<MessageResponse> addTenant(@RequestBody TenantResponse tenantResponse) {
-        try{
+        try {
             TenantResponse tenantResponse1 = tenantService.addTenant(tenantResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Add new tenant successfully", tenantResponse1)
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );
@@ -55,7 +55,7 @@ public class TenantController {
         try {
             tenantService.deleteTenant(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Delete tenant successfully" + id, "")
+                    new MessageResponse(0, "Delete tenant successfully with id: " + id, "")
             );
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -77,5 +77,4 @@ public class TenantController {
             );
         }
     }
-
 }

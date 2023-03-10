@@ -2,7 +2,7 @@ package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.HouseResponse;
 import com.training0802.demo.dto.MessageResponse;
-import com.training0802.demo.service.HouseService;
+import com.training0802.demo.service.mysql.MysqlHouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class HouseController {
     @Autowired
-    private HouseService houseServiceImp;
+    private MysqlHouseServiceImpl houseServiceImp;
 
     @GetMapping
     @PreAuthorize("hasAuthority('admin')")
@@ -42,13 +42,12 @@ public class HouseController {
     @PostMapping(consumes = {"application/json"})
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> addHouse(@RequestBody HouseResponse houseResponse) {
-        try{
-            houseServiceImp.addHouse(houseResponse);
+        try {
+            HouseResponse houseResponse1 = houseServiceImp.addHouse(houseResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Add new house successfully", houseResponse)
+                    new MessageResponse(0, "Add new house successfully", houseResponse1)
             );
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );
@@ -62,7 +61,7 @@ public class HouseController {
         try {
             houseServiceImp.deleteHouse(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Delete house successfully" + id, "")
+                    new MessageResponse(0, "Delete house successfully with id: " + id, "")
             );
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -75,9 +74,9 @@ public class HouseController {
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> updateHouse(@RequestBody HouseResponse houseResponse, @PathVariable Long id) {
         try {
-            houseServiceImp.updateHouse(houseResponse, id);
+            HouseResponse houseResponse1 = houseServiceImp.updateHouse(houseResponse, id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new MessageResponse(0, "Update house sucessfully", houseResponse)
+                    new MessageResponse(0, "Update house sucessfully", houseResponse1)
             );
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

@@ -18,6 +18,7 @@ public class House {
     private String establishDate;
     private int totalRooms;
     @OneToOne(mappedBy = "house")
+    @JsonManagedReference
     @JsonIgnore
     private Account manager;
     private String status;

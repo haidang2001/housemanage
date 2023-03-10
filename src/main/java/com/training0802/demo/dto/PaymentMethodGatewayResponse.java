@@ -1,12 +1,11 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-@Entity
-@Table(name = "tblPaymentMethodGateway")
-public class PaymentMethodGateway {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class PaymentMethodGatewayResponse {
+
     private Long id;
     private String image;
     private String name;
@@ -14,10 +13,10 @@ public class PaymentMethodGateway {
     private String TerminalID;
     private String SecretKey;
 
-    public PaymentMethodGateway() {
+    public PaymentMethodGatewayResponse() {
     }
 
-    public PaymentMethodGateway(Long id, String image, String name, String qrcode, String terminalID, String secretKey) {
+    public PaymentMethodGatewayResponse(Long id, String image, String name, String qrcode, String terminalID, String secretKey) {
         this.id = id;
         this.image = image;
         this.name = name;

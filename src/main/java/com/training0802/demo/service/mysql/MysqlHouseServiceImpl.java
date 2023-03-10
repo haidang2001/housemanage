@@ -55,6 +55,7 @@ public class MysqlHouseServiceImpl implements HouseService {
     public HouseResponse getHouseDetail(Long id) {
         House modelHouse = mysqlHouseRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found this house with id: " + id));
         HouseResponse dtoHouse = modelMapper.map(modelHouse, HouseResponse.class);
+//        dtoHouse.setManagerName(modelHouse.getManager().getName());
         return dtoHouse;
     }
 
@@ -64,6 +65,7 @@ public class MysqlHouseServiceImpl implements HouseService {
         House modelHouse = modelMapper.map(houseResponse, House.class);
         House save = mysqlHouseRepository.save(modelHouse);
         houseResponse.setId(save.getId());
+//        houseResponse.setManagerName(save.getManager().getName());
         return houseResponse;
     }
 
@@ -97,6 +99,7 @@ public class MysqlHouseServiceImpl implements HouseService {
 
         House save = mysqlHouseRepository.save(houseById);
         houseResponse.setId(save.getId());
+//        houseResponse.setManagerName(save.getManager().getName());
         return houseResponse;
     }
 

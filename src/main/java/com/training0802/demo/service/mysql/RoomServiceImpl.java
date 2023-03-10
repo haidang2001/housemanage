@@ -37,6 +37,9 @@ public class RoomServiceImpl implements RoomService {
         List<Room> modelRoomList = roomRepository.findAll();
         List<RoomResponse> dtoRoomList = new ArrayList<RoomResponse>();
         dtoRoomList = modelMapper.map(modelRoomList,new TypeToken<List<RoomResponse>>(){}.getType());
+        for (RoomResponse roomResponse: dtoRoomList){
+            roomResponse.setTenantMax(roomResponse.getTenantList().size());
+        }
         return dtoRoomList;
     }
 
@@ -50,14 +53,15 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoomResponse addRoom(RoomResponse roomResponse) {
-        Long idHouse = roomResponse.getHouse().getId();
+        Long idHouse = roomResponse.getIdHouse();
         House house = mysqlHouseRepository.findById(idHouse).orElseThrow(() -> new EntityNotFoundException("Not exist house with id: "+idHouse));
         int totalRoom = house.getTotalRooms();
         house.setTotalRooms(totalRoom + 1);
         mysqlHouseRepository.save(house);
 
         Room modelRoom = modelMapper.map(roomResponse,Room.class);
-        roomRepository.save(modelRoom);
+        Room save = roomRepository.save(modelRoom);
+        roomResponse.setId(save.getId());
         return roomResponse;
     }
 

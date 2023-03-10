@@ -1,21 +1,15 @@
-package com.training0802.demo.model.mysql;
+package com.training0802.demo.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "tblPaymentMethodManual")
-public class PaymentMethodManual {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class PaymentMethodManualResponse {
     private Long id;
     private String name;
     private String type;
     private String status;
 
-    public PaymentMethodManual() {
+    public PaymentMethodManualResponse() {
     }
 
-    public PaymentMethodManual(Long id, String name, String type, String status) {
+    public PaymentMethodManualResponse(Long id, String name, String type, String status) {
         this.id = id;
         this.name = name;
         this.type = type;

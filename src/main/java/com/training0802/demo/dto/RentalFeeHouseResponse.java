@@ -1,12 +1,15 @@
 package com.training0802.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.training0802.demo.model.mysql.House;
+import jakarta.persistence.*;
 
 public class RentalFeeHouseResponse {
     private Long id;
     private String type;
     private int price;
     private String unit;
+//    private House house;
     private Long idHouse;
 
     public RentalFeeHouseResponse() {
@@ -52,13 +55,20 @@ public class RentalFeeHouseResponse {
         this.unit = unit;
     }
 
-    public Long getHouse() {
+//    public House getHouse() {
+//        return house;
+//    }
+//
+//    public void setHouse(House house) {
+//        this.house = house;
+//    }
+
+
+    public Long getIdHouse() {
         return idHouse;
     }
 
-    public void setHouse(Long idHouse) {
+    public void setIdHouse(Long idHouse) {
         this.idHouse = idHouse;
     }
-
-
 }

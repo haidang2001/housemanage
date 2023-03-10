@@ -2,8 +2,10 @@ package com.training0802.demo.service.mysql;
 
 import com.training0802.demo.dto.HouseResponse;
 import com.training0802.demo.dto.RentalFeeHouseResponse;
+import com.training0802.demo.dto.TenantResponse;
 import com.training0802.demo.model.mysql.House;
 import com.training0802.demo.model.mysql.RentalFeeHouse;
+import com.training0802.demo.model.mysql.Tenant;
 import com.training0802.demo.repository.RentalFeeHouseRepository;
 import com.training0802.demo.service.RentalFeeHouseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,17 +29,21 @@ public class RentalFeeHouseServiceImpl implements RentalFeeHouseService {
         List<RentalFeeHouse> mysqlModelRentalHouses = rentalFeeHouseRepository.findAll();
         List<RentalFeeHouseResponse> dtoRentalFeeHouses = new ArrayList<RentalFeeHouseResponse>();
 
-        for (RentalFeeHouse rentalFeeHouse: mysqlModelRentalHouses){
-            RentalFeeHouseResponse dtoRentalFeeHouse = new RentalFeeHouseResponse();
-            dtoRentalFeeHouse.setId(rentalFeeHouse.getId());
-            dtoRentalFeeHouse.setType(rentalFeeHouse.getType());
-            dtoRentalFeeHouse.setPrice(rentalFeeHouse.getPrice());
-            dtoRentalFeeHouse.setUnit(rentalFeeHouse.getUnit());
-            dtoRentalFeeHouse.setHouse(rentalFeeHouse.getHouse().getId());
-//            RentalFeeHouseResponse dtoRentalFeeHouse = modelMapper.map(rentalFeeHouse,RentalFeeHouseResponse.class);
-            dtoRentalFeeHouses.add(dtoRentalFeeHouse);
-        }
+//        for (RentalFeeHouse rentalFeeHouse: mysqlModelRentalHouses){
+//            RentalFeeHouseResponse dtoRentalFeeHouse = new RentalFeeHouseResponse();
+//            dtoRentalFeeHouse.setId(rentalFeeHouse.getId());
+//            dtoRentalFeeHouse.setType(rentalFeeHouse.getType());
+//            dtoRentalFeeHouse.setPrice(rentalFeeHouse.getPrice());
+//            dtoRentalFeeHouse.setUnit(rentalFeeHouse.getUnit());
+//            dtoRentalFeeHouse.setHouse(rentalFeeHouse.getHouse().getId());
+////            RentalFeeHouseResponse dtoRentalFeeHouse = modelMapper.map(rentalFeeHouse,RentalFeeHouseResponse.class);
+//            dtoRentalFeeHouses.add(dtoRentalFeeHouse);
+//        }
 //        dtoRentalFeeHouses = modelMapper.map(mysqlModelRentalHouses, new TypeToken<List<RentalFeeHouseResponse>>(){}.getType());
+        for (RentalFeeHouse rentalFeeHouse : mysqlModelRentalHouses) {
+            RentalFeeHouseResponse dtoRental = modelMapper.map(rentalFeeHouse, RentalFeeHouseResponse.class);
+            dtoRentalFeeHouses.add(dtoRental);
+        }
         return dtoRentalFeeHouses;
     }
 
@@ -72,7 +78,8 @@ public class RentalFeeHouseServiceImpl implements RentalFeeHouseService {
         rentalFeeHouseById.setPrice(rentalFeeHouseResponse.getPrice());
         rentalFeeHouseById.setUnit(rentalFeeHouseResponse.getUnit());
 
-        rentalFeeHouseRepository.save(rentalFeeHouseById);
+        RentalFeeHouse save = rentalFeeHouseRepository.save(rentalFeeHouseById);
+        rentalFeeHouseResponse = modelMapper.map(save,RentalFeeHouseResponse.class);
         return rentalFeeHouseResponse;
     }
 }

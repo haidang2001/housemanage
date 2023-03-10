@@ -2,10 +2,7 @@ package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.InvoiceResponse;
 import com.training0802.demo.dto.MessageResponse;
-import com.training0802.demo.dto.TenantResponse;
-import com.training0802.demo.service.InvoiceService;
 import com.training0802.demo.service.mysql.InvoiceServiceImpl;
-import com.training0802.demo.service.mysql.TenantServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,12 +39,12 @@ public class InvoiceController {
 
     @PostMapping
     public ResponseEntity<MessageResponse> addInvoice(@RequestBody InvoiceResponse invoiceResponse) {
-        try{
+        try {
             InvoiceResponse invoiceResponse1 = invoiceService.addInvoice(invoiceResponse);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new MessageResponse(0, "Add new invoice successfully", invoiceResponse1)
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );
