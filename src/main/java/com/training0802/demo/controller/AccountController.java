@@ -20,25 +20,25 @@ public class AccountController {
     private AccountServiceImpl accountService;
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccount() {
         return accountService.getAccounts();
     }
 
     @GetMapping("/manager")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListAccountManager() {
         return accountService.getAccountsManager();
     }
     @GetMapping("/managers")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public List<AccountResponse> getListManagers() {
         return accountService.getListManagers();
     }
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> getAccount(@PathVariable Long id) {
         try {
             AccountResponse accountFound = accountService.getOneAccount(id);
@@ -70,7 +70,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> deleteAccount(@PathVariable Long id) {
         try {
             accountService.deleteAccount(id);
@@ -85,7 +85,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> updateAccount(@RequestBody AccountResponse accountResponse, @PathVariable Long id) {
         try {
             AccountResponse accountResponse1 = accountService.updateAccount(accountResponse, id);

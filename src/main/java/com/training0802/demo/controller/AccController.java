@@ -23,18 +23,18 @@ public class AccController {
     private AccServiceImpl accService;
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public List<AccResponse> getListAccount() {
         return accService.getAcc();
     }
     @GetMapping("/last")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public AccResponse getLastAccount() {
         return accService.getLastAcc();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin')")
+//    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<MessageResponse> getAccount(@PathVariable Long id) {
         try {
             AccResponse accResponse = accService.getOneAcc(id);
