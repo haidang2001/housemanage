@@ -28,20 +28,20 @@ public class SecurityConfig {
         return new AccountInfoToUserDetailsService();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .cors().and()
-                .authorizeHttpRequests((authr) -> authr
-                        .requestMatchers("/api/acc/add").permitAll()
-                        .requestMatchers("/api/acc/login").permitAll()
-//                        .requestMatchers("/api/account/add").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults());
-
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .cors().and()
+//                .authorizeHttpRequests((authr) -> authr
+//                        .requestMatchers("/api/acc/add").permitAll()
+//                        .requestMatchers("/api/acc/login").permitAll()
+////                        .requestMatchers("/api/account/add").permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .httpBasic(Customizer.withDefaults());
+//
+//        return http.build();
+//    }
 }
 
