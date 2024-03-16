@@ -15,13 +15,15 @@ public class AccountResponse {
     private String phone;
     private String email;
     private int idNumber;
-    private Long house_id;
+//    private Long house_id;
+    private String houseName;
     private String position;
     //    private String username;
 //    private String password;
     private Date startedDate;
     private String status;
     private String description;
+    private String image;
     private Long acc_id;
     public AccountResponse() {
 
@@ -50,25 +52,23 @@ public class AccountResponse {
 //        this.password = password;
     }
 
-    public AccountResponse(Long id, String name, Date birthDate, String gender, String role, String phone, String email, int idNumber, Long house_id, String position, String username, String password, Date startedDate, String status, String description) {
+    public AccountResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String houseName, String position, Date startedDate, String status, String description,String image) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
-//        this.role = role;
         this.phone = phone;
         this.email = email;
         this.idNumber = idNumber;
-        this.house_id = house_id;
+        this.houseName = houseName;
         this.position = position;
-//        this.username = username;
-//        this.password = password;
         this.startedDate = startedDate;
         this.status = status;
         this.description = description;
+        this.image= image;
     }
 
-    public AccountResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, Long house_id, String position, Date startedDate, String status, String description, Long acc_id) {
+    public AccountResponse(Long id, String name, Date birthDate, String gender, String phone, String email, int idNumber, String houseName, String position, Date startedDate, String status, String description, Long acc_id) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -76,12 +76,20 @@ public class AccountResponse {
         this.phone = phone;
         this.email = email;
         this.idNumber = idNumber;
-        this.house_id = house_id;
+        this.houseName = houseName;
         this.position = position;
         this.startedDate = startedDate;
         this.status = status;
         this.description = description;
         this.acc_id = acc_id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {
@@ -158,12 +166,21 @@ public class AccountResponse {
 //    }
 
 
-    public Long getHouse_id() {
-        return house_id;
+//    public Long getHouse_id() {
+//        return house_id;
+//    }
+//
+//    public void setHouse_id(Long house_id) {
+//        this.house_id = house_id;
+//    }
+
+
+    public String getHouseName() {
+        return houseName;
     }
 
-    public void setHouse_id(Long house_id) {
-        this.house_id = house_id;
+    public void setHouseName(String houseName) {
+        this.houseName = houseName;
     }
 
     public Long getAcc_id() {

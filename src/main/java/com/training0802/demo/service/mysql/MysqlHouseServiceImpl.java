@@ -12,11 +12,24 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,7 +41,22 @@ public class MysqlHouseServiceImpl implements HouseService {
     public AccountRepository accountRepository;
     @Autowired
     public ModelMapper modelMapper;
-
+    private final String FOLDER_PATH="D:\\Download\\DangNguyen (1)\\TrainingProj\\TrainingProj\\nchdang\\images\\";
+    public Page<House> getHousesPage(Integer page, Integer size){
+        Pageable pageable = PageRequest.of(page,size);
+        Page<House> houses = mysqlHouseRepository.findAll(pageable);
+//        List<HouseResponse> dtoHouses = new ArrayList<HouseResponse>();
+//        dtoHouses = modelMapper.map(houses, new TypeToken<List<HouseResponse>>() {}.getType());
+//        if(houses.hasContent()) {
+//            List<House> content = houses.getContent();
+//            List<HouseResponse> dtoHouses = new ArrayList<HouseResponse>();
+//            dtoHouses = modelMapper.map(houses, new TypeToken<List<HouseResponse>>() {}.getType());
+//            return dtoHouses;
+//        } else {
+//            return new ArrayList<HouseResponse>();
+//        }
+        return houses;
+    }
     @Override
     public List<HouseResponse> getHouses() {
         List<House> mysqlModelHouses = mysqlHouseRepository.findAll();
@@ -61,18 +89,49 @@ public class MysqlHouseServiceImpl implements HouseService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public HouseResponse addHouse(HouseResponse houseResponse) {
+    public HouseResponse addHouse( HouseResponse houseResponse,MultipartFile image) throws IOException {
         House modelHouse = modelMapper.map(houseResponse, House.class);
-        House save = mysqlHouseRepository.save(modelHouse);
-        houseResponse.setId(save.getId());
+        House byName = mysqlHouseRepository.findByName(modelHouse.getName());
+        if(Objects.isNull(byName)){
+
+            House save = mysqlHouseRepository.save(modelHouse);
+
+            String filePath = FOLDER_PATH + image.getOriginalFilename();
+            save.setImage(filePath);
+            image.transferTo(new File(filePath));
+
+
+//            Account accountByName = accountRepository.findByName(houseResponse.getManager());
+//            accountByName.setHouse(save);
+//            accountRepository.save(accountByName);
+            houseResponse.setId(save.getId());
+            houseResponse.setImage(filePath);
+            // save image file to directory or cloud storage
+//            String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+//            Path path = Paths.get("uploads");
+//            Files.createDirectories(path);
+//            try (InputStream inputStream = image.getInputStream()) {
+//                Files.copy(inputStream, path.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+//            } catch (IOException e) {
+//                throw new IOException("Failed to save file " + fileName, e);
+//            }
+
+            return houseResponse;
+        }else{
+            throw new RuntimeException("This name house existed please another name");
+        }
 //        houseResponse.setManagerName(save.getManager().getName());
-        return houseResponse;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteHouse(Long id) {
-        mysqlHouseRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Not found house with id: "+id));
+        House house = mysqlHouseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found house with id: " + id));
+        Account byHouse = accountRepository.findByHouse(house);
+        if(!Objects.isNull(byHouse)){
+            byHouse.setHouse(null);
+        }
+
         mysqlHouseRepository.deleteById(id);
     }
 
@@ -89,8 +148,9 @@ public class MysqlHouseServiceImpl implements HouseService {
 
 //        Account ManagerFoundByName = accountRepository.findByName(houseResponse.getManager());
 //        houseById.setManager(ManagerFoundByName);
-        Account managerEntity = modelMapper.map(houseResponse.getManager(),Account.class);
-        houseById.setManager(managerEntity);
+//        Account managerEntity = modelMapper.map(houseResponse.getManager(),Account.class);
+//        houseById.setManager(managerEntity);
+        houseById.setManager(houseResponse.getManager());
         houseById.setImage(houseResponse.getImage());
         houseById.setStatus(houseResponse.getStatus());
         houseById.setDescription(houseResponse.getDescription());
@@ -101,6 +161,15 @@ public class MysqlHouseServiceImpl implements HouseService {
         houseResponse.setId(save.getId());
 //        houseResponse.setManagerName(save.getManager().getName());
         return houseResponse;
+    }
+
+    public byte[] loadImage(Long id) throws IOException{
+        Optional<House> byId = mysqlHouseRepository.findById(id);
+        String image = byId.get().getImage();
+
+//        String filePath = fileData.get().getImage();
+        byte[] images = Files.readAllBytes(Paths.get(image));
+        return images;
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Profile("mysql")
@@ -41,8 +42,44 @@ public class AccountServiceImpl implements AccountService {
         List<AccountResponse> accountList = new ArrayList<AccountResponse>();
         for (Account acc : rawAccountList) {
             AccountResponse dto = modelMapper.map(acc, AccountResponse.class);
-            dto.setAcc_id(acc.getAcc().getId());
-            dto.setHouse_id(acc.getHouse().getId());
+//            dto.setAcc_id(acc.getAcc().getId());
+//            dto.setHouse_id(acc.getHouse().getId());
+//            dto.setHouse_id(acc.getHouse());
+            if(acc.getHouse() != null){
+                dto.setHouseName(acc.getHouse().getName());
+            }else{
+                dto.setHouseName(null);
+            }
+
+            accountList.add(dto);
+        }
+        return accountList;
+    }
+
+    @Override
+    public List<AccountResponse> getAccountsManager() {
+        List<Account> manager = accountRepository.findAllByPosition("manager");
+        List<AccountResponse> accountList = new ArrayList<AccountResponse>();
+        for (Account acc : manager) {
+            AccountResponse dto = modelMapper.map(acc, AccountResponse.class);
+//            dto.setAcc_id(acc.getAcc().getId());
+//            dto.setHouse_id(acc.getHouse().getId());
+//            dto.setHouse_id(acc.getHouse());
+            dto.setHouseName(acc.getHouse().getName());
+            accountList.add(dto);
+        }
+        return accountList;
+    }
+    @Override
+    public List<AccountResponse> getListManagers() {
+        List<Account> manager = accountRepository.findAllManagerHouseNull();
+        List<AccountResponse> accountList = new ArrayList<AccountResponse>();
+        for (Account acc : manager) {
+            AccountResponse dto = modelMapper.map(acc, AccountResponse.class);
+//            dto.setAcc_id(acc.getAcc().getId());
+//            dto.setHouse_id(acc.getHouse().getId());
+//            dto.setHouse_id(acc.getHouse());
+//            dto.setHouseName(acc.getHouse().getName());
             accountList.add(dto);
         }
         return accountList;
@@ -52,8 +89,10 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse getOneAccount(Long id) {
         Account modelAccount = accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found account with this id: " + id));
         AccountResponse dtoAccount = modelMapper.map(modelAccount, AccountResponse.class);
-        dtoAccount.setHouse_id(modelAccount.getHouse().getId());
-        dtoAccount.setAcc_id(modelAccount.getAcc().getId());
+//        dtoAccount.setHouse_id(modelAccount.getHouse().getId());
+//        dtoAccount.setHouse_id(modelAccount.getHouse());
+//        dtoAccount.setAcc_id(modelAccount.getAcc().getId());
+        dtoAccount.setHouseName(modelAccount.getHouse().getName());
         return dtoAccount;
     }
 
@@ -61,31 +100,38 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(rollbackFor = Exception.class)
     public AccountResponse addAccount(AccountResponse accountResponse) {
 //        accountResponse.setPassword(passwordEncoder.encode(accountResponse.getPassword()));
+        Account byEmail = accountRepository.findByEmail(accountResponse.getEmail());
+        if(Objects.isNull(byEmail)){
+            Account modelAccount = new Account();
+//        modelAccount.setId(accountResponse.getId());
+            modelAccount.setName(accountResponse.getName());
+            modelAccount.setGender(accountResponse.getGender());
+            modelAccount.setPhone(accountResponse.getPhone());
 
-        Account modelAccount = new Account();
-        modelAccount.setId(accountResponse.getId());
-        modelAccount.setName(accountResponse.getName());
-        modelAccount.setGender(accountResponse.getGender());
-//        modelAccount.setRole(accountResponse.getRole());
-        modelAccount.setPhone(accountResponse.getPhone());
-        modelAccount.setEmail(accountResponse.getEmail());
-//        modelAccount.setUsername(accountResponse.getUsername());
-//        modelAccount.setPassword(accountResponse.getPassword());
-        modelAccount.setBirthDate(accountResponse.getBirthDate());
-        modelAccount.setDescription(accountResponse.getDescription());
-        modelAccount.setIdNumber(accountResponse.getIdNumber());
-        modelAccount.setPosition(accountResponse.getPosition());
-        modelAccount.setStartedDate(accountResponse.getStartedDate());
-        modelAccount.setStatus(accountResponse.getStatus());
+            modelAccount.setEmail(accountResponse.getEmail());
 
-        House house = mysqlHouseRepository.findById(accountResponse.getHouse_id()).orElseThrow(() -> new EntityNotFoundException("Not found house with this id"));
-        modelAccount.setHouse(house);
+            modelAccount.setBirthDate(accountResponse.getBirthDate());
+            modelAccount.setDescription(accountResponse.getDescription());
+            modelAccount.setIdNumber(accountResponse.getIdNumber());
+            modelAccount.setPosition(accountResponse.getPosition());
+            modelAccount.setStartedDate(accountResponse.getStartedDate());
+            modelAccount.setStatus(accountResponse.getStatus());
+            modelAccount.setImage(accountResponse.getImage());
+
+//        House house = mysqlHouseRepository.findById(accountResponse.getHouse_id()).orElseThrow(() -> new EntityNotFoundException("Not found house with this id"));
+            House house = mysqlHouseRepository.findByName(accountResponse.getHouseName());
+            modelAccount.setHouse(house);
+//        modelAccount.setHouse(accountResponse.getHouse_id());
         Acc acc = accRepository.findById(accountResponse.getAcc_id()).orElseThrow(() -> new EntityNotFoundException("Not found acc with this id"));
         modelAccount.setAcc(acc);
 
-        Account save = accountRepository.save(modelAccount);
-        accountResponse.setId(save.getId());
-        return accountResponse;
+            Account save = accountRepository.save(modelAccount);
+            accountResponse.setId(save.getId());
+            return accountResponse;
+        }else{
+            throw new RuntimeException("This email existed please another email");
+        }
+
     }
 
     @Override
@@ -115,7 +161,7 @@ public class AccountServiceImpl implements AccountService {
 //        accountById.setHouse(accountResponse.getHouse());
 
         Account save = accountRepository.save(accountById);
-        accountResponse.setAcc_id(save.getAcc().getId());
+//        accountResponse.setAcc_id(save.getAcc().getId());
         return accountResponse;
     }
 }

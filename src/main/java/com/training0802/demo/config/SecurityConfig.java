@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests((authr) -> authr
                         .requestMatchers("/api/acc/add").permitAll()
-                        .requestMatchers("/api/account/add").permitAll()
+                        .requestMatchers("/api/acc/login").permitAll()
+//                        .requestMatchers("/api/account/add").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());

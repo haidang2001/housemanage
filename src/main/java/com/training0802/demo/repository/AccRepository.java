@@ -10,4 +10,7 @@ public interface AccRepository extends JpaRepository<Acc, Long> {
     Optional<Acc> findByUsername(String username);
     boolean existsByUsername(String username);
 
+    Optional<Acc> findOneByUsernameAndPassword(String username,String password);
+    Acc findTopByOrderByIdDesc();
+
 }

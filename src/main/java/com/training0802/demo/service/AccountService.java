@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface AccountService {
     List<AccountResponse> getAccounts();
+    List<AccountResponse> getAccountsManager();
+    List<AccountResponse> getListManagers();
 
     AccountResponse getOneAccount(Long id);
 

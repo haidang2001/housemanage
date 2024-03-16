@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,15 @@ public class MongoHouseServiceImpl implements HouseService {
     }
 
     @Override
-    public HouseResponse addHouse(HouseResponse houseResponse) {
-
-        return houseResponse;
+    public HouseResponse addHouse(HouseResponse houseResponse,MultipartFile image) {
+        return null;
     }
+
+//    @Override
+//    public HouseResponse addHouse(HouseResponse houseResponse) {
+//
+//        return houseResponse;
+//    }
 
     @Override
     public void deleteHouse(Long id) {

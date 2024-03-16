@@ -13,7 +13,7 @@ public class Acc {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private String repassword;
+//    private String repassword;
     private String role;
     @OneToOne(mappedBy = "acc")
     private Account account;
@@ -21,13 +21,21 @@ public class Acc {
     public Acc() {
     }
 
-    public Acc(Long id, String username, String password, String repassword, String role) {
+    public Acc(Long id, String username, String password, Account account,String role) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.repassword = repassword;
+        this.account = account;
         this.role = role;
     }
+
+//    public Acc(Long id, String username, String password, String repassword, String role) {
+//        this.id = id;
+//        this.username = username;
+//        this.password = password;
+//        this.repassword = repassword;
+//        this.role = role;
+//    }
 
     public Long getId() {
         return id;
@@ -53,14 +61,14 @@ public class Acc {
         this.password = password;
     }
 
-    public String getRepassword() {
-        return repassword;
-    }
-
-    public void setRepassword(String repassword) {
-        this.repassword = repassword;
-    }
-
+//    public String getRepassword() {
+//        return repassword;
+//    }
+//
+//    public void setRepassword(String repassword) {
+//        this.repassword = repassword;
+//    }
+//
     public String getRole() {
         return role;
     }

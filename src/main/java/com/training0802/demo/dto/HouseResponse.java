@@ -13,9 +13,10 @@ public class HouseResponse {
     private String name;
     private String establishDate;
     private int totalRooms;
-    private Account manager;
+//    private Account manager;
+    private String manager;
     private String status;
-    private  String description;
+    private String description;
     private String image;
 
     private List<Room> roomList;
@@ -25,7 +26,7 @@ public class HouseResponse {
     private List<Tenant> tenantList;
     public HouseResponse(){}
 
-    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, Account manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
+    public HouseResponse(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
         this.id = id;
         this.location = location;
         this.name = name;
@@ -87,11 +88,20 @@ public class HouseResponse {
         this.totalRooms = totalRooms;
     }
 
-    public Account getManager() {
+//    public Account getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(Account manager) {
+//        this.manager = manager;
+//    }
+
+
+    public String getManager() {
         return manager;
     }
 
-    public void setManager(Account manager) {
+    public void setManager(String manager) {
         this.manager = manager;
     }
 

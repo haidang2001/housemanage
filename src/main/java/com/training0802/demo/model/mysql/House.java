@@ -17,10 +17,11 @@ public class House {
     private String name;
     private String establishDate;
     private int totalRooms;
-    @OneToOne(mappedBy = "house")
-    @JsonManagedReference
-    @JsonIgnore
-    private Account manager;
+//    @OneToOne(cascade = CascadeType.ALL,mappedBy = "house")
+//    @JsonManagedReference
+//    @JsonIgnore
+//    private Account manager;
+    private String manager;
     private String status;
     private  String description;
     private String image;
@@ -41,7 +42,7 @@ public class House {
     private List<Tenant> tenantList;
     public House(){}
 
-    public House(Long id, String location, String name, String establishDate, int totalRooms, Account manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
+    public House(Long id, String location, String name, String establishDate, int totalRooms, String manager, String status, String description, String image, List<Room> roomList, List<RentalFeeHouse> rentalFeeHouseList, List<Tenant> tenantList) {
         this.id = id;
         this.location = location;
         this.name = name;
@@ -103,11 +104,20 @@ public class House {
         this.totalRooms = totalRooms;
     }
 
-    public Account getManager() {
+//    public Account getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(Account manager) {
+//        this.manager = manager;
+//    }
+
+
+    public String getManager() {
         return manager;
     }
 
-    public void setManager(Account manager) {
+    public void setManager(String manager) {
         this.manager = manager;
     }
 

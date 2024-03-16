@@ -1,6 +1,7 @@
 package com.training0802.demo.controller;
 
 import com.training0802.demo.dto.AccResponse;
+import com.training0802.demo.dto.LoginResponse;
 import com.training0802.demo.dto.MessageResponse;
 import com.training0802.demo.service.mysql.AccServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/acc")
-
+@CrossOrigin
 public class AccController {
     @Autowired
     private AccServiceImpl accService;
@@ -25,6 +26,11 @@ public class AccController {
     @PreAuthorize("hasAuthority('admin')")
     public List<AccResponse> getListAccount() {
         return accService.getAcc();
+    }
+    @GetMapping("/last")
+    @PreAuthorize("hasAuthority('admin')")
+    public AccResponse getLastAccount() {
+        return accService.getLastAcc();
     }
 
     @GetMapping("/{id}")
@@ -56,6 +62,20 @@ public class AccController {
                     new MessageResponse(0, "Add successful account", accResponse1)
             );
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new MessageResponse(1, e.getMessage(), "")
+            );
+        }
+    }
+    @PostMapping("/login")
+    public ResponseEntity<MessageResponse> loginAcc(@RequestBody LoginResponse loginResponse){
+
+        try{
+            MessageResponse login = accService.login(loginResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    login
+            );
+        }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new MessageResponse(1, e.getMessage(), "")
             );

@@ -19,10 +19,11 @@ public class Account {
     private String phone;
     private String email;
     private int idNumber;
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, orphanRemoval = true )
     @JsonBackReference
-    @JoinColumn(name = "house_id")
+    @JoinColumn(name = "house_name")
     private House house;
+//    private Long house;
     private String position;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startedDate;
@@ -32,6 +33,7 @@ public class Account {
     @JoinColumn(name = "acc_id")
     private Acc acc;
 
+    private String image;
     public Account() {
 
     }
@@ -53,7 +55,7 @@ public class Account {
         this.email = email;
     }
 
-    public Account(Long id, String name, Date birthDate, String gender, String role, String phone, String email, int idNumber, House house, String position, String username, String password, Date startedDate, String status, String description, Acc acc) {
+    public Account(Long id, String name, Date birthDate, String gender, String role, String phone, String email, int idNumber, House house, String position, String username, String password, Date startedDate, String status, String description, Acc acc,String image) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -67,6 +69,15 @@ public class Account {
         this.status = status;
         this.description = description;
         this.acc = acc;
+        this.image=image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {
@@ -124,6 +135,15 @@ public class Account {
     public void setIdNumber(int idNumber) {
         this.idNumber = idNumber;
     }
+
+//    public Long getHouse() {
+//        return house;
+//    }
+//
+//    public void setHouse(Long house) {
+//        this.house = house;
+//    }
+
 
     public House getHouse() {
         return house;

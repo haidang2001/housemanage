@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
-
+@CrossOrigin
 public class AccountController {
     @Autowired
     private AccountServiceImpl accountService;
@@ -24,6 +24,18 @@ public class AccountController {
     public List<AccountResponse> getListAccount() {
         return accountService.getAccounts();
     }
+
+    @GetMapping("/manager")
+    @PreAuthorize("hasAuthority('admin')")
+    public List<AccountResponse> getListAccountManager() {
+        return accountService.getAccountsManager();
+    }
+    @GetMapping("/managers")
+    @PreAuthorize("hasAuthority('admin')")
+    public List<AccountResponse> getListManagers() {
+        return accountService.getListManagers();
+    }
+
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
