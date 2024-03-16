@@ -12,9 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableMethodSecurity
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -28,20 +28,21 @@ public class SecurityConfig {
         return new AccountInfoToUserDetailsService();
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .cors().and()
-//                .authorizeHttpRequests((authr) -> authr
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .cors().and()
+                .authorizeHttpRequests((authr) -> authr
 //                        .requestMatchers("/api/acc/add").permitAll()
 //                        .requestMatchers("/api/acc/login").permitAll()
-////                        .requestMatchers("/api/account/add").permitAll()
+//                        .requestMatchers("/api/account/add").permitAll()
 //                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults());
-//
-//        return http.build();
-//    }
+                                .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults());
+
+        return http.build();
+    }
 }
 
